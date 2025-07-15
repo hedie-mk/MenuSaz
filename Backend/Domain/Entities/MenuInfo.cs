@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class ManuInfo : BaseEntity
+    public class MenuInfo : BaseEntity
     {
         public required string Name { get; set; }
         public string? Address { get; set; }
