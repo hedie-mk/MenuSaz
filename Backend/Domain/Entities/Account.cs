@@ -1,4 +1,5 @@
 ﻿using Domain.Base;
+using Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace Domain.Entities
         public required string Email { get; set; }
         public string Phone { get; set; } = string.Empty ;
         public required string Password { get; set; }
+        public UserRole Role { get; set; }
     }
 }
