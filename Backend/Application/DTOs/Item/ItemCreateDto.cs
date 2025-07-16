@@ -12,7 +12,7 @@ namespace Application.DTOs.Item
         public string? Description { get; set; }
         public decimal Price { get; set; }
         public decimal? DiscountedPrice { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
 
     }
 }
