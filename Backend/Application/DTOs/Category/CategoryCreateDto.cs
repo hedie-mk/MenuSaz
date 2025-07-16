@@ -8,7 +8,7 @@ namespace Application.DTOs.Category
 {
     public class CategoryCreateDto
     {
-        public string Name { get; set; } = string.Empty;
-        public Guid ParentCategoryId { get; set; }
+        public required string Name { get; set; } = string.Empty;
+        public required Guid ParentCategoryId { get; set; }
     }
 }
