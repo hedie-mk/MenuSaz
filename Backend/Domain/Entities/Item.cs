@@ -16,8 +16,12 @@ namespace Domain.Entities
         public decimal? DiscountedPrice { get; set; }
         public string? Photo { get; set; }
         public required State State { get; set; } = State.active;
-        public required Category Category { get; set; }
-        public required Guid CategoryId { get; set; }
+        public Category? Category { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Item()
+        {
+            
+        }
 
     }
 }
