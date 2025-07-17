@@ -16,7 +16,7 @@ namespace Domain.Entities
         public string? PhoneNumber { get; set; }
         public string? SiteDescription { get; set; }
         public string? SocialMedia { get; set; }
-        public required string Logo { get; set; }
+        public string? Logo { get; set; }
 
     }
 }
