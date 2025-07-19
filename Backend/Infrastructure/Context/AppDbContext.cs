@@ -17,5 +17,16 @@ namespace Infrastructure.Context
         public DbSet<MainCategory> MainCategories => Set<MainCategory>();
         public DbSet<MenuInfo> MenuInfos => Set<MenuInfo>();
         public DbSet<Account> Accounts => Set<Account>();
+
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        }
+
+
     }
+
+   
 }
