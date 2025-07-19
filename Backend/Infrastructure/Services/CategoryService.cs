@@ -3,12 +3,7 @@ using Application.Interfaces.Services;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Services
 {
