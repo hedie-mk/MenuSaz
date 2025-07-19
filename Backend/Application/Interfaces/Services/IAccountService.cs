@@ -9,8 +9,9 @@ namespace Application.Interfaces.Services
 {
     public interface IAccountService
     {
-        Task<AccountDto> GetAllAysnc();
-        Task<AccountDto?> AuthenticateAsync(string username, string password);
+        Task<List<AccountDto>> GetAllAysnc();
+        Task<string?> AuthenticateAsync(AccountAuthenticateDto dto);
+        Task<bool> ChangePassword(ChangePasswordDto dto);
         Task<Guid> CreateAccountAysnc(AccountCreateDto dto);
         Task<bool> UpdateAccountAysnc(AccountUpdateDto dto);
         Task<bool> DeleteAccountAysnc(Guid id);

@@ -9,9 +9,9 @@ namespace Application.Interfaces.Services
 {
     public interface IMainCategoryService
     {
-        Task<List<MainCategoryDto>> GetAllAysnc();
+        Task<List<MainCategoryDto>?> GetAllAysnc();
         Task<MainCategoryDto?> GetByIdAsync(Guid id);
-        Task<MainCategoryCategoriesDto> GetCateroryCategoriesAysnc(Guid id);
+        Task<MainCategoryCategoriesDto?> GetCateroryCategoriesAysnc(Guid id);
         Task<bool> ChangeStatusAsync(Guid id);
         Task<Guid> CreateAsync(MainCategoryCreateDto dto);
         Task<bool> UpdateAsync(MainCategoryUpdateDto dto);
