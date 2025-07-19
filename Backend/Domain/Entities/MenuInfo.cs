@@ -17,6 +17,10 @@ namespace Domain.Entities
         public string? SiteDescription { get; set; }
         public string? SocialMedia { get; set; }
         public string? Logo { get; set; }
+        public MenuInfo()
+        {
+            
+        }
 
     }
 }

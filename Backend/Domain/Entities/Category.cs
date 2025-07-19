@@ -12,7 +12,7 @@ namespace Domain.Entities
     {
         public required string Name { get; set; }
         public State State { get; set; }
-        public MainCategory? ParentCategory { get; set; }
+        public MainCategory ParentCategory { get; set; }
         public required Guid ParentCategoryId { get; set; }
         public ICollection<Item>? Items { get; set; } = new List<Item>();
         public Category()
