@@ -8,6 +8,6 @@ namespace Application.DTOs.MainCategory
 {
     public class MainCategoryCreateDto
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
     }
 }

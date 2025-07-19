@@ -15,6 +15,6 @@ namespace Application.DTOs.MenuInfo
         public string? PhoneNumber { get; set; }
         public string? SiteDescription { get; set; }
         public string? SocialMedia { get; set; }
-        public string Logo { get; set; } = string.Empty;
+        public string? Logo { get; set; } = string.Empty;
     }
 }

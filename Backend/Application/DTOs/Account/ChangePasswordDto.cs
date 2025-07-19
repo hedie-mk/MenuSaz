@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs.MainCategory
+namespace Application.DTOs.Account
 {
-    public class MainCategoryUpdateDto
+    public class ChangePasswordDto
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
+        public string Password { get; set; }
     }
 }
