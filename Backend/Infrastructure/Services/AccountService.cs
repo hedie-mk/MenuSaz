@@ -38,6 +38,19 @@ namespace Infrastructure.Services
                 }).ToListAsync();
         }
 
+        public async Task<AccountDto> GetAccountAsync(Guid id)
+        {
+            var account = await _context.Accounts.FindAsync(id);
+            return new AccountDto
+            {
+                Id = account!.Id,
+                UserName = account.UserName,
+                Email = account.Email,
+                Phone = account.Phone,
+                Role = account.Role.ToString(),
+                CreatedAt = account.CreatedAt,
+            };
+        }
 
         public async Task<string?> AuthenticateAsync(AccountAuthenticateDto dto)
         {
@@ -104,5 +117,6 @@ namespace Infrastructure.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
     }
 }
