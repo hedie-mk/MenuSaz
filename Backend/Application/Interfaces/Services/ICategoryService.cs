@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.Category;
+using Application.DTOs.Item;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,7 @@ namespace Application.Interfaces.Services
         Task<Guid> CreateAsync(CategoryCreateDto dto);
         Task<bool> UpdateAsync(CategoryUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
+        Task<List<DiactiveCategoryDto>> GetDiactiveCategoryAsync();
+
     }
 }
