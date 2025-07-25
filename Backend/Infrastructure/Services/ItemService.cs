@@ -88,10 +88,22 @@ namespace Infrastructure.Services
         public async Task<bool> ChangeStatusAsync(Guid id)
         {
             var item = await _context.Items.FindAsync(id);
+
             if (item == null) return false;
+
             item.State = item.State == State.active
                           ? State.diactive
                           : State.active;
+
+            if(item.State == State.diactive)
+            {
+                item.DiactiveDateTime = DateTime.UtcNow;
+            }
+            else
+            {
+                item.DiactiveDateTime = null;
+            }
+
             await _context.SaveChangesAsync();
             return true;
         }
@@ -137,6 +149,17 @@ namespace Infrastructure.Services
             return true;
         }
 
-        
+        public async Task<List<DiactiveItemsDto>> GetDiactiveItemsAsync()
+        {
+            return await _context.Items
+                .Where(i => i.State == State.diactive)
+                .Select(i => new DiactiveItemsDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    DiactiveDateTime = i.DiactiveDateTime
+
+                }).ToListAsync();
+        }
     }
 }

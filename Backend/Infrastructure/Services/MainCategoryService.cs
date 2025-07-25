@@ -1,4 +1,5 @@
-﻿using Application.DTOs.MainCategory;
+﻿using Application.DTOs.Category;
+using Application.DTOs.MainCategory;
 using Application.Interfaces.Services;
 using Domain.Entities;
 using Domain.Enums;
@@ -119,8 +120,17 @@ namespace Infrastructure.Services
 
             return true;
         }
-        
 
-        
+        public async Task<List<DiactiveMainCategoryDto>> GetDiactiveCategoryAsync()
+        {
+            return await _context.Categories
+               .Where(c => c.State == State.diactive)
+               .Select(c => new DiactiveMainCategoryDto
+               {
+                   Id = c.Id,
+                   Name = c.Name,
+                   DiactiveDateTime = c.DiactiveDateTime,
+               }).ToListAsync();
+        }
     }
 }

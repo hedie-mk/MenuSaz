@@ -59,6 +59,15 @@ namespace Infrastructure.Services
             category.State = category.State == State.active
                           ? State.diactive
                           : State.active;
+            if (category.State == State.diactive)
+            {   
+                category.DiactiveDateTime = DateTime.UtcNow;
+            }   
+            else
+            {   
+                category.DiactiveDateTime = null;
+            }
+
             await _context.SaveChangesAsync();
             return true;
         }
@@ -109,8 +118,17 @@ namespace Infrastructure.Services
             await _context.SaveChangesAsync();
             return true;
         }
-        
 
-        
+        public async Task<List<DiactiveCategoryDto>> GetDiactiveCategoryAsync()
+        {
+            return await _context.Categories
+                .Where(c => c.State == State.diactive)
+                .Select(c => new DiactiveCategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    DiactiveDateTime = c.DiactiveDateTime,
+                }).ToListAsync();
+        }
     }
 }
