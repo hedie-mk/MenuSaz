@@ -71,7 +71,7 @@ namespace Infrastructure.Services
             {
                 UserName = dto.UserName,
                 Password = PasswordHasher.Hash(dto.Password),
-                Role = dto.Role
+                Role = UserRole.Staff,
             };
 
             _context.Accounts.Add(account);
