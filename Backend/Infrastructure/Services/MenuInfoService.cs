@@ -32,7 +32,7 @@ namespace Infrastructure.Services
                 Logo = m.Logo
 
             }).FirstOrDefaultAsync();
-            }
+        }
 
         public async Task<Guid> CreateMenuInfoAsync(MenuInfoCreateDto dto)
         {
