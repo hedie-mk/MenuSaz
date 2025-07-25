@@ -161,5 +161,19 @@ namespace Infrastructure.Services
 
                 }).ToListAsync();
         }
+
+        public async Task<List<LatestAddedItemsDto>> GetLatestAddedItemsAsync(int index)
+        {
+            return await _context.Items
+                .OrderByDescending(i => i.CreatedAt)
+                .Take(index)
+                .Select(i => new LatestAddedItemsDto
+                {
+                    Id = i.Id,
+                    Name = i.Name,
+                    Description = i.Description,
+                    CreatedAt = i.CreatedAt,
+                }).ToListAsync();
+        }
     }
 }

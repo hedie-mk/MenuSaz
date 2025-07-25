@@ -18,5 +18,6 @@ namespace Application.Interfaces.Services
         Task<bool> UpdateAsync(ItemUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
         Task<List<DiactiveItemsDto>> GetDiactiveItemsAsync();
+        Task<List<LatestAddedItemsDto>> GetLatestAddedItemsAsync(int index);
     }
 }
