@@ -12,6 +12,7 @@ namespace Domain.Entities
     {
         public required string Name { get; set; }
         public State State { get; set; } 
+        public DateTime? DiactiveDateTime { get; set; }
         public ICollection<Category> Categories { get; set; } = new List<Category>();
         public MainCategory()
         {
