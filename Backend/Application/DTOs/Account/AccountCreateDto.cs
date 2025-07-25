@@ -11,6 +11,5 @@ namespace Application.DTOs.Account
     {
         public string UserName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public UserRole Role { get; set; } = UserRole.Staff;
     }
 }
