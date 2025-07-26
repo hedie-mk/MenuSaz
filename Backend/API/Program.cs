@@ -1,4 +1,3 @@
-using Application.Interfaces.Helpers;
 using Infrastructure.DI;
 using Infrastructure.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -86,5 +85,7 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+
+
 
 app.Run();
