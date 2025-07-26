@@ -38,9 +38,10 @@ namespace Infrastructure.Services
                 }).ToListAsync();
         }
 
-        public async Task<AccountDto> GetAccountAsync(Guid id)
+        public async Task<AccountDto?> GetAccountAsync(Guid id)
         {
             var account = await _context.Accounts.FindAsync(id);
+            if (account == null) return null;
             return new AccountDto
             {
                 Id = account!.Id,
