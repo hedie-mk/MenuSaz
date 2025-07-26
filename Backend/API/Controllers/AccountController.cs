@@ -8,7 +8,7 @@ using System.Security.Claims;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/dashboard")]
+    [Route("api/[Controller]")]
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
@@ -21,11 +21,16 @@ namespace API.Controllers
 
         [HttpGet("/")]
         [Authorize]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string? id)
         {
-            var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var result = await _accountService.GetAccountAsync(Guid.Parse(id!));
-            return Ok(result);
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (id != null) userId = id;
+
+            var result = await _accountService.GetAccountAsync(Guid.Parse(userId!));
+
+            return result != null ? Ok(result) : NotFound();
+
         }
 
 
@@ -34,6 +39,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var result = await _accountService.GetAllAysnc();
+
             return Ok(result);
         }
 
@@ -42,18 +48,18 @@ namespace API.Controllers
         public async Task<IActionResult> Create([FromBody] AccountCreateDto dto)
         {
             var id = await _accountService.CreateAccountAysnc(dto);
+
             return Created("" , new { id });
         }
 
-
+        
         [HttpPut("updateAccount")]
         [Authorize]
         public async Task<IActionResult> Update([FromBody] AccountUpdateDto dto)
         {
             var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (userIdFromToken == null || userIdFromToken != dto.Id.ToString())
-                return Forbid("You can only update your own account.");
+            dto.Id = Guid.Parse(userIdFromToken!);
 
             var result = await _accountService.UpdateAccountAysnc(dto);
 
@@ -65,6 +71,7 @@ namespace API.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _accountService.DeleteAccountAysnc(Guid.Parse(id!));
+
             return result ? Ok() : NotFound();
         }
 
@@ -74,10 +81,10 @@ namespace API.Controllers
         {
             var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (userIdFromToken == null || userIdFromToken != dto.Id.ToString())
-                return Forbid("You can only update your own account.");
+            dto.Id = Guid.Parse(userIdFromToken!);
 
             var result = await _accountService.ChangePassword(dto);
+
             return result ? Ok() : NotFound();
         }
 
