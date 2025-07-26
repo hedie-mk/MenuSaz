@@ -17,7 +17,7 @@ namespace Application.Interfaces.Services
         Task<Guid> CreateAsync(ItemCreateDto dto);
         Task<bool> UpdateAsync(ItemUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
-        Task<List<DiactiveItemsDto>> GetDiactiveItemsAsync();
+        Task<List<DiactiveItemsDto?>> GetDiactiveItemsAsync();
         Task<List<LatestAddedItemsDto>> GetLatestAddedItemsAsync(int index);
     }
 }

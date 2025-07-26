@@ -149,9 +149,9 @@ namespace Infrastructure.Services
             return true;
         }
 
-        public async Task<List<DiactiveItemsDto>> GetDiactiveItemsAsync()
+        public async Task<List<DiactiveItemsDto?>> GetDiactiveItemsAsync()
         {
-            return await _context.Items
+            var result = await _context.Items
                 .Where(i => i.State == State.diactive)
                 .Select(i => new DiactiveItemsDto
                 {
@@ -160,6 +160,7 @@ namespace Infrastructure.Services
                     DiactiveDateTime = i.DiactiveDateTime
 
                 }).ToListAsync();
+            return result;
         }
 
         public async Task<List<LatestAddedItemsDto>> GetLatestAddedItemsAsync(int index)
