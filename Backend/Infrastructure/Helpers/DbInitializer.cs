@@ -17,13 +17,11 @@ namespace Infrastructure.Helpers
             {
                 var admin = new Account
                 {
-                    Id = Guid.NewGuid(),
                     UserName = "admin",
                     Password = PasswordHasher.Hash("Admin123!"),
                     Role = UserRole.Manager,
                     Email = "admin@menusaz.ir",
-                    Phone = "09120000000",
-                    CreatedAt = DateTime.UtcNow
+                    Phone = "09120000000"
                 };
 
                 context.Accounts.Add(admin);
