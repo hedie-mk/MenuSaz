@@ -10,14 +10,14 @@ namespace Application.Interfaces.Services
 {
     public interface ICategoryService
     {
-        Task<List<CategoryDto>> GetAllAysnc();
+        Task<List<CategoryDto>?> GetAllAysnc();
         Task<CategoryDto?> GetByIdAsync(Guid id);
         Task<CategoryItemsDto?> GetCateroryItemsAysnc(Guid id);
         Task<bool> ChangeStatusAsync(Guid id);
         Task<Guid> CreateAsync(CategoryCreateDto dto);
         Task<bool> UpdateAsync(CategoryUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
-        Task<List<DiactiveCategoryDto>> GetDiactiveCategoryAsync();
+        Task<List<DiactiveCategoryDto>?> GetDiactiveCategoryAsync();
 
     }
 }
