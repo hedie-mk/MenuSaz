@@ -80,21 +80,6 @@ namespace API.Controllers
             return result ? Ok() : NotFound();
         }
 
-        // GET: api/item/diactiveItems
-        [HttpGet("diactiveItems")]
-        public async Task<IActionResult> GetDiactiveItems()
-        {
-            var items = await _itemService.GetDiactiveItemsAsync();
-            return items != null ? Ok(items) : Empty;
-        }
-
-        // GET: api/item/latest/{index}
-        [HttpGet("latest/{index:int}")]
-        public async Task<IActionResult> GetLatestAddedItems(int index)
-        {
-            var items = await _itemService.GetLatestAddedItemsAsync(index);
-            return items != null ? Ok(items) : Empty;
-        }
 
     }
 }
