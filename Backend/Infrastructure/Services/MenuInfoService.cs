@@ -19,7 +19,7 @@ namespace Infrastructure.Services
             _context = context;
         }
 
-        public async Task<MenuInfoDto> GetMenuInfoAsync()
+        public async Task<MenuInfoDto?> GetMenuInfoAsync()
         {
             return await _context.MenuInfos.Select(m => new MenuInfoDto
             {
@@ -31,7 +31,7 @@ namespace Infrastructure.Services
                 SocialMedia = m.SocialMedia,
                 Logo = m.Logo
 
-            }).FirstOrDefaultAsync();
+            }).FirstOrDefaultAsync() ?? null;
         }
 
         public async Task<Guid> CreateMenuInfoAsync(MenuInfoCreateDto dto)
