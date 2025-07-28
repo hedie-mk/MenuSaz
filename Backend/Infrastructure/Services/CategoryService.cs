@@ -14,7 +14,7 @@ namespace Infrastructure.Services
         {
             _context = context;
         }
-        public async Task<List<CategoryDto>> GetAllAysnc()
+        public async Task<List<CategoryDto>?> GetAllAysnc()
         {
             return await _context.Categories
                 .Include(c => c.Items)
@@ -25,11 +25,11 @@ namespace Infrastructure.Services
                     Name = c.Name,
                     State = c.State.ToString(),
                     ParentCategoryId = c.ParentCategoryId,
-                    ParentCategoryName = c.ParentCategory!.Name,
-                    Items = c.Items!.Select(i => i.Name).ToList() ?? null ,
+                    ParentCategoryName = c.ParentCategory.Name,
+                    Items = c.Items!.Select(i => i.Name).ToList() ,
                     ItemsLength = c.Items!.Count,
 
-                }).ToListAsync();
+                }).ToListAsync() ?? null;
         }
         public async Task<CategoryDto?> GetByIdAsync(Guid id)
         {
@@ -47,43 +47,11 @@ namespace Infrastructure.Services
                 State = category.State.ToString(),
                 ParentCategoryId = category.ParentCategoryId,
                 ParentCategoryName = category.ParentCategory!.Name,
-                Items = category.Items!.Select(i => i.Name).ToList() == null ? null : category.Items!.Select(i => i.Name).ToList(),
+                Items = category.Items!.Select(i => i.Name).ToList(),
                 ItemsLength = category.Items!.Count,
             };
         }
 
-        public async Task<bool> ChangeStatusAsync(Guid id)
-        {
-            var category = await _context.Categories.FindAsync(id);
-            if (category == null) return false;
-            category.State = category.State == State.active
-                          ? State.diactive
-                          : State.active;
-            if (category.State == State.diactive)
-            {   
-                category.DiactiveDateTime = DateTime.UtcNow;
-            }   
-            else
-            {   
-                category.DiactiveDateTime = null;
-            }
-
-            await _context.SaveChangesAsync();
-            return true;
-        }
-        public async Task<CategoryItemsDto?> GetCateroryItemsAysnc(Guid id)
-        {
-            var category = await _context.Categories.Include(c => c.Items).FirstOrDefaultAsync(c => c.Id == id);
-
-            if (category == null) return null;
-
-            return new CategoryItemsDto
-            {
-                Name = category.Name,
-                ItemsName = category.Items!.Select(i => i.Name).ToList() ?? null,
-            };
-
-        }
 
         public async Task<Guid> CreateAsync(CategoryCreateDto dto)
         {
@@ -119,7 +87,43 @@ namespace Infrastructure.Services
             return true;
         }
 
-        public async Task<List<DiactiveCategoryDto>> GetDiactiveCategoryAsync()
+        public async Task<bool> ChangeStatusAsync(Guid id)
+        {
+            var category = await _context.Categories.FindAsync(id);
+
+            if (category == null) return false;
+
+            category.State = category.State == State.active
+                          ? State.diactive
+                          : State.active;
+
+            if (category.State == State.diactive)
+            {   
+                category.DiactiveDateTime = DateTime.UtcNow;
+            }   
+            else
+            {   
+                category.DiactiveDateTime = null;
+            }
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        public async Task<CategoryItemsDto?> GetCateroryItemsAysnc(Guid id)
+        {
+            var category = await _context.Categories.Include(c => c.Items).FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null) return null;
+
+            return new CategoryItemsDto
+            {
+                Name = category.Name,
+                ItemsName = category.Items!.Select(i => i.Name).ToList() ?? null,
+            };
+
+        }
+
+        public async Task<List<DiactiveCategoryDto>?> GetDiactiveCategoryAsync()
         {
             return await _context.Categories
                 .Where(c => c.State == State.diactive)
