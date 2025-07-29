@@ -8,7 +8,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    [Authorize]
+    
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -32,6 +32,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] CategoryCreateDto dto)
         {
             var id = await _categoryService.CreateAsync(dto);
@@ -39,6 +40,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] CategoryUpdateDto dto)
         {
             var result = await _categoryService.UpdateAsync(dto);
@@ -46,6 +48,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _categoryService.DeleteAsync(id);
@@ -53,6 +56,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("ChangeStatus/{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> ChangeStatus(Guid id)
         {
             var result = await _categoryService.ChangeStatusAsync(id);
@@ -60,6 +64,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetCategoryItems/{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetCategoryItems(Guid id)
         {
             var items = await _categoryService.GetCateroryItemsAysnc(id);
@@ -67,6 +72,7 @@ namespace API.Controllers
         }
 
         [HttpGet("GetDiactiveCategories")]
+        [Authorize]
         public async Task<IActionResult> GetDiactiveCategories()
         {
             var items = await _categoryService.GetDiactiveCategoryAsync();
