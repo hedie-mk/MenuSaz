@@ -7,7 +7,7 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    [Authorize]
+    
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;
@@ -43,14 +43,16 @@ namespace API.Controllers
 
         // POST: api/item
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ItemCreateDto dto)
+        [Authorize]
+        public async Task<IActionResult> Create([FromForm] ItemCreateDto dto)
         {
             var id = await _itemService.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id }, null);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] ItemUpdateDto dto)
+        [Authorize]
+        public async Task<IActionResult> Update([FromForm] ItemUpdateDto dto)
         {
             var result = await _itemService.UpdateAsync(dto);
             return result ? Ok() : NotFound();
@@ -58,6 +60,7 @@ namespace API.Controllers
 
         // DELETE: api/item/{id}
         [HttpDelete("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _itemService.DeleteAsync(id);
@@ -66,6 +69,7 @@ namespace API.Controllers
 
         // PATCH: api/item/changeStatus/{id}
         [HttpPatch("changeStatus/{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> ChangeStatus(Guid id)
         {
             var result = await _itemService.ChangeStatusAsync(id);
@@ -74,6 +78,7 @@ namespace API.Controllers
 
         // PATCH: api/item/addCategory?id={itemId}&categoryId={categoryId}
         [HttpPatch("addCategory")]
+        [Authorize]
         public async Task<IActionResult> AddCategory([FromQuery] Guid id, [FromQuery] Guid categoryId)
         {
             var result = await _itemService.AddCategoryAsync(id, categoryId);

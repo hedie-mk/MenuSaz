@@ -1,25 +1,28 @@
-﻿using Application.DTOs.Item;
+﻿using Application.Common.Options;
+using Application.DTOs.Item;
+using Application.Interfaces.Helpers;
 using Application.Interfaces.Services;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Services
 {
     public class ItemService : IItemService
     {
         private readonly AppDbContext _context;
+        private readonly IFileService _fileService;
+        private readonly FileStorageOptions _options;
+        private readonly FileUrlBuilder _fileUrlBuilder;
 
-        public ItemService(AppDbContext context)
+        public ItemService(AppDbContext context, IFileService fileService, IOptions<FileStorageOptions> fileStorageOptions, FileUrlBuilder fileUrlBuilder )
         {
             _context = context;
+            _fileService = fileService;
+            _options = fileStorageOptions.Value;
+            _fileUrlBuilder = fileUrlBuilder;
         }
         public async Task<List<ItemDto>> GetAllAsync()
         {
@@ -33,7 +36,10 @@ namespace Infrastructure.Services
                     Price = p.Price,
                     DiscountedPrice = p.DiscountedPrice,
                     State = p.State.ToString(),
-                    CategoryName = p.Category != null ? p.Category.Name : ""
+                    CategoryName = p.Category != null ? p.Category.Name : "",
+                    Photo = String.IsNullOrEmpty(p.Photo)
+                            ? null 
+                            : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{p.Photo}")
                 }).ToListAsync();
         }
         
@@ -49,7 +55,10 @@ namespace Infrastructure.Services
                     Price = p.Price,
                     DiscountedPrice = p.DiscountedPrice,
                     State = p.State.ToString(),
-                    CategoryName = p.Category != null ? p.Category.Name : ""
+                    CategoryName = p.Category != null ? p.Category.Name : "",
+                    Photo = String.IsNullOrEmpty(p.Photo)
+                            ? null
+                            : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{p.Photo}")
                 })
                 .Take(index * 10)
                 .ToListAsync();
@@ -70,7 +79,10 @@ namespace Infrastructure.Services
                 Price = item.Price,
                 DiscountedPrice = item.DiscountedPrice,
                 State = item.State.ToString(),
-                CategoryName = item.Category?.Name ?? ""
+                CategoryName = item.Category?.Name ?? "",
+                Photo = String.IsNullOrEmpty(item.Photo)
+                            ? null
+                            : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{item.Photo}")
             };
         }
         public async Task<bool> AddCategoryAsync(Guid id, Guid categoryId)
@@ -110,6 +122,8 @@ namespace Infrastructure.Services
 
         public async Task<Guid> CreateAsync(ItemCreateDto dto)
         {
+            var photoUrl = dto.Photo != null ? await _fileService.SaveFileAsync(dto.Photo,FileType.Item) : null;
+
             var item = new Item
             {
                 Name = dto.Name,
@@ -118,6 +132,7 @@ namespace Infrastructure.Services
                 DiscountedPrice = dto.DiscountedPrice,
                 State = State.active,
                 CategoryId = dto.CategoryId ?? null,
+                Photo = photoUrl,
             };
 
             _context.Items.Add(item);
@@ -135,6 +150,11 @@ namespace Infrastructure.Services
             item.DiscountedPrice = dto.DiscountedPrice;
             item.CategoryId = dto.CategoryId;
 
+            if (dto.Photo != null)
+            {
+               if(item.Photo != null) await _fileService.DeleteFileAsync(item.Photo,FileType.Item);
+                item.Photo = await _fileService.SaveFileAsync(dto.Photo, FileType.Item); 
+            }
             await _context.SaveChangesAsync();
             return true;
         }
@@ -143,6 +163,8 @@ namespace Infrastructure.Services
         {
             var item = await _context.Items.FindAsync(id);
             if (item == null) return false;
+
+            if(item.Photo != null) await _fileService.DeleteFileAsync(item.Photo , FileType.Item);
 
             _context.Items.Remove(item);
             await _context.SaveChangesAsync();
