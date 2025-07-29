@@ -24,7 +24,6 @@ namespace Infrastructure.DI
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IMenuInfoService, MenuInfoService>();
             services.AddScoped<ITokenService, TokenService>();
-
             return services;
         }
     }
