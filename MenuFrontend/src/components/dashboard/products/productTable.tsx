@@ -1,6 +1,10 @@
-
+import {Trash2, Edit ,PlusCircleIcon} from "lucide-react";
 import { useNavigate } from "react-router-dom"
-import type { GetProduct } from "../../../features/Products/productTable/productType";
+import type { GetProduct  } from "../../../features/Products/productTable/productType";
+import { useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productTable/productApi";
+import DeleteModal from "../shared/DeleteModal";
+import { useState } from "react";
+
 type TableProps = {
     isLoading : boolean,
     filteredItem : any,
@@ -10,54 +14,92 @@ type TableProps = {
 
 export default function ProductTable({isLoading , filteredItem , tHead} : TableProps){
     const navigate = useNavigate();
+    const [changeProductStatus] = useChangeProductStatusMutation();
+    const [deleteProduct] = useDeleteProductMutation();
+
+    const [modalOpen, setModalOpen] = useState(false);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [selectedName, setSelectedName] = useState<string | null>(null);
+
+
+  const handleDelete = async (id: string , name : string) => {
+    setSelectedId(id);
+    setSelectedName(name);
+    setModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (selectedId) {
+      deleteProduct(selectedId);
+      setModalOpen(false);
+      setSelectedId(null);
+      setSelectedName(null);
+    }
+  };
+
+
+
     return(
-        <div className="overflow-auto rounded-xl shadow-md">
-        <table className="w-full text-sm text-right bg-white">
-          <thead className="bg-purple-100 text-purple-800">
-            <tr className="text-sm">
-                {tHead.map((t) => (
-                    <th className="px-4 py-3">{t}</th>
-                ))}
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={6} className="text-center py-6">
-                  در حال بارگذاری...
-                </td>
+        <div className="overflow-auto shadow-md rounded-2xl">
+          <table className="w-full text-sm text-right ">
+            <thead className="bg-[#D8D4FF] text-[#0C1086] ">
+              <tr className="text-sm">
+                  {tHead.map((t) => (
+                      <th className="px-4 py-3 ">{t}</th>
+                  ))}
               </tr>
-            ) : (
-              filteredItem?.map((item : GetProduct) => (
-                <tr key={item.id} className="border-b">
-                  <td className="px-4 py-2 text-gray-700">
-                    <img className="w-[15px] h-[15px]" src={item.photo ?? undefined}></img>
-                  </td>
-                  <td className="px-4 py-2 font-medium text-[#222]">{item.name}</td>
-                  <td className="px-4 py-2 text-gray-600 truncate max-w-[250px]">{item.description}</td>
-                  <td className="px-4 py-2 text-[#444]">{item.price}</td>
-                  <td className="px-4 py-2 text-[#444]">{item.categoryName}</td>
-                  
-                  <td className="px-4 py-2 flex gap-2 items-center">
-                    <button onClick={() => navigate(`/product/${item.id}`)} className="bg-blue-800 hover:bg-blue-900 text-white p-1 rounded-full">
-                      +
-                    </button>
-                    <button onClick={() => navigate(`/edit-product/${item.id}`)} className="bg-yellow-400 hover:bg-yellow-500 text-white p-1 rounded-full">
-                      ✎
-                    </button>
-                    <button onClick={() => navigate(`/delete-product/${item.id}`)} className="bg-red-600 hover:bg-red-700 text-white p-1 rounded-full">
-                      🗑️
-                    </button>
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input type="checkbox" className="sr-only peer" checked={item.state === 'active'} readOnly />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-green-400"></div>
-                    </label>
+            </thead>
+            <tbody>
+              {isLoading ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-6">
+                    در حال بارگذاری...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredItem?.map((item : GetProduct) => (
+                  <tr key={item.id} className=" hover:bg-[#DDD9FF] duration-300 ease-in ">
+                    <td className="px-4 py-2 text-gray-700">
+                      <img className="w-[15px] h-[15px]" src={item.photo ?? undefined}></img>
+                    </td>
+                    <td className="px-4 py-2 font-medium text-[#222]">{item.name}</td>
+                    <td className="px-4 py-2 text-gray-600 truncate max-w-[250px]">{item.description}</td>
+                    <td className="px-4 py-2 text-[#444]">{item.price}</td>
+                    <td className="px-4 py-2 text-[#444]">{item.categoryName}</td>
+                    
+                    <td className="px-4 py-2 flex gap-2 items-center">
+                      <button onClick={() => navigate(`/product/${item.id}`)} className=" p-1 rounded-full">
+                        <PlusCircleIcon className="text-[#0C1086] hover:text-[#CAA200] duration-300 ease-in "/>
+                      </button>
+                      <button onClick={() => navigate(`/edit-product/${item.id}`)} className="p-1 rounded-full">
+                        <Edit className="text-[#0C1086] hover:text-[#CAA200] duration-300 ease-in "/>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item.id,item.name)}
+                        className="p-1 rounded-full"
+                      >
+                        <Trash2 className="text-[#0C1086] hover:text-red-700 duration-200 ease-in "/>
+                      </button>
+                      
+
+                      <label className="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" className="sr-only peer" checked={item.state === 'active'} onChange={() => changeProductStatus(item.id)} />
+                        <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none  peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#0C1086] dark:peer-checked:bg-[#0C1086]"></div>
+                      </label>
+                      
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+
+          <DeleteModal
+            isOpen={modalOpen}
+            selectedName = {selectedName}
+            onClose={() => setModalOpen(false)}
+            onConfirm={confirmDelete}
+          />
       </div>
     )
 }
