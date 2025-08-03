@@ -7,15 +7,15 @@ export default function SearchInput({search , setSearch}: SearchInputProps ){
 
     
 return(
-    <div className="flex items-center bg-[#D8D4FF] rounded-xl px-4 py-2">
+    <div className="flex lg:w-[250px]  items-center bg-[#D8D4FF] rounded-xl px-2 lg:px-5 py-3">
         <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="جستجو "
-            className="bg-transparent outline-none text-right text-sm placeholder:text-[#CAA200]"
+            className="bg-transparent outline-none text-right text-sm text-gray-700 placeholder:text-[#CAA200]"
         />
-        <Search className="w-4 h-4 mr-2 text-[#CAA200]" />
+        <Search className="w-5 h-5 mr-2 text-[#CAA200]" />
     </div>
 )
 }
