@@ -195,7 +195,7 @@ namespace Infrastructure.Services
                     Id = i.Id,
                     Name = i.Name,
                     Description = i.Description,
-                    CreatedAt = i.CreatedAt,
+                    CreatedAt = i.CreatedAt.Date.ToShortDateString(),
                 }).ToListAsync();
         }
     }

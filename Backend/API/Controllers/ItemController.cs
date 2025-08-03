@@ -35,9 +35,9 @@ namespace API.Controllers
 
         // GET: api/item/{id}
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var item = await _itemService.GetByIdAsync(id);
+            var item = await _itemService.GetByIdAsync(Guid.Parse(id));
             return item != null ? Ok(item) : NotFound();
         }
 
@@ -61,27 +61,27 @@ namespace API.Controllers
         // DELETE: api/item/{id}
         [HttpDelete("{id:guid}")]
         [Authorize]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var result = await _itemService.DeleteAsync(id);
+            var result = await _itemService.DeleteAsync(Guid.Parse(id));
             return result ? Ok() : NotFound();
         }
 
         // PATCH: api/item/changeStatus/{id}
         [HttpPatch("changeStatus/{id:guid}")]
         [Authorize]
-        public async Task<IActionResult> ChangeStatus(Guid id)
+        public async Task<IActionResult> ChangeStatus(string id)
         {
-            var result = await _itemService.ChangeStatusAsync(id);
+            var result = await _itemService.ChangeStatusAsync(Guid.Parse(id));
             return result ? Ok() : NotFound();
         }
 
         // PATCH: api/item/addCategory?id={itemId}&categoryId={categoryId}
         [HttpPatch("addCategory")]
         [Authorize]
-        public async Task<IActionResult> AddCategory([FromQuery] Guid id, [FromQuery] Guid categoryId)
+        public async Task<IActionResult> AddCategory([FromQuery] string id, [FromQuery] string categoryId)
         {
-            var result = await _itemService.AddCategoryAsync(id, categoryId);
+            var result = await _itemService.AddCategoryAsync(Guid.Parse(id), Guid.Parse(categoryId));
             return result ? Ok() : NotFound();
         }
 

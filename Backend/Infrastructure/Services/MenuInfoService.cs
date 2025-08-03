@@ -33,6 +33,7 @@ namespace Infrastructure.Services
         {
             return await _context.MenuInfos.Select(m => new MenuInfoDto
             {
+                Id = m.Id,
                 Name = m.Name,
                 Address = m.Address,
                 WorkHour = m.WorkHour,
