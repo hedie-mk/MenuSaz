@@ -34,7 +34,7 @@ namespace API.Controllers
         }
 
         // GET: api/item/{id}
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
             var item = await _itemService.GetByIdAsync(Guid.Parse(id));
