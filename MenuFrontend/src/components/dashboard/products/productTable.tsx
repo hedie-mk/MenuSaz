@@ -4,6 +4,8 @@ import type { GetProduct  } from "../../../features/Products/productTable/produc
 import { useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productTable/productApi";
 import DeleteModal from "../shared/DeleteModal";
 import { useState } from "react";
+import AddCategoryModal from "./AddCategoryModal";
+import { guid } from "zod/v4-mini";
 
 type TableProps = {
     isLoading : boolean,
@@ -17,21 +19,34 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
     const [changeProductStatus] = useChangeProductStatusMutation();
     const [deleteProduct] = useDeleteProductMutation();
 
-    const [modalOpen, setModalOpen] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [categoryModalOpen, setCategoryModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedName, setSelectedName] = useState<string | null>(null);
 
+  const handelAddCategory = async(id: string , name : string) =>{
+    setSelectedId(id);
+    setSelectedName(name);
+    setCategoryModalOpen(true);
+  }
+  const confirmAddCategory = () =>{
+    if (selectedId) {
+      setCategoryModalOpen(false);
+      setSelectedId(null);
+      setSelectedName(null);
+    }
+  }
 
   const handleDelete = async (id: string , name : string) => {
     setSelectedId(id);
     setSelectedName(name);
-    setModalOpen(true);
+    setDeleteModalOpen(true);
   };
 
   const confirmDelete = () => {
     if (selectedId) {
       deleteProduct(selectedId);
-      setModalOpen(false);
+      setDeleteModalOpen(false);
       setSelectedId(null);
       setSelectedName(null);
     }
@@ -60,7 +75,7 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
                 filteredItem?.map((item : GetProduct) => (
                   <tr key={item.id} className=" hover:bg-[#DDD9FF] duration-300 ease-in ">
                     <td className="px-4 py-2 text-gray-700">
-                      <img className="w-[15px] h-[15px]" src={item.photo ?? undefined}></img>
+                      <img className="w-[50px] h-[50px] aspect-square object-cover" src={item.photo ?? undefined}></img>
                     </td>
                     <td className="px-4 py-2 font-medium text-[#222]">{item.name}</td>
                     <td className="px-4 py-2 text-gray-600 truncate max-w-[250px]">{item.description}</td>
@@ -68,10 +83,13 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
                     <td className="px-4 py-2 text-[#444]">{item.categoryName}</td>
                     
                     <td className="px-4 py-2 flex gap-2 items-center">
-                      <button onClick={() => navigate(`/product/${item.id}`)} className=" p-1 rounded-full">
+                      <button onClick={() => handelAddCategory(item.id,item.name)} className=" p-1 rounded-full">
                         <PlusCircleIcon className="text-[#0C1086] hover:text-[#CAA200] duration-300 ease-in "/>
                       </button>
-                      <button onClick={() => navigate(`/edit-product/${item.id}`)} className="p-1 rounded-full">
+                      <button 
+                        onClick={() => navigate(`update/${item.id}`)}
+                        className="p-1 rounded-full"
+                      >
                         <Edit className="text-[#0C1086] hover:text-[#CAA200] duration-300 ease-in "/>
                       </button>
                       <button
@@ -95,10 +113,16 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
           </table>
 
           <DeleteModal
-            isOpen={modalOpen}
+            isOpen={deleteModalOpen}
             selectedName = {selectedName}
-            onClose={() => setModalOpen(false)}
+            onClose={() => setDeleteModalOpen(false)}
             onConfirm={confirmDelete}
+          />
+          <AddCategoryModal 
+            isOpen={categoryModalOpen}
+            selectedName={selectedName}
+            onClose={() => setCategoryModalOpen(false)}
+            onConfirm={confirmAddCategory}
           />
       </div>
     )
