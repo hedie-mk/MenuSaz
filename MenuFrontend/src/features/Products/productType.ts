@@ -6,6 +6,7 @@ export interface GetProduct {
     description : string | null,
     state : string,
     categoryName : string | null,
+    categoryId : string | null,
     photo : string | null,
 }
 
