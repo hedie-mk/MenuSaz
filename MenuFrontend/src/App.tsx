@@ -4,6 +4,8 @@ import PrivateRoute from './routes/PrivateRoute';
 import DashboardLayout from './components/layouts/DashboardLayout';
 import DashboardHome from './pages/dashboard/Home/DashboardHome';
 import Products from './pages/dashboard/products/Products';
+import CreateProduct from './pages/dashboard/products/CreateProduct';
+import UpdateProduct from './pages/dashboard/products/UpdateProduct';
 function App() {
 
   return ( 
@@ -21,7 +23,10 @@ function App() {
         >
           <Route path='home' element={<DashboardHome/>} />
           <Route path='products' element={<Products/>} />
-          {/* مسیرهای دیگر داشبورد رو هم می‌تونی اینجا اضافه کنی */}
+          <Route path='products/create' element={<CreateProduct/>}/>
+          <Route path='products/update/:id' element={<UpdateProduct/>}/>
+          
+          
         </Route>
 
         {/* پیش‌فرض: redirect به menu */}
