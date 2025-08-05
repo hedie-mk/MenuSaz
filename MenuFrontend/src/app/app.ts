@@ -13,7 +13,7 @@ import inactiveProductCardSlice from "../features/Home/inactiveProductsCard/inac
 import { inactiveCategoriesApi } from "../features/Home/inactiveCategoriesCard/inactiveCategoriesApi";
 import inactiveCategoriesCardSlice from "../features/Home/inactiveCategoriesCard/inactiveCategoriesSlice"
 import { latestProductsApi } from "../features/Home/latestProductsCard/latestProductsApi";
-import { productsApi } from "../features/Products/productTable/productApi";
+import { productsApi } from "../features/Products/productApi";
 
 const rootReducer = combineReducers({
   auth: authReducer,

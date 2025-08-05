@@ -1,11 +1,10 @@
 import {Trash2, Edit ,PlusCircleIcon} from "lucide-react";
 import { useNavigate } from "react-router-dom"
-import type { GetProduct  } from "../../../features/Products/productTable/productType";
-import { useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productTable/productApi";
+import type { GetProduct  } from "../../../features/Products/productType";
+import { useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productApi";
 import DeleteModal from "../shared/DeleteModal";
 import { useState } from "react";
 import AddCategoryModal from "./AddCategoryModal";
-import { guid } from "zod/v4-mini";
 
 type TableProps = {
     isLoading : boolean,

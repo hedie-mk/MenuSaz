@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useGetProductQuery, useUpdateProductMutation } from "../../../features/Products/productTable/productApi";
+import { useGetProductQuery, useUpdateProductMutation } from "../../../features/Products/productApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -2,7 +2,7 @@ import SearchInput from "../../../components/dashboard/shared/searchInput";
 import FilterInput from "../../../components/dashboard/shared/filterInput";
 import ProductTable from "../../../components/dashboard/products/productTable";
 import { useState } from "react";
-import { useGetProductsQuery } from "../../../features/Products/productTable/productApi";
+import { useGetProductsQuery } from "../../../features/Products/productApi";
 import { useNavigate } from "react-router-dom";
 
 const categories = [
