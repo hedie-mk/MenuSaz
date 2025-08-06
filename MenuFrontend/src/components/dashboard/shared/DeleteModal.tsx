@@ -61,7 +61,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
               />
             </svg>
             <h3 className="mb-2 text-lg font-semibold text-[#0C1086] dark:text-[#0C1086]">
-              حذف محصول
+              حذف 
             </h3>
             <p className="mb-5 text-sm text-gray-500 dark:text-gray-500">
               آیا از حذف {selectedName} مطمعن هستید؟

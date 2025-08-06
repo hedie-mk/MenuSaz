@@ -128,6 +128,6 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
             onClose={() => setCategoryModalOpen(false)}
             onConfirm={confirmAddCategory}
           />
-      </div>
+        </div>
     )
 }
