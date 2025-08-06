@@ -63,7 +63,7 @@ export const productsApi = createApi({
 
         addCategoryToProduct : builder.mutation<void , AddCategory>({
             query : (request) =>({
-                url : `item/addCategory/${request.id}/${request.categoryId}`,
+                url : `item/addCategory?id=${request.id}&categoryId=${request.categoryId}`,
                 method : "PATCH",
             }),
             invalidatesTags : ["Products"],
