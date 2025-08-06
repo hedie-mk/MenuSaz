@@ -4,29 +4,30 @@ import ProductTable from "../../../components/dashboard/products/productTable";
 import { useState } from "react";
 import { useGetProductsQuery } from "../../../features/Products/productApi";
 import { useNavigate } from "react-router-dom";
+import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
 
-const categories = [
-  { name: "همه", value: "" },
-  { name: "قهوه", value: "coffee" },
-  { name: "چای", value: "tea" },
-];
 const thead = ["عکس محصول" , "اسم" , "توضیحات" , "قیمت" , "دسته بندی" , "عملیات"]
 
 export default function Products(){
 const {data , isLoading  } = useGetProductsQuery();
-const [category, setCategory] = useState("");
+const [category, setCategory] = useState("همه");
 const [search , setSearch] = useState("");
 const navigate = useNavigate();
-
+const {data : categoriesData} = useGetCategoriesQuery();
 
 const [currentPage, setCurrentPage] = useState(1);
 const itemsPerPage = 5; // چند محصول در هر صفحه
 
 
+const categories = categoriesData?.map(c => ({
+    name: c.name,
+    id: c.id,
+}));
+
 
 var filteredProducts = undefined;
-if(category){
-    filteredProducts = data?.filter((p) => p.categoryName === category );
+if(category && category != "همه"){
+    filteredProducts = data?.filter((p) => p.categoryId === category );
 }
 else if(search){
     filteredProducts = data?.filter((p)=> p.name.includes(search))
