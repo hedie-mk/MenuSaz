@@ -1,8 +1,11 @@
 import React from "react";
-
+import { useState } from "react";
+import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
+import { useAddCategoryToProductMutation } from "../../../features/Products/productApi";
 type AddCategoryProps = {
   isOpen: boolean;
   selectedName : string | null;
+  setCategoryId : (categoryId : string) => void,
   onClose: () => void;
   onConfirm: () => void;
 };
@@ -10,9 +13,12 @@ type AddCategoryProps = {
 const AddCategoryModal: React.FC<AddCategoryProps> = ({
   isOpen,
   selectedName,
+  setCategoryId,
   onClose,
   onConfirm,
 }) => {
+  const {data} = useGetCategoriesQuery();
+
   if (!isOpen) return null;
 
   return (
@@ -55,12 +61,11 @@ const AddCategoryModal: React.FC<AddCategoryProps> = ({
             <div className="gap-4 mb-4 ">
                 <div className=" w-full">
                     <label htmlFor="category" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#0C1086]">دسته بندی</label>
-                    <select id="category" className="bg-gray-50 text-[#0C1086] text-sm rounded-lg block w-full p-2.5 dark:bg-[#D9D9D9] dark:text-[#0C1086]">
-                        <option value="">Select category</option>
-                        <option value="TV">TV/Monitors</option>
-                        <option value="PC">PC</option>
-                        <option value="GA">Gaming/Console</option>
-                        <option value="PH">Phones</option>
+                    <select onChange={(e) => setCategoryId(e.target.value)} id="category" className="bg-gray-50 text-[#0C1086] text-sm rounded-lg block w-full p-2.5 dark:bg-[#D9D9D9] dark:text-[#0C1086]">
+                        <option value="">انتخاب دسته بندی</option>
+                        {data?.map((c , index) =>(
+                          <option key={index} value={c.id}>{c.name}</option>
+                        ))}
                     </select>
                 </div>
             </div>
