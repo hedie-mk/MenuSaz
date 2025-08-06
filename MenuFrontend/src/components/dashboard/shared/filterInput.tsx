@@ -3,11 +3,11 @@ import { Filter } from "lucide-react";
 
 type Option = {
   name: string;
-  value?: string; // می‌تونی value جدا از name داشته باشی
-};
+  id: string; 
+}
 
 type FilterInputProps = {
-  options: Option[];
+  options: Option[] | undefined;
   categoryFilter: string;
   setCategoryFilter: (value: string) => void;
 };
@@ -25,8 +25,11 @@ export default function filterInput({
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
         >
-            {options.map((o, index) => (
-            <option className="bg-[#D8D4FF]" key={index} value={o.value ?? o.name}>
+            <option className="bg-[#D8D4FF]" value={"همه"}>
+                همه
+            </option>
+            {options?.map((o, index) => (
+            <option className="bg-[#D8D4FF]" key={index} value={o.id}>
                 {o.name}
             </option>
             ))}
