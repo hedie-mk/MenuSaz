@@ -25,10 +25,10 @@ namespace API.Controllers
             var result = await _mainCategoryService.GetAllAysnc();
             return Ok(result);
         }
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
         {
-            var result = await _mainCategoryService.GetByIdAsync(id);
+            var result = await _mainCategoryService.GetByIdAsync(Guid.Parse(id));
             return result != null ? Ok(result) : NotFound();
         }
 
@@ -46,24 +46,24 @@ namespace API.Controllers
             return result ? Ok() : NotFound();
         }
 
-        [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
         {
-            var result = await _mainCategoryService.DeleteAsync(id);
+            var result = await _mainCategoryService.DeleteAsync(Guid.Parse(id));
             return result ? Ok() : NotFound();
         }
 
-        [HttpPatch("ChangeStatus/{id:guid}")]
-        public async Task<IActionResult> ChangeStatus(Guid id)
+        [HttpPatch("ChangeStatus/{id}")]
+        public async Task<IActionResult> ChangeStatus(string id)
         {
-            var result = await _mainCategoryService.ChangeStatusAsync(id);
+            var result = await _mainCategoryService.ChangeStatusAsync(Guid.Parse(id));
             return result ? Ok() : NotFound();
         }
 
-        [HttpGet("getCategoryCategories/{id:guid}")]
-        public async Task<IActionResult> GetCateroryCategories(Guid id)
+        [HttpGet("getCategoryCategories/{id}")]
+        public async Task<IActionResult> GetCateroryCategories(string id)
         {
-            var categories = await _mainCategoryService.GetCateroryCategoriesAysnc(id);
+            var categories = await _mainCategoryService.GetCateroryCategoriesAysnc(Guid.Parse(id));
             return categories != null ? Ok(categories) : NotFound();
         }
 

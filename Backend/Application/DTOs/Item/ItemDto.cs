@@ -16,6 +16,7 @@ namespace Application.DTOs.Item
         public string? Description { get; set; }
         public string State { get; set; }
         public string CategoryName { get; set; } = string.Empty;
+        public Guid? CategoryId { get; set; }
         public string? Photo { get; set; }
 
     }

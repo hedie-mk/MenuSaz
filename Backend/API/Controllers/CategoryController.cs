@@ -17,17 +17,17 @@ namespace API.Controllers
             _categoryService = categoryService;
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         public async Task<IActionResult> GetAll()
         {
             var result = await _categoryService.GetAllAysnc();
             return Ok(result);
         }
 
-        [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(string id)
         {
-            var result = await _categoryService.GetByIdAsync(id);
+            var result = await _categoryService.GetByIdAsync(Guid.Parse(id));
             return result != null ? Ok(result) : NotFound();
         }
 
@@ -47,27 +47,27 @@ namespace API.Controllers
             return result ? Ok() : NotFound();
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(string id)
         {
-            var result = await _categoryService.DeleteAsync(id);
+            var result = await _categoryService.DeleteAsync(Guid.Parse(id));
             return result ? Ok() : NotFound();
         }
 
-        [HttpPatch("ChangeStatus/{id:guid}")]
+        [HttpPatch("ChangeStatus/{id}")]
         [Authorize]
-        public async Task<IActionResult> ChangeStatus(Guid id)
+        public async Task<IActionResult> ChangeStatus(string id)
         {
-            var result = await _categoryService.ChangeStatusAsync(id);
+            var result = await _categoryService.ChangeStatusAsync(Guid.Parse(id));
             return result ? Ok() : NotFound();
         }
 
-        [HttpGet("GetCategoryItems/{id:guid}")]
+        [HttpGet("GetCategoryItems/{id}")]
         [Authorize]
-        public async Task<IActionResult> GetCategoryItems(Guid id)
+        public async Task<IActionResult> GetCategoryItems(string id)
         {
-            var items = await _categoryService.GetCateroryItemsAysnc(id);
+            var items = await _categoryService.GetCateroryItemsAysnc(Guid.Parse(id));
             return items != null ? Ok(items) : NotFound();
         }
 

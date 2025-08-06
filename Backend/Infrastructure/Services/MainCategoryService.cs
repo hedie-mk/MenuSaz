@@ -81,7 +81,7 @@ namespace Infrastructure.Services
 
             if (category.State == State.diactive)
             {
-                category.DiactiveDateTime = DateTime.UtcNow;
+                category.DiactiveDateTime = DateTime.Now;
             }
             else
             {

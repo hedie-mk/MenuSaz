@@ -37,6 +37,7 @@ namespace Infrastructure.Services
                     DiscountedPrice = p.DiscountedPrice,
                     State = p.State.ToString(),
                     CategoryName = p.Category != null ? p.Category.Name : "",
+                    CategoryId = p.Category != null ? p.Category.Id : null,
                     Photo = String.IsNullOrEmpty(p.Photo)
                             ? null 
                             : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{p.Photo}")
@@ -56,6 +57,7 @@ namespace Infrastructure.Services
                     DiscountedPrice = p.DiscountedPrice,
                     State = p.State.ToString(),
                     CategoryName = p.Category != null ? p.Category.Name : "",
+                    CategoryId = p.Category != null ? p.Category.Id : null,
                     Photo = String.IsNullOrEmpty(p.Photo)
                             ? null
                             : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{p.Photo}")
@@ -80,6 +82,7 @@ namespace Infrastructure.Services
                 DiscountedPrice = item.DiscountedPrice,
                 State = item.State.ToString(),
                 CategoryName = item.Category?.Name ?? "",
+                CategoryId = item.Category != null ? item.Category.Id : null,
                 Photo = String.IsNullOrEmpty(item.Photo)
                             ? null
                             : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{item.Photo}")
