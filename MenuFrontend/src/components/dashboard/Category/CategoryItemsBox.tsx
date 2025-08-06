@@ -6,9 +6,11 @@ type CategoryItemsBox = {
 }
 
 export default function CategoryItemsBox({selectedRowName , selectedRowId} : CategoryItemsBox){
-    console.log(selectedRowId)
+    if(!selectedRowId){
+        return null;
+    }
     const {data : items , isLoading} = useGetCategoryItemsQuery(selectedRowId);
-    console.log(items)
+
 
 
     return(
