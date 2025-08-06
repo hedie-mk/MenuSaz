@@ -15,6 +15,11 @@ import inactiveCategoriesCardSlice from "../features/Home/inactiveCategoriesCard
 import { latestProductsApi } from "../features/Home/latestProductsCard/latestProductsApi";
 import { productsApi } from "../features/Products/productApi";
 import { categoryApi } from "../features/Category/categoryApi";
+import { mainCategoryApi } from "../features/MainCategory/MainCategoryApi";
+
+
+
+
 const rootReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
@@ -29,6 +34,7 @@ const rootReducer = combineReducers({
   [latestProductsApi.reducerPath] : latestProductsApi.reducer,
   [productsApi.reducerPath] : productsApi.reducer,
   [categoryApi.reducerPath] : categoryApi.reducer,
+  [mainCategoryApi.reducerPath] : mainCategoryApi.reducer,
 
 });
 
@@ -58,6 +64,7 @@ export const store = configureStore({
       latestProductsApi.middleware,
       productsApi.middleware,
       categoryApi.middleware,
+      mainCategoryApi.middleware,
     )
 });
 
