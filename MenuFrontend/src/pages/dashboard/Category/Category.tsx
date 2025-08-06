@@ -23,8 +23,8 @@ export default function Category(){
             setSearch={setSearch}
             />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-4 ">
-            <div className="sm:col-span-3">
+        <div className="grid grid-cols-1 sm:grid-cols-3 ">
+            <div className="sm:col-span-2">
                 <CategoryTable
                 isLoading={isLoading}
                 maincategories={mainCategories}
