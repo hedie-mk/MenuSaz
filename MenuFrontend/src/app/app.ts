@@ -14,7 +14,7 @@ import { inactiveCategoriesApi } from "../features/Home/inactiveCategoriesCard/i
 import inactiveCategoriesCardSlice from "../features/Home/inactiveCategoriesCard/inactiveCategoriesSlice"
 import { latestProductsApi } from "../features/Home/latestProductsCard/latestProductsApi";
 import { productsApi } from "../features/Products/productApi";
-
+import { categoryApi } from "../features/Category/categoryApi";
 const rootReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
@@ -28,6 +28,7 @@ const rootReducer = combineReducers({
   [inactiveCategoriesApi.reducerPath] : inactiveCategoriesApi.reducer,
   [latestProductsApi.reducerPath] : latestProductsApi.reducer,
   [productsApi.reducerPath] : productsApi.reducer,
+  [categoryApi.reducerPath] : categoryApi.reducer,
 
 });
 
@@ -56,6 +57,7 @@ export const store = configureStore({
       inactiveCategoriesApi.middleware,
       latestProductsApi.middleware,
       productsApi.middleware,
+      categoryApi.middleware,
     )
 });
 
