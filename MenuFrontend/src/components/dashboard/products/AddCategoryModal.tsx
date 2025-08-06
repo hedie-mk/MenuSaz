@@ -1,7 +1,5 @@
 import React from "react";
-import { useState } from "react";
 import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
-import { useAddCategoryToProductMutation } from "../../../features/Products/productApi";
 type AddCategoryProps = {
   isOpen: boolean;
   selectedName : string | null;
