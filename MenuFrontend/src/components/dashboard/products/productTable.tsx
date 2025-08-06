@@ -1,7 +1,7 @@
 import {Trash2, Edit ,PlusCircleIcon} from "lucide-react";
 import { useNavigate } from "react-router-dom"
 import type { GetProduct  } from "../../../features/Products/productType";
-import { useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productApi";
+import { useAddCategoryToProductMutation, useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productApi";
 import DeleteModal from "../shared/DeleteModal";
 import { useState } from "react";
 import AddCategoryModal from "./AddCategoryModal";
@@ -17,11 +17,13 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
     const navigate = useNavigate();
     const [changeProductStatus] = useChangeProductStatusMutation();
     const [deleteProduct] = useDeleteProductMutation();
+    const [addCategory] = useAddCategoryToProductMutation();
 
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
     const [categoryModalOpen, setCategoryModalOpen] = useState(false);
     const [selectedId, setSelectedId] = useState<string | null>(null);
     const [selectedName, setSelectedName] = useState<string | null>(null);
+    const [categoryId , setCategoryId] = useState<string>("")
 
   const handelAddCategory = async(id: string , name : string) =>{
     setSelectedId(id);
@@ -30,6 +32,8 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
   }
   const confirmAddCategory = () =>{
     if (selectedId) {
+      addCategory({id:selectedId,categoryId});
+      alert("دسته بندی با موفقیت اضافه شد");
       setCategoryModalOpen(false);
       setSelectedId(null);
       setSelectedName(null);
@@ -120,6 +124,7 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
           <AddCategoryModal 
             isOpen={categoryModalOpen}
             selectedName={selectedName}
+            setCategoryId={setCategoryId}
             onClose={() => setCategoryModalOpen(false)}
             onConfirm={confirmAddCategory}
           />
