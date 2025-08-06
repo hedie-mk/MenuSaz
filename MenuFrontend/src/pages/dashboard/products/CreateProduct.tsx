@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useCreateProductMutation } from "../../../features/Products/productApi";
 import { useState } from "react";
 import { LucideImageDown } from "lucide-react";
-
+import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
 const productSchema = z.object({
   name: z.string().min(1, "نام محصول الزامی است"),
   price: z
@@ -27,6 +27,7 @@ export default function CreateProduct() {
   const navigate = useNavigate();
   const [createProduct, { isLoading }] = useCreateProductMutation();
   const [photo, setPhoto] = useState<File | null>(null);
+  const {data} = useGetCategoriesQuery()
 
   const {
     register,
@@ -36,11 +37,10 @@ export default function CreateProduct() {
     resolver: zodResolver(productSchema),
   });
 
-  const categories = [
-    { id: "1", name: "دسته ۱" },
-    { id: "2", name: "دسته ۲" },
-    { id: "3", name: "دسته ۳" },
-  ];
+    const categories = data?.map(c => ({
+    name: c.name,
+    id: c.id,
+    }));
 
   const onSubmit = async (data: ProductFormData) => {
     const formData = new FormData();
@@ -124,7 +124,7 @@ export default function CreateProduct() {
             className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-3 text-gray-600"
           >
             <option value="">انتخاب دسته</option>
-            {categories.map((cat) => (
+            {categories?.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.name}
               </option>
