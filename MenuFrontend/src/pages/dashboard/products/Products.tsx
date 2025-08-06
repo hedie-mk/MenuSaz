@@ -94,7 +94,7 @@ return(
             <div className="col-span-1 flex mb-4 justify-end items-end">
                 <button
                     onClick={() => navigate("create")}
-                    className=" lg:w-[230px] w-[150px] bg-yellow-400 hover:bg-yellow-500  text-white font-bold py-2 px-6 rounded-xl text-lg shadow "
+                    className="lg:w-[230px] w-[150px] bg-yellow-400 hover:bg-yellow-500  text-white font-bold py-2 px-6 rounded-xl text-lg shadow "
                 >
                     ساخت محصول
                 </button>
