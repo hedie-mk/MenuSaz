@@ -67,7 +67,7 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
                   </button>
                 )}
                 <button
-                  onClick={() => onDelete(item.id)}
+                  onClick={() => onDelete(item.name)}
                   className="text-red-600 hover:text-red-800"
                 >
                   <Trash2 className="text-[#0C1086] hover:text-red-700" />

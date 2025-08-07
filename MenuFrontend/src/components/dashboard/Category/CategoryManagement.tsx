@@ -3,6 +3,7 @@ import CategoryTable from './CatgeoryTable';
 import Pagination from './Pagination';
 import CategoryModal from './CategoryModal';
 import MainCategoryModal from './MainCategoryModal';
+import DeleteModal from '../shared/DeleteModal';
 import {
      useGetCategoriesQuery , 
      useChangeCategoryStatusMutation,
@@ -30,10 +31,13 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
 
   const [page, setPage] = useState(1);
   const [openModal, setOpenModal] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editData, setEditData] = useState({
     mainCategory: { id: null, name: null },
     subCategory: { id: null, name: null, parentCategoryId: null },
   });
+  const [selectedName, setSelectedName] = useState<string | null>(null);
+
 
   const mainCategoriesQuery = useGetMainCategoriesQuery();
   const categoriesQuery = useGetCategoriesQuery();
@@ -60,12 +64,16 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
     return Math.ceil((length ?? 0) / pageSize);
   }, [categoryFilter, mainCategoriesQuery.data, categoriesQuery.data]);
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm('آیا از حذف اطمینان دارید؟')) {
-      categoryFilter === '1' ? await deleteMainCategory(id) : await deleteCategory(id);
-    }
+  const confirmDelete = async () => {
+    categoryFilter === '1' ? await deleteMainCategory(selectedRowId) : await deleteCategory(selectedRowId);
+    setSelectedRowId("")
+    setDeleteModalOpen(false)
+    setSelectedName(null)
   };
-
+  const handleDelete = async(name : string) => {
+    setDeleteModalOpen(true);
+    setSelectedName(name);
+  }
   const handleEdit = (item: any) => {
     if (categoryFilter === '1') {
       setEditData((prev) => ({ ...prev, mainCategory: item }));
@@ -102,16 +110,21 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   
   return(
     <div className="px-4 py-6 space-y-4">
-      <CategoryTable
-        data={currentData}
-        type={categoryFilter}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        statusChange={(id:string) => handleStatuschange(id)}
-        setSelectedRowName={setSelectedRowName}
-        setSelectedRowId={setSelectedRowId}
-      />
-
+        <CategoryTable
+            data={currentData}
+            type={categoryFilter}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            statusChange={(id:string) => handleStatuschange(id)}
+            setSelectedRowName={setSelectedRowName}
+            setSelectedRowId={setSelectedRowId}
+        />
+        <DeleteModal
+          isOpen={deleteModalOpen}
+          selectedName={selectedName}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={confirmDelete}
+        />
       <Pagination currentPage={page} totalPages={totalPages} onChangefunc={setPage} />
 
       {openModal && categoryFilter === '1' ? (
