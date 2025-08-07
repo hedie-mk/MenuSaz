@@ -1,6 +1,5 @@
 import { createApi , fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { GetCategory , PostCategory , GetCategoryItems } from "./categoryType";
-import type { PostProduct } from "../Products/productType";
 
 
 export const categoryApi = createApi({
@@ -27,7 +26,7 @@ export const categoryApi = createApi({
             providesTags : ["Categories"]
         }),
 
-        createCategory : builder.mutation<void,PostCategory>({
+        createCategory : builder.mutation<void,Partial<PostCategory>>({
             query : (newProduct) => ({
                 url: "category",
                 method: "POST",
@@ -36,7 +35,7 @@ export const categoryApi = createApi({
             invalidatesTags : ["Categories"],
         }),
 
-        updateCategory : builder.mutation<void,Partial<PostProduct>>({
+        updateCategory : builder.mutation<void,PostCategory>({
             query : (category) => ({
                 url :"category",
                 method : "PUT",

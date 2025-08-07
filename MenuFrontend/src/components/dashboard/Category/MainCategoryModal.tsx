@@ -1,34 +1,40 @@
-import { useState } from "react";
-import { useGetMainCategoriesQuery } from "../../../features/MainCategory/MainCategoryApi";
+import { useState , useEffect} from "react";
 
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (mainCategoryId: string, name: string) => void;
+  onConfirm: (item : any) => void;
+  name : string | null
 }
 
-export default function CreateCategoryModal({
+export default function MainCategoryModal({
   isOpen,
   onClose,
   onConfirm,
+  name
 }: ModalProps) {
 
-  const [mainCategoryId, setMainCategoryId] = useState<string | null>(null);
-  const [name, setName] = useState<string | null>(null);
-  const { data: categories } = useGetMainCategoriesQuery();
 
-  if (!isOpen) return null;
+  const [Name, setName] = useState<string | null>(null);
+
+  
+
+
+  useEffect(() => {
+    setName(name ?? null);
+  }, [name]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (mainCategoryId && name) {
-      onConfirm(mainCategoryId, name);
-      setMainCategoryId(null)
+    if (Name) {
+      onConfirm({
+        name : Name
+      });
       setName(null)
     }
   };
-
+  if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-55 flex items-center justify-center backdrop-blur-sm bg-black/10">
       <div className="relative p-4 w-full max-w-md max-h-full">
@@ -60,12 +66,9 @@ export default function CreateCategoryModal({
             
             <div className="flex items-center justify-between p-4 md:p-5 mb-3 border-b rounded-t dark:border-[#0C1086] border-gray-200">
               <h2 className="text-xl font-semibold text-[#0C1086] ">
-                ساخت دسته بندی
+                ساخت دسته بندی اصلی
               </h2>
             </div>
-
-
-            
             <form onSubmit={handleSubmit} className="space-y-4 p-3 md:p-4">
               <div>
                 <label htmlFor="name" className="block mb-1 text-sm font-medium text-[#0C1086]">
@@ -74,32 +77,12 @@ export default function CreateCategoryModal({
                 <input
                   id="name"
                   type="text"
-                  value={name ?? ""}
+                  value={Name ?? ""}
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="نام دسته بندی را وارد کنید"
                   className="w-full px-3 py-2 bg-[#D9D9D9] rounded-lg text-sm"
                 />
-              </div>
-
-              <div>
-                <label htmlFor="category" className="block mb-1 text-sm font-medium text-[#0C1086]">
-                  دسته بندی اصلی
-                </label>
-                <select
-                  id="category"
-                  value={mainCategoryId ?? ""}
-                  onChange={(e) => setMainCategoryId(e.target.value)}
-                  required
-                  className="w-full px-3 py-2  rounded-lg text-sm bg-[#D9D9D9] text-[#0C1086]"
-                >
-                  <option value="">انتخاب دسته بندی اصلی</option>
-                  {categories?.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
               </div>
 
               <div className="flex justify-center">

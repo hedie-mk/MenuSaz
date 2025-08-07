@@ -13,7 +13,7 @@ const DashboardLayout = () => {
         { label: "اکانت", to: "/dashboard/accounts" },
     ];
   return (
-    <div className="min-h-screen w-screen items-center justify-center bg-gradient-to-br  from-blue-100 via-purple-100 to-pink-100" >
+    <div className="h-screen w-screen items-center justify-center bg-gradient-to-br  from-blue-100 via-purple-100 to-pink-100" >
         <header className="flex items-center justify-center pt-3">
             <nav className="bg-[#E7E5FA] shadow-sm w-[1120px] h-[50px] rounded-full grid grid-cols-5 justify-items-center  gap-2 font-semibold text-gray-700 text-base">
                 

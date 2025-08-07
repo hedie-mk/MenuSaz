@@ -24,7 +24,7 @@ export const mainCategoryApi = createApi({
             providesTags : ["MainCategories"]
         }),
 
-        createMainCategory : builder.mutation<void,PostMainCategory>({
+        createMainCategory : builder.mutation<void,Partial<PostMainCategory>>({
             query : (newProduct) => ({
                 url: "MainCategory",
                 method: "POST",

@@ -1,27 +1,43 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
+import { useGetMainCategoriesQuery } from "../../../features/MainCategory/MainCategoryApi";
 
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (name: string) => void;
+  onConfirm: (item : any) => void;
+  name : string | null,
+  mainCategoryId : string | null,
 }
 
-export default function CreateMainCategoryModal({
+export default function CategoryModal({
   isOpen,
   onClose,
   onConfirm,
+  name,
+  mainCategoryId
 }: ModalProps) {
 
+  const [MainCategoryId, setMainCategoryId] = useState<string | null>();
+  const [Name, setName] = useState<string | null>();
+  const { data: categories } = useGetMainCategoriesQuery();
+ 
 
-  const [name, setName] = useState<string | null>(null);
+  useEffect(() => {
+    setName(name ?? null);
+    setMainCategoryId(mainCategoryId ?? null);
+  }, [name, mainCategoryId]);
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (name) {
-      onConfirm(name);
+    if (MainCategoryId && Name) {
+      onConfirm({
+        name : Name,
+        parentCategoryId : MainCategoryId
+      });
+      setMainCategoryId(null)
       setName(null)
     }
   };
@@ -57,7 +73,7 @@ export default function CreateMainCategoryModal({
             
             <div className="flex items-center justify-between p-4 md:p-5 mb-3 border-b rounded-t dark:border-[#0C1086] border-gray-200">
               <h2 className="text-xl font-semibold text-[#0C1086] ">
-                ساخت دسته بندی اصلی
+                ساخت دسته بندی
               </h2>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4 p-3 md:p-4">
@@ -68,12 +84,32 @@ export default function CreateMainCategoryModal({
                 <input
                   id="name"
                   type="text"
-                  value={name ?? ""}
+                  value={Name ?? ""}
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="نام دسته بندی را وارد کنید"
                   className="w-full px-3 py-2 bg-[#D9D9D9] rounded-lg text-sm"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="category" className="block mb-1 text-sm font-medium text-[#0C1086]">
+                  دسته بندی اصلی
+                </label>
+                <select
+                  id="category"
+                  value={MainCategoryId ?? ""}
+                  onChange={(e) => setMainCategoryId(e.target.value)}
+                  required
+                  className="w-full px-3 py-2  rounded-lg text-sm bg-[#D9D9D9] text-[#0C1086]"
+                >
+                  <option value="">انتخاب دسته بندی اصلی</option>
+                  {categories?.map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="flex justify-center">

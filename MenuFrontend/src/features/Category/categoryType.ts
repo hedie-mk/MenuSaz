@@ -1,16 +1,17 @@
 export interface GetCategory {
-    id : string,
-    name : string,
-    state : string ,
-    parentCategoryId : string ,
-    parentCategoryName : string,
-    items : string[] | null,
-    itemsLength : number | null,
+    id : string
+    name : string
+    state : string 
+    parentCategoryId : string 
+    parentCategoryName : string
+    items : string[] | null
+    itemsLength : number | null
 }
 
 export interface PostCategory {
-    name : string,
-    parentCategoryId : string ,
+    id : string | null;
+    name : string;
+    parentCategoryId : string | null ;
 }
 
 export interface GetCategoryItems {

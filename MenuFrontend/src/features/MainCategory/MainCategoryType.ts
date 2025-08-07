@@ -7,7 +7,8 @@ export interface GetMainCategory {
 }
 
 export interface PostMainCategory {
-    name : string,
+    id: string | null;
+    name : string;
 }
 
 export interface GetCategoryCategories {

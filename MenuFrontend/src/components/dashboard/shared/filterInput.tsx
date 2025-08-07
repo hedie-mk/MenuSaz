@@ -11,7 +11,7 @@ type FilterInputProps = {
   categoryFilter: string;
   setCategoryFilter: (value: string) => void;
 };
-export default function filterInput({
+export default function FilterInput({
                                     options,
                                     categoryFilter,
                                     setCategoryFilter,

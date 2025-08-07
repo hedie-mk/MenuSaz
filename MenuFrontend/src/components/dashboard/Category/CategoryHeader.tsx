@@ -1,50 +1,36 @@
 
 import SearchInput from "../shared/searchInput"
-import { useState } from "react";
-import CreateCategoryModal from "./CreateCategoryModal";
-import CreateMainCategoryModal from "./CreateMainCategoryModal";
-import { useCreateCategoryMutation } from "../../../features/Category/categoryApi";
-import { useCreateMainCategoryMutation } from "../../../features/MainCategory/MainCategoryApi";
+import CategoryFilterInput from "./CategoryFilterInput";
+
 
 type CategoryHeaderProps = {
     search : string,
     setSearch : (value : string) => void,
+    categoryFilter : '1' | '2' ,
+    setCategoryFilter : (value :'1' | '2') => void,
+    setCategoryModalOpen : (value : boolean) => void,
+    setMainCategoryModalOpen : (value : boolean) => void,
 }
 
 
 export default function CategoryHeader({
     search,
-    setSearch
+    setSearch,
+    categoryFilter,
+    setCategoryFilter,
+    setCategoryModalOpen,
+    setMainCategoryModalOpen
 } : CategoryHeaderProps){
-
-    const [categoryModalOpen, setCategoryModalOpen] = useState(false);
-    const [mainCategoryModalOpen, setMainCategoryModalOpen] = useState(false);
-
-    const [createCategory] = useCreateCategoryMutation();
-    const [createMainCategory] = useCreateMainCategoryMutation();
-
-    const handelSubmitCategory = (mainCategoryId : string , name : string) => {
-        createCategory({
-            name : name,
-            parentCategoryId : mainCategoryId
-        })
-        setCategoryModalOpen(false);
-    }
-
-    const handelSubmitMainCategory = (name : string) => {
-        createMainCategory({
-            name : name
-        })
-        setMainCategoryModalOpen(false);
-    }
-
-
     return(
         <>
             <div className="flex justify-between col-span-3 items-center ">
                 <div className="flex gap-4 items-center ">
                     <SearchInput search={search}
                                 setSearch={setSearch}
+                    />
+                    <CategoryFilterInput
+                    categoryFilter={categoryFilter}
+                    setCategoryFilter={(value : '1' | '2') => setCategoryFilter(value)}
                     />
                 </div>
             </div>
@@ -63,16 +49,7 @@ export default function CategoryHeader({
                         ساخت دسته بندی
                     </button>
                 </div>
-                <CreateCategoryModal
-                isOpen={categoryModalOpen}
-                onClose={() => setCategoryModalOpen(false)}
-                onConfirm={(mainCategoryId , name) => handelSubmitCategory(mainCategoryId,name)}
-                />
-                <CreateMainCategoryModal
-                isOpen={mainCategoryModalOpen}
-                onClose={() => setMainCategoryModalOpen(false)}
-                onConfirm={(name) => handelSubmitMainCategory(name)}
-                />
+                
             </div>
                   
         </>
