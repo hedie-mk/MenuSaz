@@ -10,7 +10,7 @@ namespace Application.Interfaces.Services
 {
     public interface IMenuInfoService
     {
-        Task<List<MenuInfoDto>> GetMenuInfoAsync();
+        Task<MenuInfoDto?> GetMenuInfoAsync();
         Task<Guid> CreateMenuInfoAsync(MenuInfoCreateDto dto);
         Task<bool> UpdateMenuInfoAsync(MenuInfoUpdateDto dto);
     }

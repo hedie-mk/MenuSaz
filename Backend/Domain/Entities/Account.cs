@@ -10,10 +10,14 @@ namespace Domain.Entities
 {
     public class Account : BaseEntity
     {
-        public string UserName { get; set; } = string.Empty;
-        public required string Email { get; set; }
-        public string Phone { get; set; } = string.Empty ;
+        public required string UserName { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; } 
         public required string Password { get; set; }
         public UserRole Role { get; set; }
+        public Account()
+        {
+
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace Application.DTOs.Category
         public string Name { get; set; } = string.Empty;
         public string State { get; set; } = string.Empty;
         public Guid ParentCategoryId { get; set; }
+        public string ParentCategoryName { get; set; }
         public List<string>? Items { get; set; } = new List<string>();
         public int ItemsLength { get; set; }
     }

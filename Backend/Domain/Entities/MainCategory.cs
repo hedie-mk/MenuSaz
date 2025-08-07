@@ -11,7 +11,12 @@ namespace Domain.Entities
     public class MainCategory : BaseEntity
     {
         public required string Name { get; set; }
-        public required State State { get; set; } = State.active;
-        public ICollection<Category>? Categories { get; set; } = new List<Category>();
+        public State State { get; set; } 
+        public DateTime? DiactiveDateTime { get; set; }
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
+        public MainCategory()
+        {
+            State = State.active;
+        }
     }
 }

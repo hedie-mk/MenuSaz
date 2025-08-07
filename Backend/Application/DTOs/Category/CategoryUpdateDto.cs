@@ -8,9 +8,8 @@ namespace Application.DTOs.Category
 {
     public class CategoryUpdateDto
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string State { get; set; } = string.Empty;
-        public Guid ParentCategoryId { get; set; }
+        public required Guid Id { get; set; }
+        public required string Name { get; set; } 
+        public required Guid ParentCategoryId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,6 @@ namespace Application.DTOs.MenuInfo
         public string? PhoneNumber { get; set; }
         public string? SiteDescription { get; set; }
         public string? SocialMedia { get; set; }
-        public string Logo { get; set; } = string.Empty;
+        public IFormFile? Logo { get; set; } 
     }
 }

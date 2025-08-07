@@ -10,14 +10,19 @@ namespace Domain.Entities
 {
     public class Item : BaseEntity
     {
-        public required string Name { get; set; } = string.Empty;
+        public required string Name { get; set; } 
         public string? Description { get; set; }
         public required decimal Price { get; set; }
         public decimal? DiscountedPrice { get; set; }
         public string? Photo { get; set; }
         public required State State { get; set; } = State.active;
-        public required Category Category { get; set; }
-        public required Guid CategoryId { get; set; }
+        public DateTime? DiactiveDateTime { get; set; }
+        public Category? Category { get; set; }
+        public Guid? CategoryId { get; set; }
+        public Item()
+        {
+            
+        }
 
     }
 }

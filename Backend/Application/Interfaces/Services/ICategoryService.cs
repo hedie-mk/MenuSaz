@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.Category;
-using Application.DTOs.product;
+using Application.DTOs.Item;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,14 @@ namespace Application.Interfaces.Services
 {
     public interface ICategoryService
     {
-        Task<List<CategoryDto>> GetAllAysnc();
-        Task<List<CategoryDto>> GetByIndexAsync(int index);
+        Task<List<CategoryDto>?> GetAllAysnc();
         Task<CategoryDto?> GetByIdAsync(Guid id);
-        Task<CategoryItemsDto> GetCateroryItemsAysnc(Guid id);
+        Task<CategoryItemsDto?> GetCateroryItemsAysnc(Guid id);
         Task<bool> ChangeStatusAsync(Guid id);
         Task<Guid> CreateAsync(CategoryCreateDto dto);
         Task<bool> UpdateAsync(CategoryUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
+        Task<List<DiactiveCategoryDto>?> GetDiactiveCategoryAsync();
+
     }
 }
