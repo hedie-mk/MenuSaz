@@ -7,6 +7,7 @@ import Products from './pages/dashboard/products/Products';
 import CreateProduct from './pages/dashboard/products/CreateProduct';
 import UpdateProduct from './pages/dashboard/products/UpdateProduct';
 import Category from './pages/dashboard/Category/Category';
+import MenuInfo from './pages/dashboard/MenuInfo/ManuInfo';
 function App() {
 
   return ( 
@@ -27,6 +28,7 @@ function App() {
           <Route path='products/create' element={<CreateProduct/>}/>
           <Route path='products/update/:id' element={<UpdateProduct/>}/>
           <Route path='categories' element={<Category/>}/>
+          <Route path='menuInfo' element={<MenuInfo/>}/>
           
           
         </Route>
