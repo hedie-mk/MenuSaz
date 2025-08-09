@@ -1,25 +1,7 @@
-
-import { useGetMenuStatusQuery } from "../../../features/Home/menuStatusCard/menuStatusApi"
-import { useEffect } from "react";
-import { useAppDispatch } from "../../../app/hooks";
-import { setMenuStatusCard , setLoading , setErorr } from "../../../features/Home/menuStatusCard/menuStatusSlice";
-
-
+import { useGetMenuStatusQuery } from "../../../features/Category/categoryApi";
 
 export default function MenuStatusCard() {
    const { data, isLoading, error } = useGetMenuStatusQuery();
-   const dispatch = useAppDispatch();
-
-   useEffect(() => {
-      dispatch(setLoading(isLoading));
-      if (error) {
-         dispatch(setErorr("خطا در دریافت اطلاعات"));
-      }
-      if (data) {
-         dispatch(setMenuStatusCard(data));
-      }
-   }, [data, error, dispatch]);
-
 
    if (isLoading) return <div>در حال بارگذاری...</div>;
 

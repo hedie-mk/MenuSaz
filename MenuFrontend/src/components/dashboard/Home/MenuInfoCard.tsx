@@ -1,24 +1,7 @@
-import { useAppDispatch } from "../../../app/hooks"
-import { setMenuInfoCard , setLoading , setErorr } from "../../../features/Home/menuInfoCard/menuInfoSlice"
-import { useGetMenuInfoQuery } from "../../../features/Home/menuInfoCard/menuInfoApi"
-import { useEffect } from "react";
-
-
+import { useGetMenuInfoQuery } from "../../../features/MenuInfo/MenuInfoApi";
 
 export default function MenuInfoCard(){
     const { data , isLoading , error} = useGetMenuInfoQuery();
-    const dispatch = useAppDispatch();
-    console.log(data);
-    useEffect(() => {
-        dispatch(setLoading(true));
-        if (error) {
-            dispatch(setErorr("خطا در دریافت اطلاعات"));
-        }
-        if (data) {
-            dispatch(setMenuInfoCard(data));
-        }
-    },[data, isLoading, error, dispatch]);
-
     
    if (isLoading) return <div>در حال بارگذاری...</div>;
 
@@ -30,9 +13,9 @@ return(
       <div className="grid grid-cols-3">
         
         <div className="col-span-2 text-sm">
-            <p className="text-start">نام کافه : {data?.name}</p>
-            <p className="text-start">آدرس : {data?.address}</p>
-            <p className="text-start">ساعت کاری : {data?.workHour}</p>
+            <p className="text-start pb-2">نام کافه : {data?.name}</p>
+            <p className="text-start pb-2">آدرس : {data?.address}</p>
+            <p className="text-start pb-2">ساعت کاری : {data?.workHour}</p>
             <p className="text-start">شماره تماس : {data?.phoneNumber}</p>
         </div>
         <div className="col-span-1">
