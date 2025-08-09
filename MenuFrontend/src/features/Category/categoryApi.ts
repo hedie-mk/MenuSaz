@@ -1,5 +1,5 @@
 import { createApi , fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { GetCategory , PostCategory , GetCategoryItems } from "./categoryType";
+import type { GetCategory , PostCategory , GetCategoryItems ,inactiveCategory , MenuStatusCard } from "./categoryType";
 
 
 export const categoryApi = createApi({
@@ -63,6 +63,16 @@ export const categoryApi = createApi({
         getCategoryItems : builder.query<GetCategoryItems,string>({
             query : (id) => `category/GetCategoryItems/${id}`,
             providesTags : ["Categories"]
+        }),
+
+        getInactiveCategories : builder.query<inactiveCategory[],void>({
+            query: () => 'Dashboard/DiactiveCategories',
+            providesTags: ["Categories"],
+        }),
+
+        getMenuStatus: builder.query<MenuStatusCard[], void>({
+            query: () => 'Dashboard/Menu',
+            providesTags: ["Categories"],
         })
     })
 });
@@ -75,5 +85,7 @@ export const {
     useUpdateCategoryMutation,
     useDeleteCategoryMutation,
     useChangeCategoryStatusMutation,
-    useGetCategoryItemsQuery
+    useGetInactiveCategoriesQuery,
+    useGetCategoryItemsQuery,
+    useGetMenuStatusQuery
 } = categoryApi;

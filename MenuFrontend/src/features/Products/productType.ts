@@ -31,3 +31,14 @@ export interface AddCategory {
     id : string,
     categoryId : string,
 }
+export interface inactiveProduct {
+    id : string,
+    name : string,
+    diactiveDateTime : Date
+}
+export interface latestProduct {
+    id : string ,
+    name : string,
+    description : string | null ,
+    createdAt : string
+}

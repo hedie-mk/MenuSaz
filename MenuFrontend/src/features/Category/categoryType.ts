@@ -18,3 +18,12 @@ export interface GetCategoryItems {
     name : string ,
     itemsName : string[]
 }
+export interface inactiveCategory {
+    id : string,
+    name : string,
+    diactiveDateTime : Date
+}
+export interface MenuStatusCard {
+  name: string;
+  itemsLength: number;
+}

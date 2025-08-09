@@ -1,5 +1,5 @@
 
-import type { GetProduct , PostProduct , UpdateProduct , AddCategory } from "./productType";
+import type { GetProduct , PostProduct , UpdateProduct , AddCategory , inactiveProduct , latestProduct} from "./productType";
 import { createApi , fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productsApi = createApi({
@@ -67,7 +67,18 @@ export const productsApi = createApi({
                 method : "PATCH",
             }),
             invalidatesTags : ["Products"],
-        })
+        }),
+
+        getInactiveProducts : builder.query<inactiveProduct[],void>({
+            query: () => 'Dashboard/DeactiveItems',
+            providesTags: ["Products"],
+        }),
+
+        getLatestProduct : builder.query<latestProduct[] , void>({
+            query : () => 'dashboard/latestItems/4',
+            providesTags : ["Products"]
+        }),
+        
     })
 })
 
@@ -79,6 +90,7 @@ export const {
     useUpdateProductMutation,
     useDeleteProductMutation,
     useChangeProductStatusMutation,
-    useAddCategoryToProductMutation
-
+    useAddCategoryToProductMutation,
+    useGetInactiveProductsQuery,
+    useGetLatestProductQuery
 } = productsApi;
