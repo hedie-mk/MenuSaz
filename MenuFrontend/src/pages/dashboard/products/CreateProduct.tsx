@@ -65,9 +65,9 @@ export default function CreateProduct() {
     <div className="relative min-h-35 flex flex-wrap justify-center items-center mt-7 px-4 py-4 rounded-xl border-2 border-yellow-400">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-4xl grid grid-cols-2 gap-2"
+        className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-2"
       >
-        <div>
+        <div className="sm:col-span-1">
           <h2 className="text-2xl font-bold text-[#CAA200] mb-3">ساخت محصول</h2>
 
           <label className="block text-sm font-medium text-gray-400 pb-2">
@@ -132,7 +132,7 @@ export default function CreateProduct() {
           </select>
         </div>
 
-        <div className="px-4">
+        <div className="px-4 sm:col-span-1">
           <label className="block text-sm font-medium text-gray-400 mb-2 mt-10">
             عکس محصول
           </label>
