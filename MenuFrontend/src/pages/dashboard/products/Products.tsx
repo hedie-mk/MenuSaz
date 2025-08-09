@@ -1,81 +1,66 @@
 import SearchInput from "../../../components/dashboard/shared/searchInput";
 import FilterInput from "../../../components/dashboard/shared/filterInput";
 import ProductTable from "../../../components/dashboard/products/productTable";
-import { useState } from "react";
+import { useState , useMemo } from "react";
 import { useGetProductsQuery } from "../../../features/Products/productApi";
 import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
+import Pagination from "../../../components/dashboard/shared/Pagination";
 
 const thead = ["عکس محصول" , "اسم" , "توضیحات" , "قیمت" , "دسته بندی" , "عملیات"]
 
 export default function Products(){
-const {data , isLoading  } = useGetProductsQuery();
-const [category, setCategory] = useState("همه");
-const [search , setSearch] = useState("");
-const navigate = useNavigate();
-const {data : categoriesData} = useGetCategoriesQuery();
+  const navigate = useNavigate();
 
-const [currentPage, setCurrentPage] = useState(1);
-const itemsPerPage = 5; // چند محصول در هر صفحه
+  // Queries
+  const { data: productsData = [], isLoading } = useGetProductsQuery();
+  const { data: categoriesData = [] } = useGetCategoriesQuery();
+
+  // States
+  const [category, setCategory] = useState("همه");
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Constants
+  const itemsPerPage = 5;
+
+  // Category Options
+  const categories = useMemo(
+    () => categoriesData.map((c) => ({ name: c.name, id: c.id })),
+    [categoriesData]
+  );
 
 
-const categories = categoriesData?.map(c => ({
-    name: c.name,
-    id: c.id,
-}));
 
+    // Filtered Products
+  const filteredProducts = useMemo(() => {
+    let result = [...productsData];
 
-var filteredProducts = undefined;
-if(category && category != "همه"){
-    filteredProducts = data?.filter((p) => p.categoryId === category );
-}
-else if(search){
-    filteredProducts = data?.filter((p)=> p.name.includes(search))
-}
-else{
-    filteredProducts = data;
-}
-// محاسبه محصولات این صفحه
-const indexOfLastItem = currentPage * itemsPerPage;
-const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
-
-// تغییر صفحه
-var totalPages = 0;
-if(data) totalPages = Math.ceil(data?.length / itemsPerPage);
-const getPageNumbers = () => {
-    const pages = [];
-    const maxVisible = 5;
-
-    if (totalPages <= maxVisible) {
-      for (let i = 1; i <= totalPages; i++) pages.push(i);
-    } else {
-      if (currentPage <= 3) {
-        pages.push(1, 2, 3, 4, 5, "...", totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pages.push(
-          1,
-          "...",
-          totalPages - 4,
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages
-        );
-      } else {
-        pages.push(
-          1,
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages
-        );
-      }
+    if (category && category !== "همه") {
+      result = result.filter((p) => p.categoryId === category);
     }
-    return pages;
-  };
+
+    if (search.trim()) {
+      result = result.filter((p) =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+
+    return result;
+  }, [category, search, productsData]);
+
+  // Paginated Products
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredProducts, currentPage]);
+
+  // Total Pages
+  const totalPages = useMemo(
+    () => Math.ceil(filteredProducts.length / itemsPerPage),
+    [filteredProducts.length]
+  );
+
 return(
     <div className="w-[1120px] p-5.5 ">
         <div className="grid grid-cols-3">
@@ -87,7 +72,7 @@ return(
 
                     <FilterInput options={categories}
                                 categoryFilter={category}
-                                setCategoryFilter={setCategory}
+                                setCategoryFilter={(id : string) => setCategory(id)}
                     />
                 </div>
             </div>
@@ -101,33 +86,14 @@ return(
             </div>
         </div>
         <div>
-            <ProductTable isLoading={isLoading} filteredItem={currentItems} tHead={thead}/>
+            <ProductTable isLoading={isLoading} filteredItem={paginatedProducts} tHead={thead}/>
             
+            <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onChangefunc={setCurrentPage}
+            />
             
-            <div className="flex justify-center mt-2">
-                <div className="flex items-center gap-2 bg-[#D8D4FF] rounded-full px-4 py-1">
-                {getPageNumbers().map((num, idx) =>
-                    num === "..." ? (
-                    <span key={idx} className="px-3 text-purple-800">
-                        ...
-                    </span>
-                    ) : (
-                    <button
-                        key={idx}
-                        onClick={() => setCurrentPage(num as number)}
-                        className={`w-7 h-7 duration-400 ease-in-out  rounded-full flex items-center justify-center text-sm font-medium transition 
-                        ${
-                            currentPage === num
-                            ? "bg-[#0C1086] text-white hover:cursor-pointer"
-                            : "text-[#0C1086] hover:cursor-pointer"
-                        }`}
-                    >
-                        {num}
-                    </button>
-                    )
-                )}
-                </div>
-            </div>
         </div>
     </div>
 )
