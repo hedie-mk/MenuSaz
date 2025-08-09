@@ -20,7 +20,7 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
           <tr className="text-sm">
             <th scope="col" className="px-4 py-3 text-center">نام</th>
             {type === '2' && <th scope="col" className="px-4 py-3 text-center">دسته‌بندی والد</th>}
-            <th scope="col" className="px-4 py-3 text-center">تعداد</th>
+            <th scope="col" className="px-4 py-3 text-center">تعداد زیر مجموعه</th>
             <th scope="col" className="px-4 py-3 text-center">عملیات</th>
           </tr>
         </thead>
