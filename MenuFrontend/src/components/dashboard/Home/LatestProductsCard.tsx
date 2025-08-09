@@ -1,4 +1,4 @@
-import { useGetLatestProductQuery } from "../../../features/Home/latestProductsCard/latestProductsApi";
+import { useGetLatestProductQuery } from "../../../features/Products/productApi";
 
 export default function LatestAddedProducts() {
   const { data, isLoading, error } = useGetLatestProductQuery();
