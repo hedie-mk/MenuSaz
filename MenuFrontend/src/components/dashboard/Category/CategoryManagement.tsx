@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import CategoryTable from './CatgeoryTable';
-import Pagination from './Pagination';
+import Pagination from '../shared/Pagination';
 import CategoryModal from './CategoryModal';
 import MainCategoryModal from './MainCategoryModal';
 import DeleteModal from '../shared/DeleteModal';
@@ -47,7 +47,7 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   const [changeMainCategoryStatus] = useChangeMainCategoryStatusMutation();
   const [updateCategory] = useUpdateCategoryMutation();
   const [updateMainCategory] = useUpdateMainCategoryMutation();
-  const pageSize = 7;  
+  const pageSize = 8;  
 
 
   const currentData = useMemo(() => {
@@ -109,7 +109,7 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   }
   
   return(
-    <div className="px-4 py-6 space-y-4">
+    <div className="px-4 py-3 space-y-4">
         <CategoryTable
             data={currentData}
             type={categoryFilter}
