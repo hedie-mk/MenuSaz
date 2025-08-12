@@ -31,7 +31,7 @@ export const accountApi = createApi({
             }),
             invalidatesTags : ["account"]
         }),
-        updateAccount : builder.mutation<UpdateAccount,void>({
+        updateAccount : builder.mutation<void,UpdateAccount>({
             query : (account) => ({
                 url : 'account/updateAccount',
                 method : 'PUT',
@@ -39,17 +39,17 @@ export const accountApi = createApi({
             }),
             invalidatesTags : ["account"]
         }),
-        deleteAccount : builder.mutation<string,void>({
+        deleteAccount : builder.mutation<void,string>({
             query : (id) => ({
                 url : `account/deleteAccount/${id}`,
                 method : 'DELETE'
             }),
             invalidatesTags : ['account']
         }),
-        changePassword : builder.mutation<ChangePassword,void>({
+        changePassword : builder.mutation<void,ChangePassword>({
             query : (data) => ({
                 url : 'account/changePassword',
-                method : 'PATCH',
+                method : 'PUT',
                 body : data
             }),
             invalidatesTags : ['account']
