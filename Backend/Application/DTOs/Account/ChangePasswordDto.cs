@@ -9,6 +9,7 @@ namespace Application.DTOs.Account
     public class ChangePasswordDto
     {
         public Guid? Id { get; set; }
+        public required string CurrentPassword { get; set; }
         public required string Password { get; set; }
     }
 }
