@@ -2,6 +2,8 @@
 import { useLoginMutation } from "./authApi";
 import { useDispatch } from "react-redux";
 import { login } from "./authSlice";
+
+
 import type { AppDispatch } from "../../app/app";
 import { useState } from "react";
 import { FaUser, FaLock } from "react-icons/fa";
@@ -11,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 export default function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [loginApi, { isLoading, error }] = useLoginMutation();
+
+  
    const navigate = useNavigate();
 
   const [UserName, setUserName] = useState("");
@@ -22,9 +26,7 @@ export default function LoginForm() {
     try {
       const result = await loginApi({ UserName, Password }).unwrap();
       dispatch(login({ token: result.token }));
-      
       navigate("/dashboard/home");
-      // TODO: redirect to dashboard
     } catch (err) {
       console.error("Login failed", err);
     }
@@ -44,6 +46,7 @@ export default function LoginForm() {
               <FaUser className="text-[#0C1086] ml-2" />
               <input
                 type="text"
+                dir="ltr"
                 value={UserName}
                 onChange={(e) => setUserName(e.target.value)}
                 className="flex-1 text-right outline-none border-none bg-transparent"
