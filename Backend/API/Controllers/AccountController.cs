@@ -19,13 +19,11 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("/")]
+        [HttpGet()]
         [Authorize]
-        public async Task<IActionResult> Get(string? id)
+        public async Task<IActionResult> Get()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (id != null) userId = id;
 
             var result = await _accountService.GetAccountAsync(Guid.Parse(userId!));
 
@@ -34,7 +32,7 @@ namespace API.Controllers
         }
 
 
-        [HttpGet("accounts")]
+        [HttpGet("all")]
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetAll()
         {
@@ -59,7 +57,7 @@ namespace API.Controllers
         {
             var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            dto.Id = Guid.Parse(userIdFromToken!);
+            dto.Id = userIdFromToken!;
 
             var result = await _accountService.UpdateAccountAysnc(dto);
 
@@ -75,7 +73,7 @@ namespace API.Controllers
             return result ? Ok() : NotFound();
         }
 
-        [HttpPut("account/changePassword")]
+        [HttpPut("changePassword")]
         [Authorize]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
         {
