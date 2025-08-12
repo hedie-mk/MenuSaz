@@ -58,7 +58,7 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
 
 
     return(
-        <div className="overflow-auto shadow-md rounded-2xl">
+        <div className="overflow-x-auto shadow-md rounded-2xl">
           <table className="w-full text-sm text-right ">
             <thead className="bg-[#D8D4FF] text-[#0C1086] ">
               <tr className="text-sm">

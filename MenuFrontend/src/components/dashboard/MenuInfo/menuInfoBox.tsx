@@ -79,8 +79,8 @@ export default function MenuInfoBox(){
     return(
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="grid grid-cols-1 sm:grid-cols-2 w-200 items-center space-x-5">
-            <div className="sm:col-span-1 w-85">
+            className="grid grid-cols-1 sm:grid-cols-2 w-full items-center space-x-5">
+            <div className="flex flex-col gap-1">
                 <label className="block text-sm font-medium text-gray-400 pb-2">
                     نام محصول<span className="text-red-500">*</span>
                 </label>
@@ -99,7 +99,7 @@ export default function MenuInfoBox(){
                     className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1"
                 />
                 {errors.address && <p className="text-red-500 text-sm">{errors.address.message}</p>}
-                <div className="flex gap-2 mb-1">
+                <div className="flex flex-col sm:flex-row gap-1">
                     <div className="flex-1">
                         <label className="block text-sm font-medium text-gray-400 pb-2">
                             شماره تماس
@@ -134,7 +134,7 @@ export default function MenuInfoBox(){
                 />
                 {errors.socialMedia && <p className="text-red-500 text-sm">{errors.socialMedia.message}</p>}
             </div>
-            <div className="sm:col-span-1 w-85 mt-10">
+            <div className="flex flex-col gap-1">
                 <label className="block text-sm font-medium text-gray-400 pb-2">
                     توضیحات سایت<span className="text-red-500">*</span>
                 </label>
@@ -147,7 +147,7 @@ export default function MenuInfoBox(){
                 <label className="block text-sm font-medium text-gray-400 mb-2">
                     لوگو کافه
                 </label>
-                <div className="md:w-50 md:h-50 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
+                <div className="w-full max-w-[200px] aspect-square border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
                     {data?.logo ? (
                     <img
                         src={photo ? URL.createObjectURL(photo) : data?.logo}
@@ -167,7 +167,7 @@ export default function MenuInfoBox(){
                     />
                 </div>                          
             </div>
-            <div className="sm:col-span-2 flex justify-end items-end mt-2">
+            <div className="sm:col-span-2 flex justify-end items-end mt-3">
                 <button
                     type="submit"
                     disabled={isLoading}

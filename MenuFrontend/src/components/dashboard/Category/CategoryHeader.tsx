@@ -23,7 +23,7 @@ export default function CategoryHeader({
 } : CategoryHeaderProps){
     return(
         <>
-            <div className="flex justify-between col-span-3 items-center ">
+            <div className="flex sm:flex-row justify-between sm:col-span-3 items-center mt-2 sm:mt-0">
                 <div className="flex gap-4 items-center ">
                     <SearchInput search={search}
                                 setSearch={setSearch}
@@ -34,17 +34,17 @@ export default function CategoryHeader({
                     />
                 </div>
             </div>
-            <div className="col-span-2 flex justify-end items-end">
+            <div className="flex sm:flex-row sm:col-span-2 justify-center items-center sm:justify-end sm:items-end mt-2 sm:mt-0">
                 <div className="flex gap-3 items-center ">
                     <button
                         onClick={() => setMainCategoryModalOpen(true)}
-                        className=" lg:w-[230px] w-[150px] border border-yellow-400 hover:bg-yellow-500 hover:text-white hover:cursor-pointer duration-400 ease-in-out  text-yellow-500 font-bold py-2 px-6 rounded-xl text-lg shadow "
+                        className="w-full sm:w-[150px] lg:w-[230px] border border-yellow-400 hover:bg-yellow-500 hover:text-white hover:cursor-pointer duration-400 ease-in-out  text-yellow-500 font-bold py-2 px-3 sm:px-6 rounded-xl text-xs sm:text-lg shadow "
                     >
                         ساخت دسته بندی اصلی
                     </button>
                     <button
                         onClick={() => setCategoryModalOpen(true)}
-                        className=" lg:w-[230px] w-[150px] bg-yellow-400 hover:bg-yellow-500 hover:cursor-pointer duration-400 ease-in-out text-white font-bold py-2 px-6 rounded-xl text-lg shadow "
+                        className="w-full sm:w-[150px] lg:w-[230px] bg-yellow-400 hover:bg-yellow-500 hover:cursor-pointer duration-400 ease-in-out text-white font-bold py-2 px-6 rounded-xl text-sm sm:text-lg shadow "
                     >
                         ساخت دسته بندی
                     </button>

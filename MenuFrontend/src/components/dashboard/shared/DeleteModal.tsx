@@ -20,7 +20,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
       className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-black/10"
     >
       <div className="relative p-4 w-full max-w-md max-h-full">
-        <div className="relative bg-[#D8D4FF] rounded-lg shadow-sm dark:bg-[#D8D4FF]">
+        <div className="relative bg-[#D8D4FF] rounded-lg shadow-sm dark:bg-[#D8D4FF] ">
           <button
             onClick={onClose}
             type="button"
@@ -44,7 +44,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
             <span className="sr-only">Close modal</span>
           </button>
 
-          <div className="p-4 md:p-5 text-center">
+          <div className="p-4 sm:p-5 text-center">
             <svg
               className="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-red-600"
               aria-hidden="true"
@@ -69,7 +69,7 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
             <button
               onClick={onConfirm}
               type="button"
-              className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+              className="text-white mb-1 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
             >
               بله , مطمعن هستم.
             </button>
