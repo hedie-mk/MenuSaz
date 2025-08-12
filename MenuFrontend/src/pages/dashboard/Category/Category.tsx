@@ -42,8 +42,8 @@ export default function Category(){
     }
 
     return(
-    <div className="w-[1120px] pt-5">
-        <div className="grid grid-cols-5 mb-3">
+    <div className="w-full max-w-[1120px] mx-auto pt-5">
+        <div className="grid grid-cols-1 sm:grid-cols-5 mb-3">
             <CategoryHeader 
             search={search}
             setSearch={setSearch}
@@ -63,7 +63,7 @@ export default function Category(){
                 setSelectedRowId={setSelectedRowId}
                 />
             </div>
-            <div className="sm:col-span-1 mt-3 sm:block hidden">
+            <div className="sm:col-span-1 mt-3 sm:block">
                 {categoryFilter === '2' ? (
                     <CategoryItemsBox
                     selectedRowName={selectedRowName}
