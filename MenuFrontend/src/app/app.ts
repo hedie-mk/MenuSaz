@@ -9,8 +9,9 @@ import { categoryApi } from "../features/Category/categoryApi";
 import { mainCategoryApi } from "../features/MainCategory/MainCategoryApi";
 import { menuInfoApi } from "../features/MenuInfo/MenuInfoApi";
 import { accountApi } from "../features/Account/accountApi";
+import accountReducer from "../features/Account/accountSlice"
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [productsApi.reducerPath] : productsApi.reducer,
@@ -18,15 +19,24 @@ const rootReducer = combineReducers({
   [mainCategoryApi.reducerPath] : mainCategoryApi.reducer,
   [menuInfoApi.reducerPath] : menuInfoApi.reducer,
   [accountApi.reducerPath] : accountApi.reducer,
+  account : accountReducer,
 
 });
 
 const persistConfig = {
   key: "root",
   storage, 
-  whitelist: ["auth"], 
+  whitelist: ["auth","account"], 
 };
 
+const rootReducer = (state: any, action: any) => {
+  if (action.type === "auth/logout") { // اکشن logout خودت
+    // پاک کردن کل persisted state
+    storage.removeItem("persist:root");
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
