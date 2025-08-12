@@ -62,10 +62,10 @@ export default function Products(){
   );
 
 return(
-    <div className="w-[1120px] p-5.5 ">
-        <div className="grid grid-cols-3">
-            <div className="flex justify-between col-span-2 items-center mb-4">
-                <div className="flex gap-4 items-center ">
+    <div className="max-w-full md:w-[1120px] p-5.5 overflow-x-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-3">
+            <div className="flex justify-between sm:flex-row sm:col-span-2 items-center mb-4">
+                <div className="flex gap-4 sm:flex-row items-center ">
                     <SearchInput search={search}
                                 setSearch={setSearch}
                     />
@@ -76,10 +76,10 @@ return(
                     />
                 </div>
             </div>
-            <div className="col-span-1 flex mb-4 justify-end items-end">
+            <div className="flex mb-4 sm:col-span-1 sm:justify-end sm:items-end">
                 <button
                     onClick={() => navigate("create")}
-                    className="lg:w-[230px] w-[150px] bg-yellow-400 hover:bg-yellow-500  text-white font-bold py-2 px-6 rounded-xl text-lg shadow "
+                    className="sm:w-[230px] w-full bg-yellow-400 hover:bg-yellow-500  text-white font-bold py-2 px-6 rounded-xl md:text-lg shadow "
                 >
                     ساخت محصول
                 </button>
