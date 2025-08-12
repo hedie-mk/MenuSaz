@@ -26,7 +26,7 @@ namespace Infrastructure.Helpers
             {
                 new Claim(ClaimTypes.NameIdentifier, account.Id.ToString()),
                 new Claim(ClaimTypes.Name, account.UserName),
-                new Claim(ClaimTypes.Role, account.Role.ToString()),
+                new Claim("role", account.Role.ToString()),
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
