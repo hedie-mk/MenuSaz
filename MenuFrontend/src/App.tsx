@@ -8,6 +8,7 @@ import CreateProduct from './pages/dashboard/products/CreateProduct';
 import UpdateProduct from './pages/dashboard/products/UpdateProduct';
 import Category from './pages/dashboard/Category/Category';
 import MenuInfo from './pages/dashboard/MenuInfo/ManuInfo';
+import Account from './pages/dashboard/Account/Account';
 function App() {
 
   return ( 
@@ -29,8 +30,7 @@ function App() {
           <Route path='products/update/:id' element={<UpdateProduct/>}/>
           <Route path='categories' element={<Category/>}/>
           <Route path='menuInfo' element={<MenuInfo/>}/>
-          
-          
+          <Route path='account' element={<Account/>}/>
         </Route>
 
         {/* پیش‌فرض: redirect به menu */}
