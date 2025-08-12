@@ -98,7 +98,7 @@ namespace Infrastructure.Services
         
         public async Task<bool> UpdateAccountAysnc(AccountUpdateDto dto)
         {
-            var account = await _context.Accounts.FindAsync(dto.Id);
+            var account = await _context.Accounts.FindAsync(Guid.Parse(dto.Id!));
             if (account == null) return false;
 
             account.UserName = dto.UserName;
@@ -113,6 +113,7 @@ namespace Infrastructure.Services
         {
             var account = await _context.Accounts.FindAsync(dto.Id);
             if (account == null) return false;
+            if(account?.Password != PasswordHasher.Hash(dto.CurrentPassword)) return false;
 
             account.Password = PasswordHasher.Hash(dto.Password);
             await _context.SaveChangesAsync();
