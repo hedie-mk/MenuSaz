@@ -5,7 +5,7 @@ import { useAddCategoryToProductMutation, useChangeProductStatusMutation , useDe
 import DeleteModal from "../shared/DeleteModal";
 import { useState } from "react";
 import AddCategoryModal from "./AddCategoryModal";
-
+import { toast } from "react-toastify";
 type TableProps = {
     isLoading : boolean,
     filteredItem : any,
@@ -31,13 +31,19 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
     setCategoryModalOpen(true);
   }
   const confirmAddCategory = () =>{
-    if (selectedId) {
-      addCategory({id:selectedId,categoryId});
-      alert("دسته بندی با موفقیت اضافه شد");
-      setCategoryModalOpen(false);
-      setSelectedId(null);
-      setSelectedName(null);
+    try{
+      if (selectedId) {
+        addCategory({id:selectedId,categoryId});
+        toast.success("دسته بندی با موفقیت اضافه شد");
+        setCategoryModalOpen(false);
+        setSelectedId(null);
+        setSelectedName(null);
+      }
+    } 
+    catch{
+      toast.error("دسته بندی اضافه نشد")
     }
+
   }
 
   const handleDelete = async (id: string , name : string) => {
@@ -47,11 +53,17 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
   };
 
   const confirmDelete = () => {
-    if (selectedId) {
-      deleteProduct(selectedId);
-      setDeleteModalOpen(false);
-      setSelectedId(null);
-      setSelectedName(null);
+    try{
+      if (selectedId) {
+        deleteProduct(selectedId);
+        setDeleteModalOpen(false);
+        setSelectedId(null);
+        setSelectedName(null);
+        toast.success("محصول با موفقیت حذف شد")
+      }
+    }
+    catch{
+      toast.error("حذف با مشکل مواجه شد")
     }
   };
 
