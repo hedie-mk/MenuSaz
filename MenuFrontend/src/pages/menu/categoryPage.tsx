@@ -25,9 +25,9 @@ export default function CategoryPage(){
 
 
     return(
-        <div className="space-y-3 p-4 overflow-hidden mt-5">
+        <div className="space-y-3 px-4 overflow-hidden ">
             <div className="flex flex-col justify-centr items-center">
-                <div className="w-1/2 px-4 py-3 mt-5 flex justify-center bg-[#40191B] rounded-2xl font-BTitr text-lg shadow-xl/30 text-white">{categoryName}</div>
+                <div className="w-1/2 px-4 py-3 mt-1س flex justify-center bg-[#40191B] rounded-2xl font-BTitr text-lg shadow-xl/30 text-white">{categoryName}</div>
             </div>
             <div className=" z-1 overflow-hidden">
                 <div className=" z-1 grid grid-cols-2 space-x-3 space-y-3">
