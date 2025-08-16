@@ -40,7 +40,8 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
         setSelectedName(null);
       }
     } 
-    catch{
+    catch(err) {
+      console.error("Error adding category product:", err);
       toast.error("دسته بندی اضافه نشد")
     }
 
@@ -62,7 +63,8 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
         toast.success("محصول با موفقیت حذف شد")
       }
     }
-    catch{
+    catch(err) {
+      console.error("Error deleting product:", err);
       toast.error("حذف با مشکل مواجه شد")
     }
   };
