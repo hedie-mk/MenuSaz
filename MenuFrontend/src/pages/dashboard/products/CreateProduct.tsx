@@ -6,6 +6,10 @@ import { useCreateProductMutation } from "../../../features/Products/productApi"
 import { useState } from "react";
 import { LucideImageDown } from "lucide-react";
 import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
+import { toast } from "react-toastify";
+
+
+
 const productSchema = z.object({
   name: z.string().min(1, "نام محصول الزامی است"),
   price: z
@@ -53,11 +57,11 @@ export default function CreateProduct() {
 
     try {
       await createProduct(formData as any).unwrap();
-      alert("محصول با موفقیت ثبت شد");
+      toast.success("محصول با موفقیت ثبت شد");
       navigate("/dashboard/products");
     } catch (err) {
       console.error("Error creating product:", err);
-      alert("خطا در ثبت محصول");
+      toast.error("خطا در ثبت محصول");
     }
   };
 
