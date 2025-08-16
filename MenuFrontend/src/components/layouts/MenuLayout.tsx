@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect , useState } from "react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../app/app";
 import { Outlet } from "react-router-dom"
@@ -6,6 +6,8 @@ import { NavLink } from "react-router-dom";
 import { Home, Heart, ShoppingCart } from "lucide-react"; 
 import type { GetMenuMainCategories } from "../../features/Menu/MenuTypes";
 import { useNavigate } from "react-router-dom";
+import MenuHeader from "../menu/menuHeader";
+import SearchResult from "../menu/searchResult";
 
 import { 
   useGetCategoriesQuery,
@@ -35,12 +37,23 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
     if(menuInfo) dispatch(getMenuInformation(menuInfo));
   },[categories , products , menuInfo, mainCategories])
 
+  const [search , setSearch] = useState("");
+
+
+
   return (
     <div className="flex h-screen bg-[#1B2744]">
       {/* سایدبار */}
       <aside className="flex flex-col rounded-bl-full rounded-tl-full  items-center w-11 bg-[#40191B] py-4">
         {/* آیکون بالا */}
-        <button onClick={()=> navigate('/menu/orders')} className="p-2">
+        <button 
+        onClick={()=>
+          { 
+            navigate('/menu/orders')
+            setSearch("")
+          }
+        } 
+        className="p-2">
           <ShoppingCart className="text-white w-6 h-6 transition-all duration-300 ease-in-out hover:scale-120" />
         </button>
 
@@ -50,6 +63,7 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
             mainCategories?.map((cat: any) => (
               <NavLink
                 key={cat.id}
+                onClick={()=> setSearch("")} 
                 to={`/menu/${cat.name}`}
                 className={({isActive}) => 
                     `text-white text-sm font-bold cursor-pointer transition-all duration-300 ease-in-out font-BNazanin 
@@ -66,17 +80,37 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
 
         {/* آیکون‌های پایین */}
         <div className="flex flex-col items-center gap-4 p-2">
-          <button onClick={()=> navigate('/menu/favorite')}>
+          <button 
+          onClick={()=>
+            { 
+              navigate('/menu/favorite')
+              setSearch("")
+            }}
+          >
             <Heart className="text-white w-6 h-6 transition-all duration-300 ease-in-out hover:scale-120" />
           </button>
-          <button onClick={()=> navigate('/menu/')}>
+          <button 
+          onClick={()=>
+            { 
+              navigate('/menu/')
+              setSearch("")
+            }}
+          >
             <Home className="text-white w-6 h-6 transition-all duration-300 ease-in-out hover:scale-120" />
           </button>
         </div>
       </aside>
+
       {/* محتوای اصلی */}
-      <main className="flex-1 overflow-auto ">
+      <main className=" flex-1 overflow-auto ">
+        <header className="">
+            <MenuHeader cafeName={menuInfo?.name ?? ""} search={search} setSearch={setSearch}/>
+        </header>
+        {search === "" ? (
         <Outlet/>
+        ) :(
+          <SearchResult search={search}/>
+        )}
       </main>
 
 
