@@ -6,6 +6,9 @@ import { useGetAccountsQuery, useGetAccountQuery , useUpdateAccountMutation} fro
 import AccountList from "./accountsList";
 import type { UpdateAccount } from "../../../features/Account/accountType";
 import ChangePasswordModal from "./ChangePasswordModal";
+import {  toast } from "react-toastify";
+
+
 const accountSchema = z.object({
   name: z.string().min(1, "نام محصول الزامی است"),
   email: z.string().optional(),
@@ -65,10 +68,10 @@ export default function AccountBox({role}: AccountBoxProps){
         };
         try {
         await updateAccount(payload as UpdateAccount).unwrap();
-        alert("اکانت با موفقیت ویرایش شد");
+        toast.success("اکانت با موفقیت ویرایش شد");
         } catch (err) {
         console.error("Error updating product:", err);
-        alert("خطا در ویرایش اکانت");
+        toast.error("خطا در ویرایش اکانت");
         }
     };
 
@@ -77,11 +80,11 @@ export default function AccountBox({role}: AccountBoxProps){
     }
     return(
         <>
-        <div className="w-full md:w-2/3 border border-yellow-400 rounded-2xl p-5 sm:px-20 bg-white/30">
+        <div className="w-full font-BNazanin md:w-2/3 border border-yellow-400 rounded-2xl p-5 sm:px-20 bg-white/30">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-3">
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 p-2">
+                        <label className="block text-sm font-medium text-gray-400 p-2 font-BTitr">
                             نام کاربری<span className="text-red-500">*</span>
                         </label>
                         <input
@@ -93,7 +96,7 @@ export default function AccountBox({role}: AccountBoxProps){
                         {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 p-2">ایمیل</label>
+                        <label className="block text-sm font-medium text-gray-400 p-2 font-BTitr">ایمیل</label>
                         <input
                         type="text"
                         {...register("email")}
@@ -102,7 +105,7 @@ export default function AccountBox({role}: AccountBoxProps){
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 p-2">شماره تماس</label>
+                        <label className="block text-sm font-medium text-gray-400 p-2 font-BTitr">شماره تماس</label>
                         <input
                         type="text"
                         {...register("phoneNumber")}
@@ -114,13 +117,13 @@ export default function AccountBox({role}: AccountBoxProps){
                 <div className="flex flex-col sm:flex-row gap-3 mt-8 justify-center items-center">
                     <div 
                     onClick={() => setChangePasswordModal(true)}
-                    className="flex w-full sm:w-2/5 font-bold border justify-center border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-100">
+                    className="flex w-full font-BTitr sm:w-2/5 font-bold border justify-center border-yellow-500 text-yellow-500 px-4 py-2 rounded-lg hover:bg-yellow-100">
                         تغییر رمز عبور
                     </div>
                     <button
                     type="submit"
                     disabled={accountLoading}
-                    className="bg-yellow-500 w-full sm:w-3/5 font-bold text-white px-4 py-2 rounded-lg hover:bg-yellow-600"
+                    className="bg-yellow-500 w-full font-BTitr sm:w-3/5 font-bold text-white px-4 py-2 rounded-lg hover:bg-yellow-600"
                     >
                         ویرایش اطلاعات
                     </button>

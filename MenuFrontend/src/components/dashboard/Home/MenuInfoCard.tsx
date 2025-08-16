@@ -9,10 +9,10 @@ export default function MenuInfoCard(){
 
 return(
     <div className="rounded-2xl shadow-xl bg-[#CAA200] p-4 text-white font-medium leading-relaxed lg:min-h-[220px] ">
-      <h2 className="mb-2 font-bold text-lg text-start pb-1">اطلاعات منو</h2>
+      <h2 className="mb-2 font-bold text-lg text-start pb-1 font-BTitr">اطلاعات منو</h2>
       <div className="grid grid-cols-3">
         
-        <div className="col-span-2 text-sm">
+        <div className="col-span-2 text-sm font-BTitr">
             <p className="text-start pb-2">نام کافه : {data?.name}</p>
             <p className="text-start pb-2">آدرس : {data?.address}</p>
             <p className="text-start pb-2">ساعت کاری : {data?.workHour}</p>

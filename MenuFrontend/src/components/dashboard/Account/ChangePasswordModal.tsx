@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useChangePasswordMutation } from "../../../features/Account/accountApi";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-
+import { toast } from "react-toastify";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -45,9 +45,10 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
 
         setForm({ id: "", currentPassword : "", password: "", confirmPassword: "" });
         onClose();
+        toast.success("پسوورد با موفقیت تغییر پیدا کرد")
         } catch (err) {
         console.error("Error changing account password:", err);
-        setError("خطا در ویرایش پسوورد");
+        toast.error("خطا در ویرایش پسوورد");
         }
     };
     if (!isOpen) return null;
@@ -80,14 +81,14 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
           </button>
 
           <div className="flex items-center justify-between p-4 md:p-5 mb-3 rounded-t border-b-2 dark:border-[#F9C700] border-gray-200">
-            <h2 className="text-xl font-bold text-[#0C1086]">
+            <h2 className="text-xl font-bold text-[#0C1086] font-BTitr">
               تغییر پسوورد
             </h2>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 p-3 md:p-4">
                         <div>
-              <label className="block mb-1 text-sm font-medium text-[#0C1086]">
+              <label className="block mb-1 text-sm font-medium text-[#0C1086] font-BTitr">
                 پسوورد در حال حاضر
               </label>
               <input
@@ -97,13 +98,13 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
                 onChange={handleChange}
                 required
                 dir="ltr"
-                className="w-full px-3 py-2 bg-[#ebe9ff] rounded-lg text-sm"
+                className="w-full px-3 py-2 bg-[#ebe9ff] rounded-lg text-sm font-BNazanin"
               />
             </div>
 
             <div className="relative w-full">
 
-                <label className="block mb-1 text-sm font-medium text-[#0C1086]">
+                <label className="block mb-1 text-sm font-medium text-[#0C1086] font-BTitr">
                     پسوورد
                 </label>
                 <input
@@ -113,7 +114,7 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
                     onChange={handleChange}
                     required
                     dir="ltr"
-                    className="w-full px-3 py-2 bg-[#ebe9ff] rounded-lg text-sm"
+                    className="w-full px-3 py-2 bg-[#ebe9ff] rounded-lg text-sm font-BNazanin"
                 />
                 <button
                         type="button"
@@ -125,7 +126,7 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
             </div>
 
             <div>
-                <label className="block mb-1 text-sm font-medium text-[#0C1086]">
+                <label className="block mb-1 text-sm font-medium text-[#0C1086] font-BTitr">
                     تکرار پسوورد
                 </label>
                 <input
@@ -135,7 +136,7 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
                     onChange={handleChange}
                     required
                     dir="ltr"
-                    className="w-full px-3 py-2 bg-[#ebe9ff] rounded-lg text-sm"
+                    className="w-full px-3 py-2 bg-[#ebe9ff] rounded-lg text-sm font-BNazanin"
                 />
             </div>
 
@@ -146,7 +147,7 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-[#CAA200] w-2/4 hover:bg-[#F9C700] text-white font-bold rounded-lg text-lg px-3 py-2 transition-colors"
+                className="bg-[#CAA200] font-BTitr w-2/4 hover:bg-[#F9C700] text-white font-bold rounded-lg text-lg px-3 py-2 transition-colors"
               >
                 ثبت
               </button>

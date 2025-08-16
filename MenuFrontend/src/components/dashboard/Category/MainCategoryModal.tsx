@@ -65,13 +65,13 @@ export default function MainCategoryModal({
 
             
             <div className="flex items-center justify-between p-4 md:p-5 mb-3 border-b rounded-t dark:border-[#0C1086] border-gray-200">
-              <h2 className="text-xl font-semibold text-[#0C1086] ">
+              <h2 className="text-xl font-semibold text-[#0C1086] font-BTitr ">
                 ساخت دسته بندی اصلی
               </h2>
             </div>
             <form onSubmit={handleSubmit} className="space-y-4 p-3 md:p-4">
               <div>
-                <label htmlFor="name" className="block mb-1 text-sm font-medium text-[#0C1086]">
+                <label htmlFor="name" className="block mb-1 text-lg font-BNazanin font-medium text-[#0C1086]">
                   عنوان دسته بندی
                 </label>
                 <input
@@ -81,14 +81,14 @@ export default function MainCategoryModal({
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="نام دسته بندی را وارد کنید"
-                  className="w-full px-3 py-2 bg-[#D9D9D9] rounded-lg text-sm"
+                  className="w-full px-3 py-2 bg-[#D9D9D9] rounded-lg text-lg font-BNazanin"
                 />
               </div>
 
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="bg-[#CAA200] hover:bg-[#F9C700] text-white font-medium rounded-lg text-sm px-5 py-2.5 transition-colors"
+                  className="bg-[#CAA200] hover:bg-[#F9C700] text-white font-medium rounded-lg text-lg font-BTitr px-5 py-2.5 transition-colors"
                 >
                   ثبت
                 </button>

@@ -35,7 +35,7 @@ export default function CategoryHeader({
                 </div>
             </div>
             <div className="flex sm:flex-row sm:col-span-2 justify-center items-center sm:justify-end sm:items-end mt-2 sm:mt-0">
-                <div className="flex gap-3 items-center ">
+                <div className="flex gap-3 items-center font-BTitr">
                     <button
                         onClick={() => setMainCategoryModalOpen(true)}
                         className="w-full sm:w-[150px] lg:w-[230px] border border-yellow-400 hover:bg-yellow-500 hover:text-white hover:cursor-pointer duration-400 ease-in-out  text-yellow-500 font-bold py-2 px-3 sm:px-6 rounded-xl text-xs sm:text-lg shadow "

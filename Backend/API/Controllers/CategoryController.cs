@@ -18,6 +18,7 @@ namespace API.Controllers
         }
 
         [HttpGet("All")]
+        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var result = await _categoryService.GetAllAysnc();
@@ -25,6 +26,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById(string id)
         {
             var result = await _categoryService.GetByIdAsync(Guid.Parse(id));

@@ -15,7 +15,7 @@ export default function InactiveProductsCard(){
                 {
                     error ? (<div>خطا در دریافت اطلاعات</div>) : null
                 }
-                <label className="font-bold text-lg text-[#CAA200] text-start">محصولات غیر فعال</label>
+                <label className="font-bold text-lg text-[#CAA200] text-start font-BTitr">محصولات غیر فعال</label>
                 <ul className="text-sm space-y-1 text-gray-700 justify-start items-start">
                     {data?.map((d) => (
                     <InactiveItem key={d.id} id={d.id} name={d.name} diactiveDateTime={d.diactiveDateTime} />

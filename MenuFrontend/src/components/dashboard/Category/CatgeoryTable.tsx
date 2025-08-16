@@ -14,10 +14,10 @@ interface CategoryTableProps {
 export default function CategoryTable({ data, type, onEdit, onDelete , statusChange , setSelectedRowName , setSelectedRowId}: CategoryTableProps) {
 
   return (
-    <div className="overflow-x-auto shadow-md rounded-2xl">
+    <div className="overflow-x-auto shadow-md rounded-2xl font-">
       <table className="w-full text-sm">
         <thead className="bg-[#D8D4FF] text-[#0C1086]">
-          <tr className="text-sm">
+          <tr className="text-sm font-BTitr">
             <th scope="col" className="px-4 py-3 text-center">نام</th>
             {type === '2' && <th scope="col" className="px-4 py-3 text-center">دسته‌بندی والد</th>}
             <th scope="col" className="px-4 py-3 text-center">تعداد زیر مجموعه</th>
@@ -30,18 +30,18 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
                       setSelectedRowName(item.name);
                       setSelectedRowId(item.id);
                     }} key={item.id} className="hover:bg-[#DDD9FF] duration-300 cursor-pointer">
-              <td className="px-4 py-2 font-medium text-center text-[#222]">
+              <td className="px-4 py-2 font-medium text-center text-lg text-[#222] font-BNazanin">
                 {item.name}
               </td>
               {type === '2' && (
-                <td className="px-4 py-2 text-center">
+                <td className="px-4 py-2 text-center text-lg font-BNazanin">
                   {item.parentCategoryName || '-'}
                 </td>
               )}
               {type === '2' ? (
-                <td className="px-4 py-2 text-center text-[#444]">{item.itemsLength}</td>
+                <td className="px-4 py-2 text-center text-[#444] text-lg font-BNazanin">{item.itemsLength}</td>
               ) : (
-                <td className="px-4 py-2 text-center text-[#444]">{item.categoriesLength}</td>
+                <td className="px-4 py-2 text-center text-[#444] text-lg font-BNazanin">{item.categoriesLength}</td>
               )}
               <td className="px-4 py-2 flex gap-2 justify-center">
                 {type === '2' ? (

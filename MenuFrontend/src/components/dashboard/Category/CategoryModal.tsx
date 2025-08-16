@@ -72,13 +72,13 @@ export default function CategoryModal({
 
             
             <div className="flex items-center justify-between p-4 md:p-5 mb-3 border-b rounded-t dark:border-[#0C1086] border-gray-200">
-              <h2 className="text-xl font-semibold text-[#0C1086] ">
+              <h2 className="text-xl font-semibold text-[#0C1086] font-BTitr ">
                 ساخت دسته بندی
               </h2>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-4 p-3 md:p-4">
+            <form onSubmit={handleSubmit} className="space-y-4 p-3 md:p-4 font-BNazanin">
               <div>
-                <label htmlFor="name" className="block mb-1 text-sm font-medium text-[#0C1086]">
+                <label htmlFor="name" className="block mb-1 text-lg font-medium text-[#0C1086]">
                   عنوان دسته بندی
                 </label>
                 <input
@@ -88,12 +88,12 @@ export default function CategoryModal({
                   onChange={(e) => setName(e.target.value)}
                   required
                   placeholder="نام دسته بندی را وارد کنید"
-                  className="w-full px-3 py-2 bg-[#D9D9D9] rounded-lg text-sm"
+                  className="w-full px-3 py-2 bg-[#D9D9D9] rounded-lg text-lg"
                 />
               </div>
 
               <div>
-                <label htmlFor="category" className="block mb-1 text-sm font-medium text-[#0C1086]">
+                <label htmlFor="category" className="block mb-1 text-lg font-medium text-[#0C1086]">
                   دسته بندی اصلی
                 </label>
                 <select
@@ -101,7 +101,7 @@ export default function CategoryModal({
                   value={MainCategoryId ?? ""}
                   onChange={(e) => setMainCategoryId(e.target.value)}
                   required
-                  className="w-full px-3 py-2  rounded-lg text-sm bg-[#D9D9D9] text-[#0C1086]"
+                  className="w-full px-3 py-2  rounded-lg text-lg bg-[#D9D9D9] text-[#0C1086]"
                 >
                   <option value="">انتخاب دسته بندی اصلی</option>
                   {categories?.map((cat) => (
@@ -115,7 +115,7 @@ export default function CategoryModal({
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="bg-[#CAA200] hover:bg-[#F9C700] text-white font-medium rounded-lg text-sm px-5 py-2.5 transition-colors"
+                  className="bg-[#CAA200] font-BTitr hover:bg-[#F9C700] text-white font-medium rounded-lg text-sm px-5 py-2.5 transition-colors"
                 >
                   ثبت
                 </button>

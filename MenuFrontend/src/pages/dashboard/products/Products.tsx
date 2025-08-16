@@ -62,7 +62,7 @@ export default function Products(){
   );
 
 return(
-    <div className="max-w-full md:w-[1120px] p-5.5 overflow-x-hidden">
+    <div className="max-w-full md:w-[1120px] p-5 overflow-x-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-3">
             <div className="flex justify-between sm:flex-row sm:col-span-2 items-center mb-4">
                 <div className="flex gap-4 sm:flex-row items-center ">
@@ -76,10 +76,10 @@ return(
                     />
                 </div>
             </div>
-            <div className="flex mb-4 sm:col-span-1 sm:justify-end sm:items-end">
+            <div className="flex mb-3 sm:col-span-1 sm:justify-end sm:items-end">
                 <button
                     onClick={() => navigate("create")}
-                    className="sm:w-[230px] w-full bg-yellow-400 hover:bg-yellow-500  text-white font-bold py-2 px-6 rounded-xl md:text-lg shadow "
+                    className="sm:w-[230px] w-full font-BTitr bg-yellow-400 hover:bg-yellow-500  text-white font-bold py-2 px-6 rounded-xl md:text-xl shadow "
                 >
                     ساخت محصول
                 </button>

@@ -60,23 +60,23 @@ const DeleteModal: React.FC<DeleteModalProps> = ({
                 d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
-            <h3 className="mb-2 text-lg font-semibold text-[#0C1086] dark:text-[#0C1086]">
+            <h3 className="mb-2 text-lg font-semibold font-BTitr text-[#0C1086] dark:text-[#0C1086]">
               حذف 
             </h3>
-            <p className="mb-5 text-sm text-gray-500 dark:text-gray-500">
+            <p className="mb-5 text-sm text-gray-500 dark:text-gray-500 font-BNazanin">
               آیا از حذف {selectedName} مطمعن هستید؟
             </p>
             <button
               onClick={onConfirm}
               type="button"
-              className="text-white mb-1 bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
+              className="text-white mb-1 font-BTitr bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
             >
               بله , مطمعن هستم.
             </button>
             <button
               onClick={onClose}
               type="button"
-              className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-[#D8D4FF] dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              className="py-2.5 px-5 ms-3 font-BTitr text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-[#D8D4FF] dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
             >
               خیر ,  بازگشت
             </button>

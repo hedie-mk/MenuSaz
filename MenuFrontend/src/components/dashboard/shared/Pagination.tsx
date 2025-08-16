@@ -31,7 +31,7 @@ export default function Pagination({
     };
 
     return(
-        <div className="flex justify-center mt-2">
+        <div className="flex justify-center mt-2 font-BTitr">
           <div className="flex gap-2 bg-[#D8D4FF] rounded-full px-4 py-1">
             {getPageNumbers().map((num , idx) => (
               <button

@@ -10,6 +10,9 @@ import { mainCategoryApi } from "../features/MainCategory/MainCategoryApi";
 import { menuInfoApi } from "../features/MenuInfo/MenuInfoApi";
 import { accountApi } from "../features/Account/accountApi";
 import accountReducer from "../features/Account/accountSlice"
+import { menuApi } from "../features/Menu/MenuApi";
+import menuReducer from "../features/Menu/MenuSlice"
+
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -20,13 +23,15 @@ const appReducer = combineReducers({
   [menuInfoApi.reducerPath] : menuInfoApi.reducer,
   [accountApi.reducerPath] : accountApi.reducer,
   account : accountReducer,
+  [menuApi.reducerPath] : menuApi.reducer,
+  menu : menuReducer
 
 });
 
 const persistConfig = {
   key: "root",
   storage, 
-  whitelist: ["auth","account"], 
+  whitelist: ["auth","account","menu"], 
 };
 
 const rootReducer = (state: any, action: any) => {
@@ -49,6 +54,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }).concat(
+      menuApi.middleware,
       authApi.middleware,
       productsApi.middleware,
       categoryApi.middleware,

@@ -15,8 +15,8 @@ export default function CategoryItemsBox({selectedRowName , selectedRowId} : Cat
 
     return(
         <div className="border border-yellow-400 text-yellow-500 font-bold rounded-2xl px-3 py-3 mx-2">
-            <h2>محصولات موجود در {selectedRowName}</h2>
-            <div className="flex flex-wrap mt-3">
+            <h2 className="font-BTitr">محصولات موجود در {selectedRowName}</h2>
+            <div className="flex flex-wrap mt-3 font-BNazanin">
                 {isLoading ? (
                     <p className="text-center py-6">
                         در حال بارگذاری...

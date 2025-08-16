@@ -30,6 +30,7 @@ namespace Infrastructure.Services
 
             return await _context.MainCategories
                 .Include(m => m.Categories)
+                .OrderByDescending(i => i.CreatedAt)
                 .Select(m => new MainCategoryDto
                 {
                     Id = m.Id,

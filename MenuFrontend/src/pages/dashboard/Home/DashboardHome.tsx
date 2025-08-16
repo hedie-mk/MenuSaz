@@ -9,7 +9,7 @@ export default function DashboardHome() {
   return (
     <div className="w-[1120px] p-6 space-y-3">
       {/* Buttons */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-BTitr">
         <div className="relative h-15 flex justify-center items-center">
             <div className="absolute inset-0 bg-white/70 z-0 shadow rounded-2xl py-4 px-6  hover:bg-gray-100"></div>
             <div className="relative z-10">

@@ -19,6 +19,7 @@ namespace Infrastructure.Services
             return await _context.Categories
                 .Include(c => c.Items)
                 .Include(c => c.ParentCategory)
+                .OrderByDescending(i => i.CreatedAt)
                 .Select(c => new CategoryDto
                 {
                     Id = c.Id,

@@ -6,19 +6,19 @@ export default function LatestAddedProducts() {
   return (
     <div className="relative min-h-35 flex flex-wrap px-5 py-5 justify-start lg:min-h-[220px]">
         <div className="absolute inset-0 bg-white/30 z-0 shadow-xl rounded-2xl py-4 px-6"></div>
-        <div className="relative z-10 flex flex-col gap-4 justify-start ">
+        <div className="relative z-10 flex flex-col gap-3 justify-start ">
 
-            <h2 className="text-[#CAA200] text-lg font-bold mb-1 text-start">
+            <h2 className="text-[#CAA200] text-lg font-bold mb-0.5 text-startv font-BTitr">
             آخرین محصولات اضافه شده
              </h2>
 
-            <div className="grid grid-cols-3 p-1.5 text-[#0C1086] text-xs font-normal bg-[#FFF0B3] rounded-lg">
+            <div className="grid grid-cols-3 p-1 font-BNazanin text-[#0C1086] text-xs font-normal bg-[#FFF0B3] rounded-lg">
                 <span>نام محصول</span>
                 <span className="col-span-1 text-center">توضیحات</span>
                 <span className="text-left">تاریخ ایجاد</span>
             </div>
 
-            <div className="overflow-y-auto space-y-1 pr-1 text-sm text-[#0C1086]">
+            <div className="overflow-y-auto space-y-1 pr-1 text-sm font-BNazanin text-[#0C1086]">
                 {isLoading && <p className="text-center">در حال بارگذاری...</p>}
                 {error && <p className="text-red-500 text-center">خطا در دریافت اطلاعات</p>}
                 {data &&

@@ -1,21 +1,22 @@
 
 import { Outlet } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { HiMenu, HiX } from "react-icons/hi"; 
-import UserDropdown from "./UserDropdown";
+import UserDropdown from "./DashboardUserDropdown";
 import { useGetAccountQuery } from "../../features/Account/accountApi";
 import { getAccount } from "../../features/Account/accountSlice";
 import type { AppDispatch } from "../../app/app";
 import { useDispatch } from "react-redux";
 const DashboardLayout = () => {
     const dispatch = useDispatch<AppDispatch>();
+    const{ data } = useGetAccountQuery();
 
-    const getAccountDetail = async () => {
-            const{data} = await useGetAccountQuery();
-            await dispatch(getAccount(data!))
-    }
-    getAccountDetail();
+    useEffect(() => {
+        if (data) {
+            dispatch(getAccount(data));
+        }
+    },[data , dispatch])
 
 
 
@@ -50,11 +51,11 @@ const DashboardLayout = () => {
                              <NavLink
                                 key={item.label}
                                 to={item.to}
-                                className={({ isActive }) =>
+                                className={({ isActive }) => 
                                     `w-full px-4 py-3 flex justify-center rounded-full transition-all duration-300 ${
                                     isActive
-                                        ? "bg-[#0C1086] text-white shadow-md text-2xl font-bold"
-                                        : "hover:bg-[#E7E5FA] text-xl font-normal text-[#0C1086]"
+                                        ? "bg-[#0C1086] text-white shadow-md text-2xl font-BTitr font-bold"
+                                        : "hover:bg-[#E7E5FA] text-xl font-normal font-BNazanin text-[#0C1086]"
                                     }`
                                 }
                                 >
@@ -80,10 +81,10 @@ const DashboardLayout = () => {
             to={item.to}
             onClick={() => setIsOpen(false)} // بستن منو بعد از کلیک
             className={({ isActive }) =>
-                `px-4 py-2 rounded-lg transition-all duration-300 ${
+                `px-4 py-2 rounded-lg transition-all duration-300  ${
                 isActive
-                    ? "bg-[#0C1086] text-white shadow-md font-bold"
-                    : "hover:bg-blue-100 text-[#0C1086]"
+                    ? "bg-[#0C1086] text-white shadow-md font-BTitr font-bold"
+                    : "hover:bg-blue-100 text-[#0C1086] font-BNazanin"
                 }`
             }
             >

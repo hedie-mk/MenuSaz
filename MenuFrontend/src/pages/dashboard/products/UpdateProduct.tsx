@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useGetProductQuery, useUpdateProductMutation } from "../../../features/Products/productApi";
+import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
 import { useNavigate, useParams } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,6 +19,8 @@ const productSchema = z.object({
     .optional()
     .or(z.literal("")),
   description: z.string().min(1, "توضیح الزامی است"),
+  categoryName : z.string().optional(),
+  categoryId: z.string().optional(),
 });
 
 type ProductFormData = z.infer<typeof productSchema>;
@@ -25,6 +28,7 @@ type ProductFormData = z.infer<typeof productSchema>;
 export default function UpdateProduct() {
   const { id } = useParams();
   const { data, isLoading } = useGetProductQuery(id as string);
+  const { data : categories } = useGetCategoriesQuery();
   const [updateProduct] = useUpdateProductMutation();
   const navigate = useNavigate();
   const [photo, setPhoto] = useState<File | null>(null);
@@ -41,6 +45,8 @@ export default function UpdateProduct() {
       price: "",
       discountedPrice: "",
       description: "",
+      categoryName : "",
+      categoryId: ""
     },
   });
 
@@ -51,6 +57,8 @@ export default function UpdateProduct() {
         price: data.price?.toString() || "",
         discountedPrice: data.discountedPrice?.toString() || "",
         description: data.description || "",
+        categoryName: data.categoryName || "",
+        categoryId: data.categoryId || ""
       });
     }
   }, [data, reset]);
@@ -62,6 +70,7 @@ export default function UpdateProduct() {
     formData.append("price", formValues.price);
     formData.append("discountedPrice", formValues.discountedPrice || "");
     formData.append("description", formValues.description);
+    formData.append("categoryId" , formValues.categoryId || "")
     if (photo) formData.append("photo", photo);
 
     try {
@@ -85,58 +94,73 @@ export default function UpdateProduct() {
         className="w-full max-w-4xl grid grid-cols-2 gap-2"
       >
         <div>
-          <h2 className="text-2xl font-bold text-[#CAA200] mb-3">ویرایش محصول</h2>
+          <h2 className="text-2xl font-bold text-[#CAA200] font-BTitr mb-3">ویرایش محصول</h2>
 
-          <label className="block text-sm font-medium text-gray-400 pb-2">
+          <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
             نام محصول<span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             {...register("name")}
-            className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 text-[#0C1086]"
+            className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 text-[#0C1086] font-BNazanin"
           />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+          {errors.name && <p className="text-red-500 text-sm font-BNazanin">{errors.name.message}</p>}
 
           <div className="flex gap-2 mb-1">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-400 pb-2">
+              <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                 قیمت اصلی<span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 {...register("price")}
-                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086]"
+                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086] font-BNazanin"
               />
-              {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
+              {errors.price && <p className="text-red-500 text-sm font-BNazanin">{errors.price.message}</p>}
             </div>
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-400 pb-2">
+              <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                 قیمت با تخفیف
               </label>
               <input
                 type="text"
                 {...register("discountedPrice")}
-                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086]"
+                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086] font-BNazanin"
               />
               {errors.discountedPrice && (
-                <p className="text-red-500 text-sm">{errors.discountedPrice.message}</p>
+                <p className="text-red-500 text-sm font-BNazanin">{errors.discountedPrice.message}</p>
               )}
             </div>
           </div>
 
-          <label className="block text-sm font-medium text-gray-400 pb-2">
+          <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
             توضیحات محصول<span className="text-red-500">*</span>
           </label>
           <textarea
             {...register("description")}
-            className="w-full h-25 bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 text-[#0C1086]"
+            className="w-full h-25 bg-[#D9D9D9] rounded-lg px-3 py-2 font-BNazanin mb-1 text-[#0C1086]"
           />
-          {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+          {errors.description && <p className="text-red-500 text-sm font-BNazanin">{errors.description.message}</p>}
 
+
+          <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
+            دسته‌بندی
+          </label>
+          <select
+            {...register("categoryId")}
+            className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-3 text-gray-600 font-BNazanin"
+          >
+            <option value="">انتخاب دسته</option>
+            {categories?.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="px-4">
-          <label className="block text-sm font-medium text-gray-400 mb-2 mt-10">
+          <label className="block text-sm font-medium text-gray-400 mb-2 mt-10 font-BTitr">
             عکس محصول
           </label>
           <div className="md:w-70 md:h-70 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
@@ -164,7 +188,7 @@ export default function UpdateProduct() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-50 transition-all duration-300 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-full font-bold"
+            className="w-50 transition-all duration-300 font-BTitr bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-full font-bold"
           >
             {isLoading ? "در حال ثبت..." : "ویرایش محصول"}
           </button>

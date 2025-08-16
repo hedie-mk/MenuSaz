@@ -60,7 +60,7 @@ const UserDropdown: React.FC = () => {
           <div className="py-2">
             <button
               onClick={() => signOut()}
-              className="block px-4 py-2 text-sm text-[#0C1086] hover:text-red-600 cursor-pointer transition-all duration-300 ease-in"
+              className="block font-BTitr px-4 py-2 text-sm text-[#0C1086] hover:text-red-600 cursor-pointer transition-all duration-300 ease-in"
             >
               خروج از اکانت
             </button>

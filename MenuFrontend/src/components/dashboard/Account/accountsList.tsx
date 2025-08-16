@@ -34,12 +34,12 @@ export default function AccountList({accounts} : AccountListProps){
         <>
             <div className="w-full max-h-[700px] md:w-1/3 border border-yellow-400 rounded-2xl p-4 bg-white/30 mb-5">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-bold text-amber-400">لیست اکانت‌ها</h2>
+                    <h2 className="text-lg font-bold text-amber-400 font-BTitr">لیست اکانت‌ها</h2>
                     <button onClick={() => setCreateModal(true)} className="bg-amber-400 p-1 rounded-full hover:bg-yellow-600">
                     <UserPlus2Icon className="text-white"/>
                     </button>
                 </div>
-                <ul className="space-y-2 overflow-y-auto">
+                <ul className="space-y-2 overflow-y-auto font-BNazanin">
                     <li
                     className="flex justify-between items-center font-normal text-sm text-[#0C1086] bg-[#D8D4FF] rounded-full px-3 py-2"
                     >

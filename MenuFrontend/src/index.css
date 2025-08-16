@@ -1,1 +1,20 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "react-toastify/dist/ReactToastify.css";
+.swiper-slide {
+  overflow: visible !important;
+}
+@theme{
+    --font-BTitr : 'BTitr' ;
+    --font-BNazanin : 'B-Nazanin';
+}
+@font-face {
+    font-family: 'BTitr';
+    src: url(/src/assets/fonts/B\ Mitra\ Bold_0.ttf) format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'B-Nazanin';
+    src: url(/src/assets/fonts/B-NAZANIN.TTF) format('truetype');
+}

@@ -16,6 +16,7 @@ import {
      useDeleteMainCategoryMutation, 
      useUpdateMainCategoryMutation
 } from '../../../features/MainCategory/MainCategoryApi';
+import { toast } from 'react-toastify';
 
 
 
@@ -47,7 +48,7 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   const [changeMainCategoryStatus] = useChangeMainCategoryStatusMutation();
   const [updateCategory] = useUpdateCategoryMutation();
   const [updateMainCategory] = useUpdateMainCategoryMutation();
-  const pageSize = 8;  
+  const pageSize = 7;  
 
 
   const currentData = useMemo(() => {
@@ -65,10 +66,16 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   }, [categoryFilter, mainCategoriesQuery.data, categoriesQuery.data]);
 
   const confirmDelete = async () => {
-    categoryFilter === '1' ? await deleteMainCategory(selectedRowId) : await deleteCategory(selectedRowId);
+    try{
+      categoryFilter === '1' ? await deleteMainCategory(selectedRowId) : await deleteCategory(selectedRowId);
+    }
+    catch{
+      toast.error("حذف با مشکل مواجه شد")
+    }
     setSelectedRowId("")
     setDeleteModalOpen(false)
     setSelectedName(null)
+    toast.success("با موفقیت حذف شد")
   };
   const handleDelete = async(name : string) => {
     setDeleteModalOpen(true);
@@ -84,19 +91,25 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   };
 
   const confirmEdit = (item : any) => {
-    if (categoryFilter === '1') {
-      updateMainCategory({
-        id: selectedRowId,
-        name : item.name
-      });
-    } else {
-      updateCategory({
-        id : selectedRowId,
-        name : item.name,
-        parentCategoryId : item.parentCategoryId
-      })
+    try{
+      if (categoryFilter === '1') {
+        updateMainCategory({
+          id: selectedRowId,
+          name : item.name
+        });
+      } else {
+        updateCategory({
+          id : selectedRowId,
+          name : item.name,
+          parentCategoryId : item.parentCategoryId
+        })
+      }
+    }
+    catch{
+      toast.error("ویرایش با خطلا مواجه شد")
     }
     setOpenModal(false);
+    toast.success("ویرایش با موفقیت انجام شد")
   }
 
   const handleStatuschange = (id:string) => {

@@ -11,9 +11,9 @@ export default function InactiveItem({id, name , diactiveDateTime} : InactiveIte
 
 
     return(
-        <li key={id} className="flex justify-between px-5 py-1">
-            <span className="text-[#5F5F61] text-sm flex-1">{name}</span>
-            <span className="text-red-500 pr-25 flex-1.5 text-xs">{timeAgo}</span>
+        <li key={id} className="flex justify-between px-5 py-1 font-BNazanin">
+            <span className="text-[#5F5F61] text-lg flex-1">{name}</span>
+            <span className="text-red-500 pr-25 flex-1.5 text-sm">{timeAgo}</span>
         </li>
     )
 }

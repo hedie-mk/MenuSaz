@@ -8,7 +8,7 @@ export default function MenuInfo() {
             <div className="max-w-[1000px] w-full p-5 sm:p-6">
                 <div className="relative flex flex-wrap px-5 py-5 justify-center items-center">
                     <div className="absolute inset-0 bg-white/30 z-0 shadow-xl rounded-2xl py-4 px-6"></div>
-                    <div className="relative z-10 flex flex-col gap-4 justify-center items-center ">
+                    <div className="relative w-full z-10 flex flex-col gap-4 justify-center items-center ">
                         <MenuInfoBox />
                     </div>
                 </div>

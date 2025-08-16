@@ -5,9 +5,6 @@ import InactiveItem from "../../../components/dashboard/shared/inactiveItem";
 
 export default function InactiveCategoriesCard(){
     const {data , isLoading , error} = useGetInactiveCategoriesQuery();
-    if (isLoading) return <div>در حال بارگذاری...</div>;
-
-    if (error) return <div>خطا در دریافت اطلاعات</div>;
    
     return(
     <div className="relative min-h-35 flex flex-wrap px-5 py-5 justify-start">
@@ -19,7 +16,7 @@ export default function InactiveCategoriesCard(){
                 {
                     error ? (<div>خطا در دریافت اطلاعات</div>) : null
                 }
-            <label className="font-bold text-lg text-[#CAA200] text-start">دسته بندی های غیر فعال</label>
+            <label className="font-bold text-lg text-[#CAA200] text-start font-BTitr">دسته بندی های غیر فعال</label>
             <ul className="text-sm space-y-1 text-gray-700 justify-start items-start">
                 {data?.map((d) => (
                 <InactiveItem key={d.id} id={d.id} name={d.name} diactiveDateTime={d.diactiveDateTime} />

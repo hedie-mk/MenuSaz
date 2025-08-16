@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LucideImageDown } from "lucide-react";
 import { useGetMenuInfoQuery , useUpdateMenuInfoMutation} from "../../../features/MenuInfo/MenuInfoApi";
-
+import { toast } from "react-toastify";
 
 const menuInfoSchema = z.object({
   name: z.string().min(1, "نام محصول الزامی است"),
@@ -68,10 +68,10 @@ export default function MenuInfoBox(){
 
         try {
         await updateMenuInfo(formData as any).unwrap();
-        alert("محصول با موفقیت ویرایش شد");
+        toast.success("محصول با موفقیت ویرایش شد");
         } catch (err) {
         console.error("Error updating product:", err);
-        alert("خطا در ویرایش محصول");
+        toast.error("خطا در ویرایش محصول");
         }
     };
 
@@ -81,70 +81,70 @@ export default function MenuInfoBox(){
             onSubmit={handleSubmit(onSubmit)}
             className="grid grid-cols-1 sm:grid-cols-2 w-full items-center space-x-5">
             <div className="flex flex-col gap-1">
-                <label className="block text-sm font-medium text-gray-400 pb-2">
+                <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                     نام محصول<span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
                     {...register("name")}
-                    className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1"
+                    className="w-full text-lg bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 font-BNazanin"
                 />
-                {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+                {errors.name && <p className="text-red-500 text-sm font-BNazanin">{errors.name.message}</p>}
 
-                <label className="block text-sm font-medium text-gray-400 pb-2">
+                <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                     آدرس<span className="text-red-500">*</span>
                 </label>
                 <textarea
                     {...register("address")}
-                    className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1"
+                    className="w-full text-lg bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 font-BNazanin"
                 />
-                {errors.address && <p className="text-red-500 text-sm">{errors.address.message}</p>}
+                {errors.address && <p className="text-red-500 text-sm font-BNazanin">{errors.address.message}</p>}
                 <div className="flex flex-col sm:flex-row gap-1">
                     <div className="flex-1">
-                        <label className="block text-sm font-medium text-gray-400 pb-2">
+                        <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                             شماره تماس
                         </label>
                         <input
                             type="text"
                             {...register("phoneNumber")}
                             dir="ltr"
-                            className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1"
+                            className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 font-BNazanin"
                         />
-                        {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber.message}</p>} 
+                        {errors.phoneNumber && <p className="text-red-500 text-sm font-BNazanin">{errors.phoneNumber.message}</p>} 
                     </div>
                     <div className="flex-1.5">
-                        <label className="block text-sm font-medium text-gray-400 pb-2">
+                        <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                             ساعت کاری<span className="text-red-500">*</span>
                         </label>
                         <input
                             type="text"
                             {...register("workHour")}
-                            className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1"
+                            className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 font-BNazanin"
                         />
-                        {errors.workHour && <p className="text-red-500 text-sm">{errors.workHour.message}</p>}
+                        {errors.workHour && <p className="text-red-500 text-sm font-BNazanin">{errors.workHour.message}</p>}
                     </div>
                 </div>
-                <label className="block text-sm font-medium text-gray-400 pb-2">
+                <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                     لینک اینستگرام
                 </label>
                 <input
                     type="text"
                     {...register("socialMedia")}
-                    className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1"
+                    className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 font-BNazanin"
                 />
-                {errors.socialMedia && <p className="text-red-500 text-sm">{errors.socialMedia.message}</p>}
+                {errors.socialMedia && <p className="text-red-500 text-sm font-BNazanin">{errors.socialMedia.message}</p>}
             </div>
             <div className="flex flex-col gap-1">
-                <label className="block text-sm font-medium text-gray-400 pb-2">
+                <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                     توضیحات سایت<span className="text-red-500">*</span>
                 </label>
                 <textarea
                     {...register("siteDescription")}
-                    className="w-full text-sm bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 h-20"
+                    className="w-full text-lg bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 h-20 font-BNazanin"
                 />
-                {errors.siteDescription && <p className="text-red-500 text-sm">{errors.siteDescription.message}</p>}
+                {errors.siteDescription && <p className="text-red-500 text-sm font-BNazanin">{errors.siteDescription.message}</p>}
 
-                <label className="block text-sm font-medium text-gray-400 mb-2">
+                <label className="block text-sm font-medium text-gray-400 mb-2 font-BTitr">
                     لوگو کافه
                 </label>
                 <div className="w-full max-w-[200px] aspect-square border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
@@ -171,7 +171,7 @@ export default function MenuInfoBox(){
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-50 transition-all duration-300 bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-full font-bold"
+                    className="w-50 transition-all duration-300 font-BTitr bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-full font-bold"
                 >
                     ویرایش اطلاعات منو
                 </button>

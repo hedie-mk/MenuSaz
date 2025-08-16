@@ -27,6 +27,7 @@ namespace Infrastructure.Services
         public async Task<List<AccountDto>> GetAllAysnc()
         {
             return await _context.Accounts
+                .OrderByDescending(i => i.CreatedAt)
                 .Select(a => new AccountDto
                 {
                     Id = a.Id,

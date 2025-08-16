@@ -28,6 +28,7 @@ namespace Infrastructure.Services
         {
             return await _context.Items
                 .Include(p => p.Category)
+                .OrderByDescending(i => i.CreatedAt)
                 .Select(p => new ItemDto
                 {
                     Id = p.Id,
@@ -41,7 +42,8 @@ namespace Infrastructure.Services
                     Photo = String.IsNullOrEmpty(p.Photo)
                             ? null 
                             : _fileUrlBuilder.Build($"{_options.ItemImagesPath}/{p.Photo}")
-                }).ToListAsync();
+                })
+                .ToListAsync();
         }
         
         public async Task<List<ItemDto>> GetByIndexAsync(int index)
