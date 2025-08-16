@@ -6,7 +6,6 @@ import ProductCard from "../../components/menu/productCard";
 import ProductCardModal from "../../components/menu/productCardModal";
 import type { GetMenuProducts } from "../../features/Menu/MenuTypes"
 import { useNavigate } from "react-router-dom";
-import MenuHeader from "../../components/menu/menuHeader";
 type MainPageProps = {
     mainCategory : string
 }
@@ -32,8 +31,7 @@ export default function MainPage({mainCategory}: MainPageProps){
 
     return(
         <>
-            <MenuHeader/>
-            <div className="space-y-3 p-4 overflow-hidden mt-10">
+            <div className="space-y-3 p-4 overflow-hidden mt-">
                 {filteredCategories.map((cat) => (
                     <div key={cat.id}>
                         <div className="flex justify-between items-center">
