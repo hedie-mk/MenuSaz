@@ -6,10 +6,6 @@ export default function InformationPage(){
     const {menuInformation} = useSelector((state : RootState) => state.menu)
     return(
         <div className="space-y-5 p-4 overflow-hidden mt-10">
-            <div className="flex flex-col justify-center items-center text-white text-2xl font-bold font-BTitr">
-                <h1>به کافه {menuInformation.name} </h1>
-                <h1>خوش اومدی</h1>
-            </div>
             <div className="flex justify-center items-center">
                 {menuInformation.logo ? (
                     <img className="w-60 h-40 object-cover rounded-lg" src={menuInformation.logo}></img>
