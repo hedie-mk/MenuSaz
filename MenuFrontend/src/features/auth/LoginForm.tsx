@@ -2,7 +2,7 @@
 import { useLoginMutation } from "./authApi";
 import { useDispatch } from "react-redux";
 import { login } from "./authSlice";
-
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 import type { AppDispatch } from "../../app/app";
 import { useState } from "react";
@@ -14,8 +14,9 @@ export default function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [loginApi, { isLoading, error }] = useLoginMutation();
 
-  
-   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
 
   const [UserName, setUserName] = useState("");
   const [Password, setPassword] = useState("");
@@ -55,19 +56,26 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <div className="mb-6">
+          <div className="relative mb-6">
             <label className="block mb-1 text-right font-medium text-sm text-[#0C1086]">
               پسورد
             </label>
             <div className="flex items-center bg-white rounded-md shadow-sm px-3 py-2">
               <FaLock className="text-[#0C1086] ml-2" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={Password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="flex-1 text-right outline-none border-none bg-transparent"
                 
               />
+              <button
+                        type="button"
+                        className="absolute left-4 top-8.5 flex items-center text-[#0C1086] hover:text-gray-700"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        >
+                        {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+                </button>
             </div>
           </div>
 
