@@ -6,6 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LucideImageDown } from "lucide-react";
+import { toast } from "react-toastify";
+
 
 const productSchema = z.object({
   name: z.string().min(1, "نام محصول الزامی است"),
@@ -75,11 +77,11 @@ export default function UpdateProduct() {
 
     try {
       await updateProduct(formData as any).unwrap();
-      alert("محصول با موفقیت ویرایش شد");
+      toast.success("محصول با موفقیت ویرایش شد");
       navigate("/dashboard/products");
     } catch (err) {
       console.error("Error updating product:", err);
-      alert("خطا در ویرایش محصول");
+      toast.error("خطا در ویرایش محصول");
     }
   };
   if(!data) return (
