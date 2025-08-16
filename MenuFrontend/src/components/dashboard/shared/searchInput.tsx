@@ -7,7 +7,7 @@ export default function SearchInput({search , setSearch}: SearchInputProps ){
 
     
 return(
-    <div className="flex w-40 font-BTitr md:w-[240px] items-center bg-[#D8D4FF] rounded-xl px-2 md:px-5 py-3">
+    <div className="flex w-40 font-BTitr justify-between md:w-[240px] items-center bg-[#D8D4FF] rounded-xl px-2 md:px-5 py-3">
         <input
             type="text"
             value={search}
