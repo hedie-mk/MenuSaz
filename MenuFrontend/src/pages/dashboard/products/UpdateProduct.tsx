@@ -85,8 +85,8 @@ export default function UpdateProduct() {
     }
   };
   if(!data) return (
-    <div className="w-20 h-20 bg-red-600 text-white">
-        <p>آیتم یافت نشد</p>
+    <div className="flex justify-center items-center rounded-3xl w-50 h-30 bg-red-600/80 text-white mt-20">
+        <p className="font-BTitr">آیتم یافت نشد</p>
     </div>
   );
   return (
