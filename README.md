@@ -3,6 +3,12 @@
 MenuMa is a **full-stack web application** designed to simplify menu management for cafés and restaurants.  
 It allows managers and staff to update menu items in real-time, apply discounts, and control category visibility with ease.  
 
+<img width="409" height="738" alt="طراحی بدون عنوان" src="https://github.com/user-attachments/assets/c5865ac1-d546-4f8e-a1ab-820e01203d3f" />
+
+
+
+
+
 <img width="944" height="424" alt="Screenshot 2025-08-25 190102" src="https://github.com/user-attachments/assets/c6e80697-0a50-49b8-b6bb-9345bdad0712" />
 
 <img width="954" height="428" alt="Screenshot 2025-08-25 190001" src="https://github.com/user-attachments/assets/2b56707a-26eb-404c-81fd-50dfba14c774" />
