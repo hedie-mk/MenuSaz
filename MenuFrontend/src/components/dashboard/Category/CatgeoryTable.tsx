@@ -19,6 +19,7 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
         <thead className="bg-[#D8D4FF] text-[#0C1086]">
           <tr className="text-sm font-BTitr">
             <th scope="col" className="px-4 py-3 text-center">نام</th>
+            {type === '2' && <th scope="col" className="px-4 py-3 text-center">اولویت</th>}
             {type === '2' && <th scope="col" className="px-4 py-3 text-center">دسته‌بندی والد</th>}
             <th scope="col" className="px-4 py-3 text-center">تعداد زیر مجموعه</th>
             <th scope="col" className="px-4 py-3 text-center">عملیات</th>
@@ -33,6 +34,11 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
               <td className="px-4 py-2 font-medium text-center text-lg text-[#222] font-BNazanin">
                 {item.name}
               </td>
+              {type === '2' && (
+                <td className="px-4 py-2 text-center text-lg font-BNazanin">
+                  {item.priority || '-'}
+                </td>
+              )}
               {type === '2' && (
                 <td className="px-4 py-2 text-center text-lg font-BNazanin">
                   {item.parentCategoryName || '-'}
