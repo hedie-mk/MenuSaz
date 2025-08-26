@@ -18,6 +18,7 @@ namespace Application.Interfaces.Services
         Task<bool> UpdateAsync(CategoryUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
         Task<List<DiactiveCategoryDto>?> GetDiactiveCategoryAsync();
+        Task<bool> ChangePriority(Guid id, int number);
 
     }
 }

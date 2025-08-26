@@ -19,11 +19,13 @@ namespace Infrastructure.Services
             return await _context.Categories
                 .Include(c => c.Items)
                 .Include(c => c.ParentCategory)
-                .OrderByDescending(i => i.CreatedAt)
+                .OrderByDescending(i => i.ParentCategoryId)
+                .ThenBy(c => c.Priority)
                 .Select(c => new CategoryDto
                 {
                     Id = c.Id,
                     Name = c.Name,
+                    Priority = c.Priority,
                     State = c.State.ToString(),
                     ParentCategoryId = c.ParentCategoryId,
                     ParentCategoryName = c.ParentCategory.Name,
@@ -134,6 +136,17 @@ namespace Infrastructure.Services
                     Name = c.Name,
                     DiactiveDateTime = c.DiactiveDateTime,
                 }).ToListAsync();
+        }
+
+        public async Task<bool> ChangePriority(Guid id , int number)
+        {
+            var category = await _context.Categories.Include(c => c.Items).FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category == null) return false;
+
+            category.Priority = number;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
