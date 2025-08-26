@@ -1,6 +1,7 @@
 export interface GetCategory {
     id : string
     name : string
+    priority : number
     state : string 
     parentCategoryId : string 
     parentCategoryName : string
@@ -26,4 +27,8 @@ export interface inactiveCategory {
 export interface MenuStatusCard {
   name: string;
   itemsLength: number;
+}
+export interface ChangePriority {
+    id : string;
+    number : number;
 }
