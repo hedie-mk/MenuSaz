@@ -66,7 +66,19 @@ namespace Infrastructure.Services
             return new MainCategoryCategoriesDto
             {
                 Name = mainCategory.Name,
-                Categories = mainCategory.Categories!.Select(c => c.Name).ToList(),
+                Categories = mainCategory.Categories!.Select(c => new CategoryDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Priority = c.Priority,
+                    State = c.State.ToString(),
+                    ParentCategoryId = c.ParentCategoryId,
+                    ParentCategoryName = c.ParentCategory.Name,
+                    Items = c.Items?.Select(i => i.Name).ToList(),
+                    ItemsLength = c.Items!.Count,
+                })
+                .OrderBy(c => c.Priority)
+                .ToList(),
             };
         }
 
