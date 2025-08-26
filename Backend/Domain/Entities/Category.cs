@@ -11,6 +11,7 @@ namespace Domain.Entities
     public class Category : BaseEntity
     {
         public required string Name { get; set; }
+        public int? Priority { get; set; }
         public State State { get; set; }
         public DateTime? DiactiveDateTime { get; set; }
         public MainCategory ParentCategory { get; set; }
