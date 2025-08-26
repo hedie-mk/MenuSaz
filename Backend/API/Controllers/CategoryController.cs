@@ -81,6 +81,14 @@ namespace API.Controllers
             return Ok(items);
         }
 
+        [HttpPatch("ChangePriority/{id}/{number}")]
+        [Authorize]
+        public async Task<IActionResult> ChangePriority(string id , int number)
+        {
+            var result = await _categoryService.ChangePriority(Guid.Parse(id) , number);
+            return result ? Ok() : NotFound();
+        }
+
 
     }
 }
