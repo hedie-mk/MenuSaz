@@ -6,7 +6,7 @@ import { useCreateMainCategoryMutation } from "../../../features/MainCategory/Ma
 import CategoryModal from "../../../components/dashboard/Category/CategoryModal"
 import MainCategoryModal from "../../../components/dashboard/Category/MainCategoryModal"
 import CategoryManagement from "../../../components/dashboard/Category/CategoryManagement"
-
+import MainCategoryBox from "../../../components/dashboard/Category/MainCategoryBox"
 export default function Category(){
     const [search , setSearch] = useState("")
 
@@ -70,7 +70,10 @@ export default function Category(){
                     selectedRowId={selectedRowId}
                     />
                 ) : (
-                    null
+                    <MainCategoryBox
+                    selectedRowName={selectedRowName}
+                    selectedRowId={selectedRowId}
+                    />
                 )}
                 
             </div>
