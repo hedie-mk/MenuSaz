@@ -19,7 +19,7 @@ export default function MenuHeader({cafeName , search , setSearch}:MenuHeaderPro
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="جستجو "
-                className="bg-transparent outline-none text-right text-sm text-gray-700"
+                className="bg-transparent font-BTitr outline-none text-right text-sm text-gray-700"
                 />
                 <Search 
                 className="w-5 h-5 mr-2 text-end text-[#1B2744]" />
