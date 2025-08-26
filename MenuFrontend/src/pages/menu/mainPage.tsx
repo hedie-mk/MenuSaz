@@ -38,7 +38,22 @@ export default function MainPage({mainCategory}: MainPageProps){
                             <h2 className="text-lg font-bold text-white mb-3 font-BTitr">{cat.name}</h2>
                             <a className="font-BNazanin text-white hover:cursor-pointer transition-all duration-300 ease-in-out hover:scale-120" onClick={()=> navigate(`/menu/${cat.name}`)}>همه</a>
                         </div>
-                        <Swiper spaceBetween={10} slidesPerView={2} effect={`fade`}>
+                        <Swiper 
+                        spaceBetween={10} 
+                        slidesPerView={2} 
+                        effect={`fade`}
+                        breakpoints={{
+                            640: {
+                            slidesPerView: 4,
+                            },
+                            1024: {
+                            slidesPerView: 6,
+                            },
+                            1440: { 
+                            slidesPerView: 8,
+                            },
+                        }}
+                        >
                             
                             {products?.filter((p) => p.categoryId === cat.id).map((item) => {
                                 const isLiked = liked.some((p) => p.id === item.id);
