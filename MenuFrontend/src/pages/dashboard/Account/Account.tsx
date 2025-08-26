@@ -2,7 +2,6 @@ import AccountBox from "../../../components/dashboard/Account/accountBox";
 import {jwtDecode} from "jwt-decode";
 import type { RootState } from "../../../app/app";
 import { useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
 
 
 export default function Account() {
@@ -25,7 +24,6 @@ export default function Account() {
           اکانت
       </div>
       <AccountBox role={role}/>
-      <ToastContainer className={"font-BNazanin"}/>
     </div>
   );
 }

@@ -8,6 +8,8 @@ import { useGetAccountQuery } from "../../features/Account/accountApi";
 import { getAccount } from "../../features/Account/accountSlice";
 import type { AppDispatch } from "../../app/app";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+
 const DashboardLayout = () => {
     const dispatch = useDispatch<AppDispatch>();
     const{ data } = useGetAccountQuery();
@@ -95,6 +97,8 @@ const DashboardLayout = () => {
         
 
         <main className="relative flex items-center justify-center">
+        <ToastContainer className={"font-BNazanin"}/>
+
             <Outlet/>
         </main>
     </div>

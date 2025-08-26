@@ -84,6 +84,8 @@ export default function UpdateProduct() {
       toast.error("خطا در ویرایش محصول");
     }
   };
+
+
   if(!data) return (
     <div className="flex justify-center items-center rounded-3xl w-50 h-30 bg-red-600/80 text-white mt-20">
         <p className="font-BTitr">آیتم یافت نشد</p>
