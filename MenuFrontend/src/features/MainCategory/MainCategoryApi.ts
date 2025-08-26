@@ -59,7 +59,7 @@ export const mainCategoryApi = createApi({
         }),
 
         getMainCategoryCategories : builder.query<GetCategoryCategories,string>({
-            query : (id) => `category/GetCategoryItems/${id}`,
+            query : (id) => `mainCategory/getCategoryCategories/${id}`,
             providesTags : ["MainCategories"]
         }),
     }),
