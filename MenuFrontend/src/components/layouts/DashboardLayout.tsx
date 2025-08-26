@@ -10,6 +10,9 @@ import type { AppDispatch } from "../../app/app";
 import { useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 
+
+
+
 const DashboardLayout = () => {
     const dispatch = useDispatch<AppDispatch>();
     const{ data } = useGetAccountQuery();
@@ -20,8 +23,7 @@ const DashboardLayout = () => {
         }
     },[data , dispatch])
 
-
-
+ 
     const navItems = [
         
         { label: "محصولات", to: "/dashboard/products" },
@@ -97,8 +99,7 @@ const DashboardLayout = () => {
         
 
         <main className="relative flex items-center justify-center">
-        <ToastContainer className={"font-BNazanin"}/>
-
+            <ToastContainer className={"font-BNazanin w-10"}/>
             <Outlet/>
         </main>
     </div>

@@ -3,6 +3,7 @@ import type { AppDispatch } from "../../app/app";
 import { addOrders , addLikedProducts , removeLikedProducts } from "../../features/Menu/MenuSlice";
 import type { GetMenuProducts } from "../../features/Menu/MenuTypes"
 import { LucidePlusCircle , Heart} from "lucide-react"; 
+import { toast } from "react-toastify";
 
 type ProductCardModalProps = {
     isOpen : boolean,
@@ -84,7 +85,11 @@ export default function ProductCardModal({isOpen, onClose, item , liked } : Prod
                 ) : (
                     <button type="button" className="flex justify-start px-2 " >
                         <LucidePlusCircle 
-                        onClick={() => dispatch(addOrders(item))}
+                        onClick={() =>
+                        {
+                            dispatch(addOrders(item))
+                            toast.success(`${item.name} به سفارشات اضافه شد`)
+                        } }
                         className="absolute z-10 bottom-2 w-10 h-10 bg-white text-[#40191B] rounded-full"
                         />
                     </button>

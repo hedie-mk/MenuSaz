@@ -18,3 +18,9 @@
     font-family: 'B-Nazanin';
     src: url(/src/assets/fonts/B-NAZANIN.TTF) format('truetype');
 }
+@layer components {
+    .Toastify__toast {
+        @apply text-sm p-3 min-h-[40px] max-w-70 self-start;  
+        @apply lg:text-base lg:p-4 lg:min-h-[60px];
+    }
+}

@@ -8,6 +8,8 @@ import type { GetMenuMainCategories } from "../../features/Menu/MenuTypes";
 import { useNavigate } from "react-router-dom";
 import MenuHeader from "../menu/menuHeader";
 import SearchResult from "../menu/searchResult";
+import { ToastContainer } from "react-toastify";
+
 
 import { 
   useGetCategoriesQuery,
@@ -103,6 +105,7 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
 
       {/* محتوای اصلی */}
       <main className=" flex-1 overflow-auto ">
+        <ToastContainer className={"font-BNazanin"}/>
         <header className="">
             <MenuHeader cafeName={menuInfo?.name ?? ""} search={search} setSearch={setSearch}/>
         </header>

@@ -3,12 +3,14 @@ import type { AppDispatch } from "../../app/app";
 import { addOrders , addLikedProducts , removeLikedProducts } from "../../features/Menu/MenuSlice";
 import type { GetMenuProducts } from "../../features/Menu/MenuTypes"
 import { LucidePlusCircle , Heart ,BadgePercent} from "lucide-react"; 
+import { toast } from "react-toastify";
 type ProductCardProps = {
     setIsOpen : (value : boolean) => void ,
     setSelectedItem : (value : GetMenuProducts) => void ,
     item : GetMenuProducts,
     isLiked : boolean
 }
+
 export default function ProductCard({setIsOpen,setSelectedItem, item , isLiked} :ProductCardProps){
 
     const dispatch = useDispatch<AppDispatch>();
@@ -67,7 +69,11 @@ export default function ProductCard({setIsOpen,setSelectedItem, item , isLiked} 
                 <button type="button" 
                 className="relative flex justify-start px-2 " >
                     <LucidePlusCircle 
-                    onClick={() => dispatch(addOrders(item))}
+                    onClick={() =>
+                    {
+                        dispatch(addOrders(item))
+                        toast.success(`${item.name} به سفارشات اضافه شد`)
+                    } }
                     className="absolute z-10 bottom-0 bg-white text-[#40191B] rounded-full transition-all duration-300 ease-in-out hover:scale-120 focus:outline-2 focus:outline-offset-2 focus:outline-green-700 active:bg-green-700"
                     />
                 </button>

@@ -4,6 +4,10 @@ import { Trash2 , PlusIcon} from "lucide-react";
 import { addOrders , removeLikedProducts } from "../../features/Menu/MenuSlice";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../app/app";
+import { toast } from "react-toastify";
+
+
+
 export default function FavoritePage(){
     const {liked } = useSelector((state : RootState) => state.menu)
     const dispatch = useDispatch<AppDispatch>()
@@ -43,7 +47,11 @@ export default function FavoritePage(){
                             </div>
                         ) :(
                             <button 
-                            onClick={() =>dispatch(addOrders(item))}
+                            onClick={() =>
+                            {
+                                dispatch(addOrders(item))
+                                toast.success(`${item.name} به سفارشات اضافه شد`)
+                            } }
                             className="w-10 h-10 flex justify-center items-center bg-white rounded-lg mx-1"
                             >
                                 <PlusIcon className="w-9 h-9 duration-300 ease-in-out hover:scale-120 hover:cursor-pointer"/>
