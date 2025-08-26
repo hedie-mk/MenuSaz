@@ -12,6 +12,7 @@ namespace Application.DTOs.Category
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
+        public int? Priority { get; set; }
         public string State { get; set; } = string.Empty;
         public Guid ParentCategoryId { get; set; }
         public string ParentCategoryName { get; set; }
