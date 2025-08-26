@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import CategoryTable from './CatgeoryTable';
 import Pagination from '../shared/Pagination';
 import CategoryModal from './CategoryModal';
@@ -39,9 +39,13 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   });
   const [selectedName, setSelectedName] = useState<string | null>(null);
 
-
-  const mainCategoriesQuery = useGetMainCategoriesQuery();
-  const categoriesQuery = useGetCategoriesQuery();
+  useEffect(() => {
+    setSelectedRowId("")
+    setSelectedName("")
+  }, [categoryFilter])
+  
+  const {data: mainCategoriesQuery} = useGetMainCategoriesQuery();
+  const {data:categoriesQuery} = useGetCategoriesQuery();
   const [deleteCategory] = useDeleteCategoryMutation();
   const [deleteMainCategory] = useDeleteMainCategoryMutation();
   const [changeCategoryStatus] = useChangeCategoryStatusMutation();
@@ -50,20 +54,20 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   const [updateMainCategory] = useUpdateMainCategoryMutation();
   const pageSize = 7;  
 
-
   const currentData = useMemo(() => {
     const source =
-        categoryFilter === '1' ? mainCategoriesQuery.data ?? [] : categoriesQuery.data ?? [];
+        categoryFilter === '1' ? mainCategoriesQuery ?? [] : categoriesQuery ?? [];
 
     const filtered = source.filter((s) => s.name?.includes(search));
-
+    
     return filtered.slice((page - 1) * pageSize, page * pageSize);
-  }, [categoryFilter,search, page, mainCategoriesQuery.data, categoriesQuery.data]);
+
+  }, [categoryFilter,search, page, mainCategoriesQuery, categoriesQuery]);
 
   const totalPages = useMemo(() => {
-    const length = categoryFilter === '1' ? mainCategoriesQuery.data?.length : categoriesQuery.data?.length;
+    const length = categoryFilter === '1' ? mainCategoriesQuery?.length : categoriesQuery?.length;
     return Math.ceil((length ?? 0) / pageSize);
-  }, [categoryFilter, mainCategoriesQuery.data, categoriesQuery.data]);
+  }, [categoryFilter, mainCategoriesQuery, categoriesQuery]);
 
   const confirmDelete = async () => {
     try{
