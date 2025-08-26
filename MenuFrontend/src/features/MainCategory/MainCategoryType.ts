@@ -11,7 +11,16 @@ export interface PostMainCategory {
     name : string;
 }
 
+export interface Category {
+    id : string
+    name : string
+    priority : number
+    state : string 
+    parentCategoryId : string 
+    parentCategoryName : string
+}
+
 export interface GetCategoryCategories {
     name : string ,
-    categories : string[]
+    categories : Category[]
 }
