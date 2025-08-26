@@ -4,6 +4,7 @@ import { useState } from "react";
 import DeleteModal from "../shared/DeleteModal";
 import CreateAccountModal from "./accountCreateModal";
 import { useDeleteAccountMutation } from "../../../features/Account/accountApi";
+import { toast } from "react-toastify";
 type AccountListProps = {
     accounts : GetAccount[] | undefined
 }
@@ -21,6 +22,7 @@ export default function AccountList({accounts} : AccountListProps){
     const onConfirm = async () => {
         try {
             await deleteAccount(selectedId).unwrap();
+            toast.warning("اکانت با موفقیت حذف شد")
         } catch (err) {
             console.error("Error deleting account:", err);
             alert("خطا در حذف اکانت");
