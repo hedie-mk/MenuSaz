@@ -1,11 +1,11 @@
 import { useGetCategoryItemsQuery } from "../../../features/Category/categoryApi"
 
-type CategoryItemsBox = {
+type CategoryItemsBoxProps = {
     selectedRowName : string | null,
     selectedRowId : string
 }
 
-export default function CategoryItemsBox({selectedRowName , selectedRowId} : CategoryItemsBox){
+export default function CategoryItemsBox({selectedRowName , selectedRowId} : CategoryItemsBoxProps){
     if(!selectedRowId){
         return null;
     }
