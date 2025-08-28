@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-
 export const useExportOrder = (elementId : any, fileName = "order-list") =>{
 
     const downloadPDF = useCallback(async () => {
@@ -12,27 +11,22 @@ export const useExportOrder = (elementId : any, fileName = "order-list") =>{
             return;
         }
 
-        // گرفتن snapshot از element
         const canvas = await html2canvas(element, { scale: 2 });
         const imgData = canvas.toDataURL("image/png");
 
-        // تنظیمات PDF
         const pdf = new jsPDF("p", "mm", "a4"); // portrait, millimeters, A4
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
 
-        // ابعاد تصویر
         const imgWidth = pdfWidth;
         const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
         let heightLeft = imgHeight;
         let position = 0;
 
-        // صفحه اول
         pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
         heightLeft -= pdfHeight;
 
-        // صفحات بعدی
         while (heightLeft > 0) {
             position = heightLeft - imgHeight;
             pdf.addPage();
@@ -46,7 +40,7 @@ export const useExportOrder = (elementId : any, fileName = "order-list") =>{
         }
     }, [elementId, fileName]);
 
-    
+
     const shareOrder = useCallback(async () => {
         try {
         const element = document.getElementById(elementId);
