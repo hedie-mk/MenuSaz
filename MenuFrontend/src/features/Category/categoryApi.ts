@@ -5,7 +5,7 @@ import type { GetCategory , PostCategory , GetCategoryItems ,inactiveCategory , 
 export const categoryApi = createApi({
     reducerPath: 'categoryApi',
     baseQuery : fetchBaseQuery({
-        baseUrl: 'https://localhost:7214/api/',
+        baseUrl : import.meta.env.VITE_API_BASE_URL,
         prepareHeaders: (headers, { getState }) => {
         const token = (getState() as any).auth?.token;
         if (token) {

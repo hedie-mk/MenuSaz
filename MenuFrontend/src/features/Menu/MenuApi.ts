@@ -4,7 +4,7 @@ import type { GetMenuMainCategories , GetMenuCategories , GetMenuProducts , GetM
 export const menuApi = createApi({
     reducerPath : "menuApi",
     baseQuery : fetchBaseQuery({
-        baseUrl: 'https://localhost:7214/api/'
+        baseUrl : import.meta.env.VITE_API_BASE_URL,
     }),
     tagTypes : ["menu"],
     endpoints : (builder) => ({

@@ -3,7 +3,7 @@ import type { GetMainCategory , PostMainCategory , GetCategoryCategories } from 
 export const mainCategoryApi = createApi({
     reducerPath: 'mainCategoryApi',
     baseQuery : fetchBaseQuery({
-        baseUrl: 'https://localhost:7214/api/',
+        baseUrl : import.meta.env.VITE_API_BASE_URL,
         prepareHeaders: (headers, { getState }) => {
         const token = (getState() as any).auth?.token;
         if (token) {

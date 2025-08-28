@@ -2,9 +2,10 @@ import { createApi , fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { GetAccount , CreateAccount , UpdateAccount , ChangePassword } from "./accountType";
 
 export const accountApi = createApi({
+    
     reducerPath : 'accountApi',
     baseQuery : fetchBaseQuery({
-        baseUrl : 'https://localhost:7214/api/',
+        baseUrl : import.meta.env.VITE_API_BASE_URL,
         prepareHeaders: (headers, { getState }) => {
         const token = (getState() as any).auth?.token;
         if (token) {
