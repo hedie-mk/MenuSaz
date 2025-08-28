@@ -62,7 +62,7 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
         {/* دسته‌بندی‌ها */}
         <div className="flex flex-1 flex-col justify-evenly items-center gap-6">
           {
-            mainCategories?.map((cat: any) => (
+            mainCategories?.filter(c => c.state === "active").map((cat: any) => (
               <NavLink
                 key={cat.id}
                 onClick={()=> setSearch("")} 
