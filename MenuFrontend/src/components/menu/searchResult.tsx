@@ -21,7 +21,7 @@ export default function SearchResult({search}:SearchResultProps){
     return(
         <div className="space-y-3 p-4 overflow-hidden mt-10">
             <div className="z-1 overflow-hidden">
-                <div className=" z-1 grid grid-cols-2 space-x-3 space-y-3">
+                <div className=" z-1 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 space-x-3 space-y-3">
                     {products.filter(p => p.name.includes(search)).map((item, index) => {
                         const isLiked = liked.some((p) => p.id === item.id);
                         return(
