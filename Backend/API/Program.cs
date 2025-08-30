@@ -4,6 +4,7 @@ using Infrastructure.DI;
 using Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 if (builder.Environment.IsDevelopment())
@@ -66,9 +67,10 @@ app.UseAuthorization();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.MapFallbackToFile("index.html");
 
 app.MapControllers();
+
+app.MapFallbackToFile("index.html");
 
 
 

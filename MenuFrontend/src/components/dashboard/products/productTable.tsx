@@ -60,7 +60,7 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
         setDeleteModalOpen(false);
         setSelectedId(null);
         setSelectedName(null);
-        toast.success("محصول با موفقیت حذف شد")
+        toast.warning("محصول با موفقیت حذف شد")
       }
     }
     catch(err) {
@@ -76,9 +76,13 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
           <table className="w-full text-sm text-right ">
             <thead className="bg-[#D8D4FF] text-[#0C1086] ">
               <tr className=" text-sm font-BTitr">
-                  {tHead.map((t , idx) => (
-                      <th key={idx} className="px-4 py-3 text-center ">{t}</th>
-                  ))}
+                <th  className="px-4 py-3 text-center ">عکس محصول</th>
+                <th  className="px-4 py-3 text-center ">اسم</th>
+                <th  className="px-4 py-3 text-center hidden md:table-cell">توضیحات</th>
+                <th  className="px-4 py-3 text-center ">قیمت</th>
+                <th  className="px-4 py-3 text-center hidden md:table-cell">دسته بندی</th>
+                <th  className="px-4 py-3 text-center ">عملیات</th>
+                  
               </tr>
             </thead>
             <tbody>
@@ -94,12 +98,12 @@ export default function ProductTable({isLoading , filteredItem , tHead} : TableP
                     <td className="px-4 py-2 text-gray-700">
                       <img className="w-[50px] h-[50px] aspect-square object-cover" src={item.photo ?? undefined}></img>
                     </td>
-                    <td className="px-4 py-2 font-medium text-[#222] text-center text-[18px] font-BNazanin">{item.name}</td>
-                    <td className="px-4 py-2 text-gray-600 text-center truncate max-w-[250px] text-[18px] font-BNazanin">{item.description}</td>
-                    <td className="px-4 py-2 text-[#444] text-center font-BNazanin text-lg">{item.price}</td>
-                    <td className="px-4 py-2 text-[#444] text-center font-BNazanin">{item.categoryName}</td>
+                    <td className="px-4 py-2 font-medium text-[#222] text-center text-sm md:text-lg font-BNazanin">{item.name}</td>
+                    <td className="px-4 py-2 text-gray-600 text-center truncate max-w-[250px] text-[18px] font-BNazanin hidden md:table-cell">{item.description}</td>
+                    <td className="px-4 py-2 text-[#444] text-center font-BNazanin font-bold text-sm md:text-lg">{item.price}</td>
+                    <td className="px-4 py-2 text-[#444] text-center font-BNazanin hidden md:table-cell">{item.categoryName}</td>
                     
-                    <td className="px-4 py-2 flex gap-2 justify-center items-center text-center">
+                    <td className="px-4 py-2 flex gap-1 md:gap-2 justify-center items-center text-center">
                       <button onClick={() => handelAddCategory(item.id,item.name)} className=" p-1 rounded-full">
                         <PlusCircleIcon className="text-[#0C1086] hover:text-[#CAA200] duration-300 ease-in "/>
                       </button>

@@ -1,7 +1,7 @@
 import MenuInfoBox from "../../../components/dashboard/MenuInfo/menuInfoBox"
 export default function MenuInfo() {
     return(
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col w-full justify-center items-center">
             <div className="w-1/2 px-4 py-3 sm:hidden mt-5 flex justify-center rounded-full bg-[#0C1086] text-white shadow-md text-sm font-bold">
                 تنظیمات منو
             </div>

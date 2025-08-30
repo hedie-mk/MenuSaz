@@ -82,7 +82,7 @@ export default function MenuInfoBox(){
             className="grid grid-cols-1 sm:grid-cols-2 w-full items-center space-x-5">
             <div className="flex flex-col gap-1">
                 <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
-                    نام محصول<span className="text-red-500">*</span>
+                    نام کافه<span className="text-red-500">*</span>
                 </label>
                 <input
                     type="text"
@@ -147,7 +147,7 @@ export default function MenuInfoBox(){
                 <label className="block text-sm font-medium text-gray-400 mb-2 font-BTitr">
                     لوگو کافه
                 </label>
-                <div className="w-full max-w-[200px] aspect-square border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
+                <div className="w-full md:max-w-[200px] aspect-square border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
                     {data?.logo ? (
                     <img
                         src={photo ? URL.createObjectURL(photo) : data?.logo}

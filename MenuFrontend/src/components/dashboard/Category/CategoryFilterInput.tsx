@@ -10,7 +10,7 @@ export default function CategoryFilterInput({
     setCategoryFilter
 } : CategoryFilterInputProps){
     return(
-        <div className="flex items-center font-BTitr bg-[#D8D4FF] lg:w-[250px] rounded-xl px-5 py-3 cursor-pointer">
+        <div className="flex w-50 items-center font-BTitr bg-[#D8D4FF] lg:w-[250px] rounded-xl px-5 py-3 cursor-pointer">
             <Filter className="w-5 h-5 ml-2 text-[#CAA200]" />
             <select
             value={categoryFilter}

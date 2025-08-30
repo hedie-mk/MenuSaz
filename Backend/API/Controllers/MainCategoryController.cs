@@ -33,6 +33,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> Create([FromBody] MainCategoryCreateDto dto)
         {
             var id = await _mainCategoryService.CreateAsync(dto);
@@ -40,6 +42,8 @@ namespace API.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> Update([FromBody] MainCategoryUpdateDto dto)
         {
             var result = await _mainCategoryService.UpdateAsync(dto);
@@ -47,6 +51,8 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _mainCategoryService.DeleteAsync(Guid.Parse(id));
@@ -54,6 +60,8 @@ namespace API.Controllers
         }
 
         [HttpPatch("ChangeStatus/{id}")]
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> ChangeStatus(string id)
         {
             var result = await _mainCategoryService.ChangeStatusAsync(Guid.Parse(id));

@@ -48,8 +48,8 @@ const UserDropdown: React.FC = () => {
 
       
         <div 
-        className={`absolute left-2 md:right-0 z-20 mt-2 bg-white divide-y divide-gray-300 rounded-lg shadow-sm w-40 transition-all duration-500 ease-in-out transform
-            ${isOpen ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"}`
+        className={` left-2  md:right-0 z-20 mt-2 bg-white divide-y divide-gray-300 rounded-lg shadow-sm w-40 transition-all duration-500 ease-in-out transform
+            ${isOpen ? " absolute opacity-100 translate-y-0" : "hidden opacity-0 -translate-y-6"}`
         }
         
         >

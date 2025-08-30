@@ -25,6 +25,23 @@ namespace Infrastructure.Helpers
                 };
 
                 context.Accounts.Add(admin);
+
+                var visiter = new Account
+                {
+                    UserName = "visiter",
+                    Password = PasswordHasher.Hash("123456"),
+                    Role = UserRole.visiter,
+                    Email = "admin@menusaz.ir",
+                    Phone = "09120000000"
+                };
+                context.Accounts.Add(visiter);
+
+                await context.SaveChangesAsync();
+            }
+            if(!context.MenuInfos.Any())
+            {
+                var menuInfo = new MenuInfo { Name = "کافه" };
+                context.MenuInfos.Add(menuInfo);
                 await context.SaveChangesAsync();
             }
         }

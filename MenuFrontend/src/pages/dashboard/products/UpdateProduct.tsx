@@ -95,9 +95,9 @@ export default function UpdateProduct() {
     <div className="relative min-h-35 flex flex-wrap justify-center items-center mt-7 px-4 py-4 rounded-xl border-2 border-yellow-400">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-4xl grid grid-cols-2 gap-2"
+        className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-2"
       >
-        <div>
+        <div className="">
           <h2 className="text-2xl font-bold text-[#CAA200] font-BTitr mb-3">ویرایش محصول</h2>
 
           <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
@@ -188,7 +188,7 @@ export default function UpdateProduct() {
           </div>
         </div>
 
-        <div className="col-span-2 flex justify-center items-center">
+        <div className="md:col-span-2 flex justify-center items-center">
           <button
             type="submit"
             disabled={isLoading}

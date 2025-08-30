@@ -1,11 +1,11 @@
 ﻿using Application.Interfaces.Services;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
+
     public class MenuController : Controller
     {
         private readonly ICategoryService _categoryService;

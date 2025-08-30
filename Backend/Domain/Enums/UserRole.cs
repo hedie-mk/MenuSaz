@@ -9,6 +9,7 @@ namespace Domain.Enums
     public enum UserRole
     {
         Manager = 0,
-        Staff = 1
+        Staff = 1, 
+        visiter =2,
     }
 }

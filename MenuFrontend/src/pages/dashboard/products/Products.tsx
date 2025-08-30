@@ -62,10 +62,10 @@ export default function Products(){
   );
 
 return(
-    <div className="max-w-full md:w-[1120px] p-5 overflow-x-hidden">
+    <div className="w-full max-w-[1120px] p-5 ">
         <div className="grid grid-cols-1 sm:grid-cols-3">
-            <div className="flex justify-between sm:flex-row sm:col-span-2 items-center mb-4">
-                <div className="flex gap-4 sm:flex-row items-center ">
+            <div className="flex w-full sm:flex-row sm:col-span-2 items-center mb-4">
+                <div className="flex justify-between md:justify-start gap-4 w-full sm:flex-row items-center ">
                     <SearchInput search={search}
                                 setSearch={setSearch}
                     />
@@ -85,7 +85,7 @@ return(
                 </button>
             </div>
         </div>
-        <div>
+        <div className="grid grid-cols-1">
             <ProductTable isLoading={isLoading} filteredItem={paginatedProducts} tHead={thead}/>
             
             <Pagination

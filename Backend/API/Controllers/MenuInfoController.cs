@@ -24,13 +24,15 @@ namespace API.Controllers
         }
         [HttpPost]
         [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> Create([FromForm] MenuInfoCreateDto dto)
         {
             var id = await _menuInfoService.CreateMenuInfoAsync(dto);
             return Ok(id);
         }
         [HttpPut]
-        [Authorize(Roles ="Manager")]
+        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Staff")]
         public async Task<IActionResult> Update([FromForm] MenuInfoUpdateDto dto)
         {
             var result = await _menuInfoService.UpdateMenuInfoAsync(dto);

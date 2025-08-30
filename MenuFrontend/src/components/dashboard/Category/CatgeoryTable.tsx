@@ -14,7 +14,7 @@ interface CategoryTableProps {
 export default function CategoryTable({ data, type, onEdit, onDelete , statusChange , setSelectedRowName , setSelectedRowId}: CategoryTableProps) {
 
   return (
-    <div className="overflow-x-auto shadow-md rounded-2xl font-">
+    <div className="overflow-x-auto shadow-md rounded-2xl">
       <table className="w-full text-sm">
         <thead className="bg-[#D8D4FF] text-[#0C1086]">
           <tr className="text-sm font-BTitr">
