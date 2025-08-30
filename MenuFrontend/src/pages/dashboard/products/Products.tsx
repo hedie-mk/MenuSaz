@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetCategoriesQuery } from "../../../features/Category/categoryApi";
 import Pagination from "../../../components/dashboard/shared/Pagination";
 
-const thead = ["عکس محصول" , "اسم" , "توضیحات" , "قیمت" , "دسته بندی" , "عملیات"]
+
 
 export default function Products(){
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ return(
             </div>
         </div>
         <div className="grid grid-cols-1">
-            <ProductTable isLoading={isLoading} filteredItem={paginatedProducts} tHead={thead}/>
+            <ProductTable isLoading={isLoading} filteredItem={paginatedProducts}/>
             
             <Pagination
             currentPage={currentPage}

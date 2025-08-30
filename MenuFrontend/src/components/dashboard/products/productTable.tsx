@@ -8,12 +8,11 @@ import AddCategoryModal from "./AddCategoryModal";
 import { toast } from "react-toastify";
 type TableProps = {
     isLoading : boolean,
-    filteredItem : any,
-    tHead : string[]
+    filteredItem : any
 }
 
 
-export default function ProductTable({isLoading , filteredItem , tHead} : TableProps){
+export default function ProductTable({isLoading , filteredItem} : TableProps){
     const navigate = useNavigate();
     const [changeProductStatus] = useChangeProductStatusMutation();
     const [deleteProduct] = useDeleteProductMutation();
