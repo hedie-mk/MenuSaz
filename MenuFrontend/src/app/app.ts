@@ -35,8 +35,8 @@ const persistConfig = {
 };
 
 const rootReducer = (state: any, action: any) => {
-  if (action.type === "auth/logout") { // اکشن logout خودت
-    // پاک کردن کل persisted state
+  if (action.type === "auth/logout") { 
+
     storage.removeItem("persist:root");
     state = undefined;
   }

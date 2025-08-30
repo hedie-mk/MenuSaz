@@ -52,8 +52,7 @@ namespace API.Controllers
 
         
         [HttpPut("updateAccount")]
-        [Authorize(Roles ="Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Update([FromBody] AccountUpdateDto dto)
         {
             var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -75,8 +74,7 @@ namespace API.Controllers
         }
 
         [HttpPut("changePassword")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
         {
             var userIdFromToken = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

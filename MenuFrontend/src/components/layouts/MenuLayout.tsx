@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import MenuHeader from "../menu/menuHeader";
 import SearchResult from "../menu/searchResult";
 import { ToastContainer } from "react-toastify";
-
+import { useOrderSummary } from "../../hooks/useOrderSummary";
 
 import { 
   useGetCategoriesQuery,
@@ -40,8 +40,7 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
   },[categories , products , menuInfo, mainCategories])
 
   const [search , setSearch] = useState("");
-
-
+  const {totalCount} = useOrderSummary()
 
   return (
     <div className="flex h-screen bg-[#1B2744]">
@@ -55,8 +54,9 @@ export default function MenuLayout({mainCategories}: MenuLayoutProps){
             setSearch("")
           }
         } 
-        className="p-2">
-          <ShoppingCart className="text-white w-6 h-6 transition-all duration-300 ease-in-out hover:scale-120" />
+        className="releative p-2">
+          <ShoppingCart className="text-white w-8 h-8 transition-all duration-300 ease-in-out hover:scale-120" />
+          <div className="absolute right-1 top-10 bg-white text-xs px-1 rounded-full">{totalCount}</div>
         </button>
 
         {/* دسته‌بندی‌ها */}

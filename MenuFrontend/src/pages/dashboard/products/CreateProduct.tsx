@@ -161,7 +161,7 @@ export default function CreateProduct() {
           </div>
         </div>
 
-        <div className="col-span-2 flex justify-center items-center">
+        <div className="md:col-span-2 flex justify-center items-center">
           <button
             type="submit"
             disabled={isLoading}

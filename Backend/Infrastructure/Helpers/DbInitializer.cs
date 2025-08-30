@@ -40,7 +40,15 @@ namespace Infrastructure.Helpers
             }
             if(!context.MenuInfos.Any())
             {
-                var menuInfo = new MenuInfo { Name = "کافه" };
+                var menuInfo = new MenuInfo { 
+                    Name = "خالی" ,
+                    Address= "خالی",
+                    WorkHour ="خالی",
+                    PhoneNumber= "خالی",
+                    SiteDescription = "خالی",
+                    SocialMedia = "خالی",
+
+                };
                 context.MenuInfos.Add(menuInfo);
                 await context.SaveChangesAsync();
             }

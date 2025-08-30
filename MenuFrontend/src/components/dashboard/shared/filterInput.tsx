@@ -18,7 +18,7 @@ export default function FilterInput({
                                     }: FilterInputProps)
 {
     return(
-        <div className="flex items-center font-BTitr bg-[#D8D4FF] w-45 md:w-[250px] rounded-xl px-5 py-3 cursor-pointer">
+        <div className="flex items-center font-BTitr bg-[#D8D4FF] w-40 md:w-[250px] rounded-xl px-5 py-3 cursor-pointer">
         <Filter className="w-5 h-5 ml-2 text-[#CAA200]" />
         <select
             className="bg-transparent text-[#CAA200] w-45 outline-none text-sm overflow-y-auto"

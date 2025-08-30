@@ -46,8 +46,7 @@ namespace API.Controllers
 
         // POST: api/item
         [HttpPost]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Create([FromForm] ItemCreateDto dto)
         {
             var id = await _itemService.CreateAsync(dto);
@@ -55,8 +54,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Update([FromForm] ItemUpdateDto dto)
         {
             var result = await _itemService.UpdateAsync(dto);
@@ -65,8 +63,7 @@ namespace API.Controllers
 
         // DELETE: api/item/{id}
         [HttpDelete("{id:guid}")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _itemService.DeleteAsync(Guid.Parse(id));
@@ -75,8 +72,7 @@ namespace API.Controllers
 
         // PATCH: api/item/changeStatus/{id}
         [HttpPatch("changeStatus/{id:guid}")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> ChangeStatus(string id)
         {
             var result = await _itemService.ChangeStatusAsync(Guid.Parse(id));
@@ -85,8 +81,7 @@ namespace API.Controllers
 
         // PATCH: api/item/addCategory?id={itemId}&categoryId={categoryId}
         [HttpPatch("addCategory")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> AddCategory([FromQuery] string id, [FromQuery] string categoryId)
         {
             var result = await _itemService.AddCategoryAsync(Guid.Parse(id), Guid.Parse(categoryId));

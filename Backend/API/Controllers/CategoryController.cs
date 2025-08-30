@@ -34,8 +34,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Create([FromBody] CategoryCreateDto dto)
         {
             var id = await _categoryService.CreateAsync(dto);
@@ -43,8 +42,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Update([FromBody] CategoryUpdateDto dto)
         {
             var result = await _categoryService.UpdateAsync(dto);
@@ -52,8 +50,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _categoryService.DeleteAsync(Guid.Parse(id));
@@ -61,8 +58,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("ChangeStatus/{id}")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> ChangeStatus(string id)
         {
             var result = await _categoryService.ChangeStatusAsync(Guid.Parse(id));
@@ -86,8 +82,7 @@ namespace API.Controllers
         }
 
         [HttpPatch("ChangePriority/{id}/{number}")]
-        [Authorize(Roles = "Manager")]
-        [Authorize(Roles = "Staff")]
+        [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> ChangePriority(string id , int number)
         {
             var result = await _categoryService.ChangePriority(Guid.Parse(id) , number);
