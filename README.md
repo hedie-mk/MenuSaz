@@ -1,7 +1,46 @@
-# MenuMa – Cafe Menu Management Web App
+MenuMa 🍽️
 
-MenuMa is a **full-stack web application** designed to simplify menu management for cafés and restaurants.  
-It allows managers and staff to update menu items in real-time, apply discounts, and control category visibility with ease.  
+A full-stack café menu management web application built with React, TypeScript, Redux Toolkit, RTK Query, Tailwind CSS on the frontend and .NET 8 Web API with Clean Architecture on the backend.
+
+🚀 Features
+
+Role-based access control (Manager vs. Staff)
+
+Real-time menu and category management (add, disable, mark unavailable)
+
+Discount management & conditional category visibility (e.g., hide breakfast menus outside breakfast hours)
+
+Modern, responsive UI designed in Figma
+
+JWT-based authentication & secure state persistence
+
+🛠️ Tech Stack
+
+Frontend:
+
+React (TypeScript)
+
+Redux Toolkit & RTK Query
+
+Redux Persist
+
+Tailwind CSS
+
+Backend:
+
+.NET 8 Web API (Clean Architecture: Domain, Application, Infrastructure, Presentation)
+
+Entity Framework Core
+
+JWT Authentication
+
+SQL Server
+
+Deployment:
+
+Hosted on a Windows VM
+
+📸 Screenshots
 
 <img width="409" height="738" alt="طراحی بدون عنوان" src="https://github.com/user-attachments/assets/c5865ac1-d546-4f8e-a1ab-820e01203d3f" />
 
@@ -18,22 +57,3 @@ It allows managers and staff to update menu items in real-time, apply discounts,
 
 <img width="928" height="423" alt="Screenshot 2025-08-25 190134" src="https://github.com/user-attachments/assets/8609a279-de5e-4ffd-91aa-ffa761a2cbc0" />
 
----
-
-## 🚀 Features
-- Role-based access control (Manager & Staff)  
-- Add, disable, or mark items as unavailable in real time  
-- Enable/disable entire categories (e.g., breakfast menu)  
-- Apply discounts to specific items  
-- Modern and responsive UI with TailwindCSS  
-- Smooth state management with Redux  
-
----
-
-## 🛠️ Tech Stack
-**Frontend:** React, TypeScript, Redux, TailwindCSS  
-**Backend:** .NET, ASP.NET Web API  
-**Database:** SQL Server  
-**Others:** Git, Docker, Azure  
-
----
