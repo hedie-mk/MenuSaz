@@ -16,13 +16,16 @@ export default function MainPage({mainCategory}: MainPageProps){
     const {categories , products , liked } = useSelector((state : RootState) => state.menu)
     const [isOpen , setIsOpen] = useState(false)
     const [selectedItem , setSelectedItem] = useState<GetMenuProducts | null>(null)
+    const [isLoading , setIsLoading]=useState(false)
 
     const [filteredCategories, setFilteredCategories] = useState<{id: string; name: string}[]>([]);
     useEffect(() => {
+        setIsLoading(true)
         if(categories){
             const filtered = categories.filter((c) => c.parentCategoryName === mainCategory).filter(c => c.state === "active").map((c) => ({id: c.id , name : c.name}));
             setFilteredCategories(filtered);
         } 
+        setIsLoading(false)
     },[mainCategory , categories])
     const onClose = () => {
         setIsOpen(false);
@@ -32,6 +35,11 @@ export default function MainPage({mainCategory}: MainPageProps){
     return(
         <>
             <div className="space-y-3 p-4 overflow-hidden mt-">
+                {isLoading ?? (
+                    <>
+                        <h3>در حال بارگذاری</h3>
+                    </>
+                )}
                 {filteredCategories.map((cat) => (
                     <div key={cat.id}>
                         <div className="flex justify-between items-center">

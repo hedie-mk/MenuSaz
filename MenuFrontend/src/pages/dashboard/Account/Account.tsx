@@ -19,7 +19,7 @@ export default function Account() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row w-full max-w-[800px] gap-4 px-6 mt-5 sm:mt-10 justify-center items-center">
+    <div className="flex flex-col md:flex-row w-full max-w-[800px] gap-4 px-6 mt-5 sm:mt-30 justify-center items-center">
       <div className="w-1/2 px-4 font-BTitr py-3 sm:hidden flex justify-center rounded-full bg-[#0C1086] text-white shadow-md text-sm font-bold">
           اکانت
       </div>

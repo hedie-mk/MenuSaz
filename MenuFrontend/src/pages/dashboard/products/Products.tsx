@@ -22,7 +22,7 @@ export default function Products(){
   const [currentPage, setCurrentPage] = useState(1);
 
   // Constants
-  const itemsPerPage = 5;
+  const itemsPerPage = 7;
 
   // Category Options
   const categories = useMemo(

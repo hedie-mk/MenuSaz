@@ -8,7 +8,7 @@ export default function MenuStatusCard() {
    if (error) return <div>خطا در دریافت اطلاعات</div>;
 
  return(
-    <div className="relative min-h-35 flex flex-wrap justify-center items-center px-5 py-5">
+    <div className="relative min-h-50 flex flex-wrap justify-start items-start px-5 py-5">
          <div className="absolute inset-0 bg-white/30 z-0 shadow-xl rounded-2xl py-4 px-6"></div>
          <div className="relative z-10 flex flex-col gap-4">
             <label className="font-bold text-lg text-start text-[#CAA200] font-BTitr">منو</label>

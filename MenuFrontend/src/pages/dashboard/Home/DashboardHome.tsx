@@ -7,7 +7,7 @@ import MenuStatusCard from "../../../components/dashboard/Home/MenuStatusCard";
 
 export default function DashboardHome() {
   return (
-    <div className="w-[1120px] p-6 space-y-3">
+    <div className="w-[1200px] p-6 space-y-3">
       {/* Buttons */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-BTitr">
         <div className="relative h-15 flex justify-center items-center">
@@ -42,7 +42,7 @@ export default function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
        
        <div className="lg:col-span-1 ">
-        <div className="grid lg:grid-cols-1 md:grid-cols-2">
+        <div className="grid grid-cols-1 ">
           <div className="flex flex-col p-2">
             <InactiveProductsCard />
           </div>

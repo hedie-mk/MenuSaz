@@ -23,7 +23,7 @@ export const useTimeAgo = (date: string | Date) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeAgo(getTimeAgo(date));
-    }, 60000); // هر 1 دقیقه یکبار آپدیت میشه
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [date]);

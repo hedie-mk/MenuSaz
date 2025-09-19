@@ -114,7 +114,7 @@ namespace Infrastructure.Services
 
             if(item.State == State.diactive)
             {
-                item.DiactiveDateTime = DateTime.Now;
+                item.DiactiveDateTime = DateTime.UtcNow;
             }
             else
             {
@@ -199,6 +199,7 @@ namespace Infrastructure.Services
                 {
                     Id = i.Id,
                     Name = i.Name,
+                    Price = i.Price,
                     Description = i.Description,
                     CreatedAt = i.CreatedAt.Date.ToShortDateString(),
                 }).ToListAsync();

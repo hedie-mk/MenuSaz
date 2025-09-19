@@ -7,6 +7,7 @@ type InactiveItemProps = {
 };
 
 export default function InactiveItem({id, name , diactiveDateTime} : InactiveItemProps){
+    console.log(diactiveDateTime)
     const timeAgo = useTimeAgo(diactiveDateTime); 
 
 

@@ -74,7 +74,7 @@ export default function LoginForm() {
                         className="absolute left-4 top-8.5 flex items-center text-[#0C1086] hover:text-gray-700"
                         onClick={() => setShowPassword((prev) => !prev)}
                         >
-                        {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+                        {showPassword ? <EyeIcon size={20} /> : <EyeOffIcon size={20} />}
                 </button>
             </div>
           </div>

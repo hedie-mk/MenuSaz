@@ -105,7 +105,7 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
             <div className="relative w-full">
 
                 <label className="block mb-1 text-sm font-medium text-[#0C1086] font-BTitr">
-                    پسوورد
+                     پسوورد جدید
                 </label>
                 <input
                     name="password"
@@ -121,13 +121,13 @@ export default function ChangePasswordModal({ isOpen, onClose , accountId }: Mod
                         className="absolute inset-y-0 right-3 top-6 flex items-center text-[#0C1086] hover:text-gray-700"
                         onClick={() => setShowPassword((prev) => !prev)}
                         >
-                        {showPassword ? <EyeOffIcon size={20} /> : <EyeIcon size={20} />}
+                        {showPassword ? <EyeIcon size={20} /> : <EyeOffIcon size={20} />}
                 </button>
             </div>
 
             <div>
                 <label className="block mb-1 text-sm font-medium text-[#0C1086] font-BTitr">
-                    تکرار پسوورد
+                    تکرار پسوورد جدید
                 </label>
                 <input
                     name="confirmPassword"

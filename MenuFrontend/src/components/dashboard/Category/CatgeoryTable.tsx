@@ -21,7 +21,11 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
             <th scope="col" className="px-4 py-3 text-center">نام</th>
             {type === '2' && <th scope="col" className="px-4 py-3 text-center">اولویت</th>}
             {type === '2' && <th scope="col" className="px-4 py-3 text-center">دسته‌بندی والد</th>}
-            <th scope="col" className="px-4 py-3 text-center">تعداد زیر مجموعه</th>
+            {type === '2' ? (
+                <th scope="col" className="px-4 py-3 text-center hidden md:table-cell">تعداد آیتم ها</th>
+              ) : (
+                <th scope="col" className="px-4 py-3 text-center ">تعداد زیر مجموعه</th>
+            )}
             <th scope="col" className="px-4 py-3 text-center">عملیات</th>
           </tr>
         </thead>
@@ -45,7 +49,7 @@ export default function CategoryTable({ data, type, onEdit, onDelete , statusCha
                 </td>
               )}
               {type === '2' ? (
-                <td className="px-4 py-2 text-center text-[#444] text-lg font-BNazanin">{item.itemsLength}</td>
+                <td className="px-4 py-2 text-center text-[#444] text-lg font-BNazanin hidden md:table-cell">{item.itemsLength}</td>
               ) : (
                 <td className="px-4 py-2 text-center text-[#444] text-lg font-BNazanin">{item.categoriesLength}</td>
               )}

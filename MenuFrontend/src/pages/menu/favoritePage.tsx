@@ -22,7 +22,7 @@ export default function FavoritePage(){
                 <div key={item.id} className="flex justify-between space-x-2 bg-[#40191B] rounded-xl px-1 py-1 mb-2 transition-all duration-300 ease-in-out">
                     <div className="flex justify-center items-center rounded-full">
                         <img
-                            src={item.photo ?? undefined}
+                            src={item.photo ?? "/notFound.png"}
                             className="w-15 h-15 object-cover rounded-full"
                         />
                     </div>

@@ -3,9 +3,12 @@ using Infrastructure.Context;
 using Infrastructure.DI;
 using Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+// ================== Services ==================
 
 if (builder.Environment.IsDevelopment())
 {
@@ -22,21 +25,20 @@ if (builder.Environment.IsDevelopment())
     });
 }
 
-// Add services to the container.
+
 builder.Services.AddInfrastructure(builder.Configuration);
-
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 
-// costum services
+
+// Custom services
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddSwaggerDocs();
 builder.Services.AddCustomAppServices(builder.Configuration, builder.Environment);
 
 var app = builder.Build();
 
-
+// ================== DB Migration & Seed ==================
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -53,7 +55,7 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// Configure the HTTP request pipeline.
+// ================== Middleware Pipeline ==================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -68,8 +70,21 @@ app.UseAuthorization();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+    RequestPath = "/images",
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Remove("Cache-Control");
+        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=2592000");
+    }
+});
+// --- API Controllers ---
 app.MapControllers();
 
+// --- SPA fallback (React Router) ---
 app.MapFallbackToFile("index.html");
 
 

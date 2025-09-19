@@ -52,7 +52,7 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
   const [changeMainCategoryStatus] = useChangeMainCategoryStatusMutation();
   const [updateCategory] = useUpdateCategoryMutation();
   const [updateMainCategory] = useUpdateMainCategoryMutation();
-  const pageSize = 7;  
+  const pageSize = 10;
 
   const currentData = useMemo(() => {
     const source =
@@ -69,9 +69,17 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
     return Math.ceil((length ?? 0) / pageSize);
   }, [categoryFilter, mainCategoriesQuery, categoriesQuery]);
 
+
+
+  const handleDelete = async(name : string) => {
+    setDeleteModalOpen(true);
+    setSelectedName(name);
+  };
+
   const confirmDelete = async () => {
     try{
       categoryFilter === '1' ? await deleteMainCategory(selectedRowId) : await deleteCategory(selectedRowId);
+      toast.success("با موفقیت حذف شد")
     }
     catch{
       toast.error("حذف با مشکل مواجه شد")
@@ -79,12 +87,8 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
     setSelectedRowId("")
     setDeleteModalOpen(false)
     setSelectedName(null)
-    toast.success("با موفقیت حذف شد")
   };
-  const handleDelete = async(name : string) => {
-    setDeleteModalOpen(true);
-    setSelectedName(name);
-  }
+  
   const handleEdit = (item: any) => {
     if (categoryFilter === '1') {
       setEditData((prev) => ({ ...prev, mainCategory: item }));
@@ -114,7 +118,7 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
     }
     setOpenModal(false);
     toast.success("ویرایش با موفقیت انجام شد")
-  }
+  };
 
   const handleStatuschange = (id:string) => {
     if(categoryFilter === "1"){
@@ -123,7 +127,7 @@ export default function CategoryManagement({search , categoryFilter , setSelecte
     else {
         changeCategoryStatus(id)
     }
-  }
+  };
   
   return(
     <div className="px-4 py-3 space-y-4">

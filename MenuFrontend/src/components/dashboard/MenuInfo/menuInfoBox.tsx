@@ -68,10 +68,10 @@ export default function MenuInfoBox(){
 
         try {
         await updateMenuInfo(formData as any).unwrap();
-        toast.success("محصول با موفقیت ویرایش شد");
+        toast.success("اطلاعات با موفقیت ویرایش شد");
         } catch (err) {
         console.error("Error updating product:", err);
-        toast.error("خطا در ویرایش محصول");
+        toast.error("خطا در ویرایش اطلاعات منو");
         }
     };
 
@@ -100,7 +100,7 @@ export default function MenuInfoBox(){
                 />
                 {errors.address && <p className="text-red-500 text-sm font-BNazanin">{errors.address.message}</p>}
                 <div className="flex flex-col sm:flex-row gap-1">
-                    <div className="flex-1">
+                    <div className="flex-1/3">
                         <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                             شماره تماس
                         </label>
@@ -112,7 +112,7 @@ export default function MenuInfoBox(){
                         />
                         {errors.phoneNumber && <p className="text-red-500 text-sm font-BNazanin">{errors.phoneNumber.message}</p>} 
                     </div>
-                    <div className="flex-1.5">
+                    <div className="flex-2/3">
                         <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
                             ساعت کاری<span className="text-red-500">*</span>
                         </label>

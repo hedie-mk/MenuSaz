@@ -57,10 +57,10 @@ export default function ProductCardModal({isOpen, onClose, item , liked } : Prod
                     }
                 }}
                 >
-                    <Heart className={`absolute z-10 mt-1 transition-all duration-300 ease-in-out ${isLiked ? " text-red-600 fill-red-600 scale-140 " : "scale-120"}`}/>
+                    <Heart className={`absolute z-10 mt-1 transition-all duration-300 ease-in-out text-[#40191B] ${isLiked ? " text-red-600 fill-red-600 scale-140 " : "scale-120"}`}/>
                 </div>
                 <img
-                    src={item.photo ?? undefined}
+                    src={item.photo ?? "/notFound.png"}
                     className="w-full h-60 object-cover rounded-b-full transition-all duration-500 ease-in-out group-hover:scale-110 "
                 />
                 <p className="flex text-xl font-extrabold mt-1 items-center justify-center font-BTitr">{item.name}</p>

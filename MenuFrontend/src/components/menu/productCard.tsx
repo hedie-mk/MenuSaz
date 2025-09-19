@@ -29,7 +29,7 @@ export default function ProductCard({setIsOpen,setSelectedItem, item , isLiked} 
             >
                 <Heart 
                 className={`absolute z-10 mt-1 transition-all duration-300 ease-in-out 
-                ${isLiked ? " text-red-600 fill-red-600 scale-120 " : "scale-100"}`
+                ${isLiked ? " text-red-600 fill-red-600 scale-120 " : "text-[#40191B] scale-100"}`
                 }
                 />
             </div>
@@ -40,7 +40,7 @@ export default function ProductCard({setIsOpen,setSelectedItem, item , isLiked} 
             ) : null}
 
             <img
-                src={item.photo ?? undefined}
+                src={item.photo ?? "/notFound.png"}
                 className="w-full h-40 object-cover rounded-b-full "
                 onClick={() => {
                     setSelectedItem(item)

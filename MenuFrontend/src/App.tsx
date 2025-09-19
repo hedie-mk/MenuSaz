@@ -27,15 +27,16 @@ function App() {
           <MenuLayout mainCategories={data!}/>
         }>
           <Route path="" element={<InformationPage/>}/>
-          <Route path=":categoryName" element={<CategoryPage/>}/>
           <Route path="favorite" element={<FavoritePage/>}/>
           <Route path="orders" element={<OrderPage/>}/>
 
           {data?.map((m)=>(
             <Route key={m.id} path={m.name} element={<MainPage mainCategory={m.name}/>} />)
           )}
+          <Route path=":categoryName" element={<CategoryPage/>}/>
+
         </Route>
-        {/* مسیر محافظت‌شده با layout */}
+        
         <Route path="/dashboard/*" element={
             <PrivateRoute>
               <DashboardLayout />

@@ -66,7 +66,7 @@ export default function CreateProduct() {
   };
 
   return (
-    <div className="relative min-h-35 flex flex-wrap justify-center items-center mt-7 px-4 py-4 rounded-xl border-2 border-yellow-400">
+    <div className="relative min-h-35 flex flex-wrap justify-center items-center mt-7 md:mt-20 px-4 py-4 rounded-xl border-2 border-yellow-400">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-2 gap-2 "
@@ -137,10 +137,10 @@ export default function CreateProduct() {
         </div>
 
         <div className="px-4 sm:col-span-1">
-          <label className="block text-sm font-medium text-gray-400 mb-2 mt-10 font-BTitr">
+          <label className="block text-sm font-medium text-gray-400 mb-2 md:mt-10 font-BTitr">
             عکس محصول
           </label>
-          <div className="md:w-70 md:h-70 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
+          <div className="md:w-50 min-h-50 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
             {photo ? (
               <img
                 src={photo ? URL.createObjectURL(photo) : undefined}

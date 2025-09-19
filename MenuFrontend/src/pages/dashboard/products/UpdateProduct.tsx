@@ -86,118 +86,125 @@ export default function UpdateProduct() {
   };
 
 
-  if(!data) return (
+  if(!data && !isLoading) return (
     <div className="flex justify-center items-center rounded-3xl w-50 h-30 bg-red-600/80 text-white mt-20">
         <p className="font-BTitr">آیتم یافت نشد</p>
     </div>
   );
   return (
     <div className="relative min-h-35 flex flex-wrap justify-center items-center mt-7 px-4 py-4 rounded-xl border-2 border-yellow-400">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-2"
-      >
-        <div className="">
-          <h2 className="text-2xl font-bold text-[#CAA200] font-BTitr mb-3">ویرایش محصول</h2>
+      {isLoading 
+      ? (<h3>در حال دریفات اطلاعات</h3>) 
+      : (
+        <>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-2"
+          >
+            <div className="">
+              <h2 className="text-2xl font-bold text-[#CAA200] font-BTitr mb-3">ویرایش محصول</h2>
 
-          <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
-            نام محصول<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            {...register("name")}
-            className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 text-[#0C1086] font-BNazanin"
-          />
-          {errors.name && <p className="text-red-500 text-sm font-BNazanin">{errors.name.message}</p>}
-
-          <div className="flex gap-2 mb-1">
-            <div className="flex-1">
               <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
-                قیمت اصلی<span className="text-red-500">*</span>
+                نام محصول<span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                {...register("price")}
-                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086] font-BNazanin"
+                {...register("name")}
+                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-1 text-[#0C1086] font-BNazanin"
               />
-              {errors.price && <p className="text-red-500 text-sm font-BNazanin">{errors.price.message}</p>}
-            </div>
-            <div className="flex-1">
+              {errors.name && <p className="text-red-500 text-sm font-BNazanin">{errors.name.message}</p>}
+
+              <div className="flex gap-2 mb-1">
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
+                    قیمت اصلی<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    {...register("price")}
+                    className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086] font-BNazanin"
+                  />
+                  {errors.price && <p className="text-red-500 text-sm font-BNazanin">{errors.price.message}</p>}
+                </div>
+                <div className="flex-1">
+                  <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
+                    قیمت با تخفیف
+                  </label>
+                  <input
+                    type="text"
+                    {...register("discountedPrice")}
+                    className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086] font-BNazanin"
+                  />
+                  {errors.discountedPrice && (
+                    <p className="text-red-500 text-sm font-BNazanin">{errors.discountedPrice.message}</p>
+                  )}
+                </div>
+              </div>
+
               <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
-                قیمت با تخفیف
+                توضیحات محصول<span className="text-red-500">*</span>
               </label>
-              <input
-                type="text"
-                {...register("discountedPrice")}
-                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 text-[#0C1086] font-BNazanin"
+              <textarea
+                {...register("description")}
+                className="w-full h-25 bg-[#D9D9D9] rounded-lg px-3 py-2 font-BNazanin mb-1 text-[#0C1086]"
               />
-              {errors.discountedPrice && (
-                <p className="text-red-500 text-sm font-BNazanin">{errors.discountedPrice.message}</p>
-              )}
+              {errors.description && <p className="text-red-500 text-sm font-BNazanin">{errors.description.message}</p>}
+
+
+              <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
+                دسته‌بندی
+              </label>
+              <select
+                {...register("categoryId")}
+                className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-3 text-gray-600 font-BNazanin"
+              >
+                <option value="">انتخاب دسته</option>
+                {categories?.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
 
-          <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
-            توضیحات محصول<span className="text-red-500">*</span>
-          </label>
-          <textarea
-            {...register("description")}
-            className="w-full h-25 bg-[#D9D9D9] rounded-lg px-3 py-2 font-BNazanin mb-1 text-[#0C1086]"
-          />
-          {errors.description && <p className="text-red-500 text-sm font-BNazanin">{errors.description.message}</p>}
+            <div className="px-4">
+              <label className="block text-sm font-medium text-gray-400 mb-2 mt-10 font-BTitr">
+                عکس محصول
+              </label>
+              <div className="md:w-70 md:h-70 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
+                {data?.photo ? (
+                  <img
+                    src={photo ? URL.createObjectURL(photo) : data.photo}
+                    alt="preview"
+                    className="w-full h-full object-cover rounded-lg"
+                  />
+                ) : (
+                  <span className="text-gray-400">
+                    <LucideImageDown className="text-gray-500" />
+                  </span>
+                )}
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
+                  onChange={(e) => setPhoto(e.target.files?.[0] || null)}
+                  className="absolute inset-0 opacity-0 cursor-pointer"
+                />
+              </div>
+            </div>
 
+            <div className="md:col-span-2 flex justify-center items-center">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-50 transition-all duration-300 font-BTitr bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-full font-bold"
+              >
+                {isLoading ? "در حال ثبت..." : "ویرایش محصول"}
+              </button>
+            </div>
+          </form>
+        </>
+      )}
 
-          <label className="block text-sm font-medium text-gray-400 pb-2 font-BTitr">
-            دسته‌بندی
-          </label>
-          <select
-            {...register("categoryId")}
-            className="w-full bg-[#D9D9D9] rounded-lg px-3 py-2 mb-3 text-gray-600 font-BNazanin"
-          >
-            <option value="">انتخاب دسته</option>
-            {categories?.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="px-4">
-          <label className="block text-sm font-medium text-gray-400 mb-2 mt-10 font-BTitr">
-            عکس محصول
-          </label>
-          <div className="md:w-70 md:h-70 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center relative">
-            {data?.photo ? (
-              <img
-                src={photo ? URL.createObjectURL(photo) : data.photo}
-                alt="preview"
-                className="w-full h-full object-cover rounded-lg"
-              />
-            ) : (
-              <span className="text-gray-400">
-                <LucideImageDown className="text-gray-500" />
-              </span>
-            )}
-            <input
-              type="file"
-              accept="image/png, image/jpeg, image/jpg, image/ico, image/svg"
-              onChange={(e) => setPhoto(e.target.files?.[0] || null)}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
-          </div>
-        </div>
-
-        <div className="md:col-span-2 flex justify-center items-center">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-50 transition-all duration-300 font-BTitr bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-full font-bold"
-          >
-            {isLoading ? "در حال ثبت..." : "ویرایش محصول"}
-          </button>
-        </div>
-      </form>
     </div>
   );
 }

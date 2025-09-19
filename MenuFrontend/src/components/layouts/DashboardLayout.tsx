@@ -49,7 +49,7 @@ const DashboardLayout = () => {
             <UserDropdown/>
             </div>
             {/* منوی دسکتاپ */}
-            <nav className="hidden bg-[#E7E5FA] shadow-sm w-[1120px] h-[50px] rounded-full md:grid grid-cols-5 justify-items-center  gap-2 font-semibold text-gray-700 text-base">
+            <nav className="hidden bg-[#E7E5FA] shadow-sm w-[1250px] h-[50px] rounded-full md:grid grid-cols-5 justify-items-center  gap-2 font-semibold text-gray-700 text-base">
                     {navItems.map((item) => (
                     
                              <NavLink

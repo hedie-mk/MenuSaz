@@ -75,7 +75,7 @@ export const productsApi = createApi({
         }),
 
         getLatestProduct : builder.query<latestProduct[] , void>({
-            query : () => 'dashboard/latestItems/4',
+            query : () => 'dashboard/latestItems/7',
             providesTags : ["Products"]
         }),
         

@@ -10,7 +10,7 @@ import {  toast } from "react-toastify";
 
 
 const accountSchema = z.object({
-  name: z.string().min(1, "نام محصول الزامی است"),
+  name: z.string().min(1, "نام کاربری الزامی است"),
   email: z.string().optional(),
   phoneNumber : z.string().optional(),
 });

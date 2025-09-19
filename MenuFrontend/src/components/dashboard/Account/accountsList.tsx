@@ -25,7 +25,7 @@ export default function AccountList({accounts} : AccountListProps){
             toast.warning("اکانت با موفقیت حذف شد")
         } catch (err) {
             console.error("Error deleting account:", err);
-            alert("خطا در حذف اکانت");
+            toast.error("خطا در حذف اکانت");
         }
         setDeleteModal(false);
         setSelectedName(null)

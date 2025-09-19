@@ -1,4 +1,4 @@
-import {Trash2, Edit ,PlusCircleIcon} from "lucide-react";
+import {Trash2, Edit ,PlusCircleIcon , Percent } from "lucide-react";
 import { useNavigate } from "react-router-dom"
 import type { GetProduct  } from "../../../features/Products/productType";
 import { useAddCategoryToProductMutation, useChangeProductStatusMutation , useDeleteProductMutation } from "../../../features/Products/productApi";
@@ -94,12 +94,18 @@ export default function ProductTable({isLoading , filteredItem} : TableProps){
               ) : (
                 filteredItem?.map((item : GetProduct) => (
                   <tr key={item.id} className=" hover:bg-[#DDD9FF] duration-300 ease-in ">
-                    <td className="px-4 py-2 text-gray-700">
-                      <img className="w-[50px] h-[50px] aspect-square object-cover" src={item.photo ?? undefined}></img>
+                    <td className="flex px-4 py-2 text-gray-700 justify-center items-center">
+                      <img className="w-[50px] h-[50px] aspect-square object-cover" src={item.photo ?? "/notFound.png"}></img>
                     </td>
                     <td className="px-4 py-2 font-medium text-[#222] text-center text-sm md:text-lg font-BNazanin">{item.name}</td>
                     <td className="px-4 py-2 text-gray-600 text-center truncate max-w-[250px] text-[18px] font-BNazanin hidden md:table-cell">{item.description}</td>
-                    <td className="px-4 py-2 text-[#444] text-center font-BNazanin font-bold text-sm md:text-lg">{item.price}</td>
+                    <td className="px-4 py-2 text-[#444] text-center font-BNazanin font-bold text-sm md:text-lg">
+                      {item.discountedPrice 
+                      ? ( 
+                        <span className="flex justify-center">{item.discountedPrice}<Percent className="text-yellow-500 w-5 mx-2"/></span> 
+                      ) 
+                      : (item.price)}
+                    </td>
                     <td className="px-4 py-2 text-[#444] text-center font-BNazanin hidden md:table-cell">{item.categoryName}</td>
                     
                     <td className="px-4 py-2 flex gap-1 md:gap-2 justify-center items-center text-center">

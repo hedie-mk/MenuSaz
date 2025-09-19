@@ -39,6 +39,7 @@ export interface inactiveProduct {
 export interface latestProduct {
     id : string ,
     name : string,
+    price : number,
     description : string | null ,
     createdAt : string
 }
