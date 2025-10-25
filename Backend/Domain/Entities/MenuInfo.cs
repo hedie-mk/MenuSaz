@@ -10,17 +10,28 @@ namespace Domain.Entities
 {
     public class MenuInfo : BaseEntity
     {
-        public required string Name { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string Name { get; set; } = string.Empty;
+
+        [MaxLength(200)]
         public string? Address { get; set; }
+
+        [MaxLength(100)]
         public string? WorkHour { get; set; }
+
+        [Phone]
+        [MaxLength(20)]
         public string? PhoneNumber { get; set; }
+
+        [MaxLength(500)]
         public string? SiteDescription { get; set; }
+
+        [MaxLength(300)]
         public string? SocialMedia { get; set; }
+
+        [MaxLength(255)]
         public string? Logo { get; set; }
-        public MenuInfo()
-        {
-            
-        }
 
     }
 }

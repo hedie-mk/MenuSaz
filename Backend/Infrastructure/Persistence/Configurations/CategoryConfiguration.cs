@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -18,7 +19,12 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(c => c.State)
-                .HasConversion<string>();
+                .HasConversion<string>()
+                .HasDefaultValue(State.active);
+            
+
+            builder.Property(c => c.Priority)
+                .HasDefaultValue(null);
 
             builder.HasOne(c => c.ParentCategory)
                 .WithMany(m => m.Categories)
@@ -30,6 +36,8 @@ namespace Infrastructure.Persistence.Configurations
                 .HasForeignKey(c => c.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
 
+            builder.HasIndex(c => c.Name)
+                .IsUnique(false);
         }
     }
 }

@@ -24,6 +24,9 @@ namespace Infrastructure.Persistence.Configurations
                 .WithOne(c => c.ParentCategory)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasIndex(m => m.Name)
+                .IsUnique(false);
         }
     }
 }

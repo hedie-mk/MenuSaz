@@ -18,7 +18,7 @@ namespace Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(i => i.Description)
-            .HasMaxLength(500); 
+                 .HasMaxLength(500); 
 
             builder.Property(i => i.Price)
                 .HasColumnType("decimal(18,2)")
@@ -35,6 +35,9 @@ namespace Infrastructure.Persistence.Configurations
                 .WithMany(c => c.Items)
                 .HasForeignKey(i => i.CategoryId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            builder.HasIndex(i => i.Name)
+                .IsUnique(false);
 
         }
     }
