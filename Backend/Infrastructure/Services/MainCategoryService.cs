@@ -5,6 +5,7 @@ using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,143 +17,242 @@ namespace Infrastructure.Services
     public class MainCategoryService : IMainCategoryService
     {
         private readonly AppDbContext _context;
-        public MainCategoryService(AppDbContext context)
+        private readonly ILogger<MainCategoryService> _logger;
+        public MainCategoryService(AppDbContext context, ILogger<MainCategoryService> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public async Task<List<MainCategoryDto>?> GetAllAysnc()
         {
-            if (_context.Categories == null)
+            try
             {
-                return null;
-            }
+                var mainCategories = await _context.MainCategories
+                    .AsNoTracking()
+                    .OrderByDescending(i => i.CreatedAt)
+                    .Select(m => new MainCategoryDto
+                    {
+                        Id = m.Id,
+                        Name = m.Name,
+                        State = m.State.ToString(),
+                        Categories = m.Categories!.Select(c => c.Name).ToList(),
+                        CategoriesLength = m.Categories!.Count
+                    }).ToListAsync();
 
-            return await _context.MainCategories
-                .Include(m => m.Categories)
-                .OrderByDescending(i => i.CreatedAt)
-                .Select(m => new MainCategoryDto
-                {
-                    Id = m.Id,
-                    Name = m.Name,
-                    State = m.State.ToString(),
-                    Categories = m.Categories!.Select(c => c.Name).ToList() ?? null,
-                    CategoriesLength = m.Categories!.Count
-                }).ToListAsync();
+                _logger.LogInformation("Fetched {Count} main categories successfully.", mainCategories.Count);
+                return mainCategories;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching all main categories.");
+                throw;
+            }
         }
 
         public async Task<MainCategoryDto?> GetByIdAsync(Guid id)
         {
-            var mainCategory = await _context.MainCategories.Include(m => m.Categories).FirstOrDefaultAsync(m => m.Id == id);
-
-            if (mainCategory == null)  return null;
-            
-            return new MainCategoryDto
+            try
             {
-                Id = mainCategory.Id,
-                Name = mainCategory.Name,
-                State = mainCategory.State.ToString(),
-                Categories = mainCategory.Categories!.Select(c => c.Name).ToList(),
-                CategoriesLength = mainCategory.Categories!.Count
-            };
+                var mainCategory = await _context.MainCategories
+                    .AsNoTracking()
+                    .Include(m => m.Categories)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+                if (mainCategory is null)
+                {
+                    _logger.LogWarning("Main category with ID {MainCategoryId} not found.", id);
+                    return null;
+                }
+
+                var categories = mainCategory.Categories?.Select(c => c.Name).ToList() ?? new List<string>();
+
+                _logger.LogInformation(
+                    "Fetched main category '{Name}' (ID: {Id}) successfully with {Count} categories.",
+                    mainCategory.Name, mainCategory.Id, categories.Count
+                );
+
+                return new MainCategoryDto
+                {
+                    Id = mainCategory.Id,
+                    Name = mainCategory.Name,
+                    State = mainCategory.State.ToString(),
+                    Categories = categories,
+                    CategoriesLength = categories.Count
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching main category with ID {MainCategoryId}.", id);
+                throw;
+            }
         }
 
         public async Task<MainCategoryCategoriesDto?> GetCateroryCategoriesAysnc(Guid id)
         {
-            var mainCategory = await _context.MainCategories.Include(m => m.Categories).FirstOrDefaultAsync(m => m.Id == id);
-
-            if (mainCategory == null) return null;
-
-            return new MainCategoryCategoriesDto
+            try
             {
-                Name = mainCategory.Name,
-                Categories = mainCategory.Categories!.Select(c => new CategoryDto
+                var mainCategory = await _context.MainCategories
+                    .AsNoTracking()
+                    .Include(m => m.Categories)
+                    .ThenInclude(c => c.Items)
+                    .FirstOrDefaultAsync(m => m.Id == id);
+
+                if (mainCategory is null)
                 {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Priority = c.Priority,
-                    State = c.State.ToString(),
-                    ParentCategoryId = c.ParentCategoryId,
-                    ParentCategoryName = c.ParentCategory.Name,
-                    Items = c.Items?.Select(i => i.Name).ToList(),
-                    ItemsLength = c.Items!.Count,
-                })
-                .OrderBy(c => c.Priority)
-                .ToList(),
-            };
+                    _logger.LogWarning("Main category with ID {MainCategoryId} not found.", id);
+                    return null;
+                }
+
+                var categories = mainCategory.Categories?
+                    .Select(c => new CategoryDto
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Priority = c.Priority,
+                        State = c.State.ToString(),
+                        ParentCategoryId = c.ParentCategoryId,
+                        ParentCategoryName = c.ParentCategory?.Name ?? "No parent",
+                        Items = c.Items?.Select(i => i.Name).ToList() ?? new List<string>(),
+                        ItemsLength = c.Items?.Count ?? 0,
+                    })
+                    .OrderBy(c => c.Priority)
+                    .ToList() ?? new List<CategoryDto>();
+
+                _logger.LogInformation("Fetched {Count} categories for main category '{MainCategoryName}' successfully.",
+                    categories.Count, mainCategory.Name);
+
+                return new MainCategoryCategoriesDto
+                {
+                    Name = mainCategory.Name,
+                    Categories = categories
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching categories for main category with ID {MainCategoryId}.", id);
+                throw;
+            }
         }
 
         public async Task<bool> ChangeStatusAsync(Guid id)
         {
-            var category = await _context.MainCategories.FindAsync(id);
-
-            if (category == null) return false;
-
-            category.State = category.State == State.active
-                          ? State.diactive
-                          : State.active;
-
-            if (category.State == State.diactive)
+            try
             {
-                category.DiactiveDateTime = DateTime.Now;
-            }
-            else
-            {
-                category.DiactiveDateTime = null;
-            }
+                var category = await _context.MainCategories.FindAsync(id);
 
-            await _context.SaveChangesAsync();
-            return true;
+                if (category == null)
+                {
+                    _logger.LogWarning("Main category with ID {MainCategoryId} not found.", id);
+                    return false;
+                }
+
+                category.State = category.State == State.active ? State.diactive : State.active;
+                category.DiactiveDateTime = category.State == State.diactive ? DateTime.Now : null;
+
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Main category '{Name}' status changed to {State}.", category.Name, category.State);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while changing status for main category with ID {MainCategoryId}.", id);
+                throw;
+            }
         }
 
         public async Task<Guid> CreateAsync(MainCategoryCreateDto dto)
         {
-            var mainCategory = new MainCategory
+            try
             {
-                Name = dto.Name
-            };
+                var mainCategory = new MainCategory { Name = dto.Name };
 
-            _context.MainCategories.Add(mainCategory);
+                _context.MainCategories.Add(mainCategory);
+                await _context.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
-
-            return mainCategory.Id;
+                _logger.LogInformation("Created main category with ID {Id}.",  mainCategory.Id);
+                return mainCategory.Id;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while creating main category '{Name}'.", dto.Name);
+                throw;
+            }
         }
 
         public async Task<bool> UpdateAsync(MainCategoryUpdateDto dto)
         {
-            var mainCategory = await _context.MainCategories.FindAsync(dto.Id);
+            try
+            {
+                var mainCategory = await _context.MainCategories.FindAsync(dto.Id);
 
-            if (mainCategory == null) return false;
+                if (mainCategory == null)
+                {
+                    _logger.LogWarning("Main category with ID {MainCategoryId} not found.", dto.Id);
+                    return false;
+                }
 
-            mainCategory.Name = dto.Name;
-            await _context.SaveChangesAsync();
+                mainCategory.Name = dto.Name;
+                await _context.SaveChangesAsync();
 
-            return true;    
+                _logger.LogInformation("Main category '{id}' updated successfully.", dto.Id);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating main category with ID {MainCategoryId}.", dto.Id);
+                throw;
+            }
         }
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var mainCategory = _context.MainCategories.Find(id);
+            try
+            {
+                var mainCategory = await _context.MainCategories.FindAsync(id);
 
-            if (mainCategory == null) return false;
+                if (mainCategory == null)
+                {
+                    _logger.LogWarning("Main category with ID {MainCategoryId} not found.", id);
+                    return false;
+                }
 
-            _context.MainCategories.Remove(mainCategory);
-            await _context.SaveChangesAsync();
+                _context.MainCategories.Remove(mainCategory);
+                await _context.SaveChangesAsync();
 
-            return true;
+                _logger.LogInformation("Main category ID: {Id} deleted successfully.", mainCategory.Id);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while deleting main category with ID {MainCategoryId}.", id);
+                throw;
+            }
         }
 
         public async Task<List<DiactiveMainCategoryDto>> GetDiactiveCategoryAsync()
         {
-            return await _context.MainCategories
-               .Where(c => c.State == State.diactive)
-               .Select(c => new DiactiveMainCategoryDto
-               {
-                   Id = c.Id,
-                   Name = c.Name,
-                   DiactiveDateTime = c.DiactiveDateTime,
-               }).ToListAsync();
+            try
+            {
+                var diactiveCategories = await _context.MainCategories
+                    .AsNoTracking()
+                    .Where(c => c.State == State.diactive)
+                    .Select(c => new DiactiveMainCategoryDto
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        DiactiveDateTime = c.DiactiveDateTime,
+                    }).ToListAsync();
+
+                _logger.LogInformation("Fetched {Count} deactivated main categories.", diactiveCategories.Count);
+                return diactiveCategories;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching deactivated main categories.");
+                throw;
+            }
         }
     }
 }
