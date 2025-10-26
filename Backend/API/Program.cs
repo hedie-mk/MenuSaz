@@ -1,92 +1,124 @@
 using API.Extensions;
+using API.Middlewares;
 using Infrastructure.Context;
 using Infrastructure.DI;
 using Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Serilog;
 
-
-var builder = WebApplication.CreateBuilder(args);
-
-// ================== Services ==================
-
-if (builder.Environment.IsDevelopment())
+try
 {
-    builder.Services.AddCors(options =>
+
+    var configuration = new ConfigurationBuilder()
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+        .AddEnvironmentVariables()
+        .Build();
+
+    Log.Logger = new LoggerConfiguration()
+        .ReadFrom.Configuration(configuration)
+        .Enrich.FromLogContext()
+        .CreateLogger();
+
+    Log.Information("Starting up web host");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+
+    builder.Host.UseSerilog((ctx, lc) =>
     {
-        options.AddPolicy("AllowFrontend",
-            policy =>
-            {
-                policy.WithOrigins("http://localhost:5173")
-                      .AllowAnyHeader()
-                      .AllowAnyMethod()
-                      .AllowCredentials();
-            });
+        lc.ReadFrom.Configuration(ctx.Configuration);
+
     });
-}
-
-
-builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-
-
-// Custom services
-builder.Services.AddJwtAuthentication(builder.Configuration);
-builder.Services.AddSwaggerDocs();
-builder.Services.AddCustomAppServices(builder.Configuration, builder.Environment);
-
-var app = builder.Build();
-
-// ================== DB Migration & Seed ==================
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    try
+    if (builder.Environment.IsDevelopment())
     {
-        var context = services.GetRequiredService<AppDbContext>();
-        context.Database.Migrate(); 
-        await DbInitializer.SeedAsync(services);
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowFrontend",
+                policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .AllowCredentials();
+                });
+        });
     }
-    catch (Exception ex)
+
+    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Services.AddControllers();
+    builder.Services.AddEndpointsApiExplorer();
+
+    // Custom services
+    builder.Services.AddJwtAuthentication(builder.Configuration);
+    builder.Services.AddSwaggerDocs();
+    builder.Services.AddCustomAppServices(builder.Configuration, builder.Environment);
+
+    var app = builder.Build();
+
+    app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+    using (var scope = app.Services.CreateScope())
     {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred during migration/seeding.");
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<AppDbContext>();
+            context.Database.Migrate();
+            await DbInitializer.SeedAsync(services);
+        }
+        catch (Exception ex)
+        {
+
+            Log.Error(ex, "An error occurred during migration/seeding.");
+            throw;
+        }
     }
-}
 
-// ================== Middleware Pipeline ==================
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-app.UseCors("AllowFrontend");
-app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
-    RequestPath = "/images",
-    OnPrepareResponse = ctx =>
+    if (app.Environment.IsDevelopment())
     {
-        ctx.Context.Response.Headers.Remove("Cache-Control");
-        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=2592000");
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
-});
-// --- API Controllers ---
-app.MapControllers();
-
-// --- SPA fallback (React Router) ---
-app.MapFallbackToFile("index.html");
 
 
+    app.UseCors("AllowFrontend");
 
-app.Run();
+    app.UseHttpsRedirection();
+
+    app.UseAuthentication();
+    app.UseAuthorization();
+
+    app.UseDefaultFiles();
+    app.UseStaticFiles();
+
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images")),
+        RequestPath = "/images",
+        OnPrepareResponse = ctx =>
+        {
+            ctx.Context.Response.Headers.Remove("Cache-Control");
+            ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=2592000");
+        }
+    });
+
+
+    app.MapControllers();
+
+    app.MapFallbackToFile("index.html");
+
+    await app.RunAsync();
+}
+catch (Exception ex)
+{
+
+    Log.Fatal(ex, "Host terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}

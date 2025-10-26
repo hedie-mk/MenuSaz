@@ -12,10 +12,12 @@ namespace API.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;
+        private readonly ILogger<AccountController> _logger;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
         {
             _accountService = accountService;
+            _logger = logger;
         }
 
 
@@ -24,7 +26,7 @@ namespace API.Controllers
         public async Task<IActionResult> Get()
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
+            _logger.LogInformation("Fetching account info for user ID: {UserId}", userId);
             var result = await _accountService.GetAccountAsync(Guid.Parse(userId!));
 
             return result != null ? Ok(result) : NotFound();
@@ -36,6 +38,7 @@ namespace API.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetAll()
         {
+            _logger.LogInformation("Manager requested all accounts list.");
             var result = await _accountService.GetAllAysnc();
 
             return Ok(result);
@@ -45,6 +48,7 @@ namespace API.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Create([FromBody] AccountCreateDto dto)
         {
+            _logger.LogInformation("Creating account for user: {UserName}", dto.UserName);
             var id = await _accountService.CreateAccountAysnc(dto);
 
             return Created("" , new { id });
@@ -59,6 +63,7 @@ namespace API.Controllers
 
             dto.Id = userIdFromToken!;
 
+            _logger.LogInformation("Updating account info for user ID: {UserId}", userIdFromToken);
             var result = await _accountService.UpdateAccountAysnc(dto);
 
             return result ? Ok() : NotFound();
@@ -68,6 +73,7 @@ namespace API.Controllers
         [Authorize(Roles = "Manager")]
         public async Task<IActionResult> Delete(string id)
         {
+            _logger.LogInformation("Request to delete account with ID: {AccountId}", id);
             var result = await _accountService.DeleteAccountAysnc(Guid.Parse(id!));
 
             return result ? Ok() : NotFound();
@@ -81,6 +87,7 @@ namespace API.Controllers
 
             dto.Id = Guid.Parse(userIdFromToken!);
 
+            _logger.LogInformation("Request to change password for user ID: {UserId}", dto.Id);
             var result = await _accountService.ChangePassword(dto);
 
             return result ? Ok() : NotFound();

@@ -11,72 +11,167 @@ namespace API.Controllers
     public class ItemController : Controller
     {
         private readonly IItemService _itemService;
-        public ItemController(IItemService itemService)
+        private readonly ILogger<ItemController> _logger;
+        public ItemController(IItemService itemService , ILogger<ItemController> logger)
         {
             _itemService = itemService;
+            _logger = logger;
         }
 
-        // GET: api/item
+        
         [HttpGet("All")]
         [Authorize]
         public async Task<IActionResult> GetAll()
         {
-            var items = await _itemService.GetAllAsync();
+            _logger.LogInformation("Fetching all items");
+            try
+            {
+                var items = await _itemService.GetAllAsync();
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching all items");
+                return StatusCode(500, "An error occurred while retrieving items.");
+            }
 
-            return Ok(items);
         }
 
-        // GET: api/item/byIndex/2
+        
         [HttpGet("{index:int}")]
         [Authorize]
         public async Task<IActionResult> GetByIndex(int index)
         {
-            var items = await _itemService.GetByIndexAsync(index);
-            return Ok(items);
+            _logger.LogInformation("Fetching item for page {Index}", index);
+
+            try
+            {
+                var items = await _itemService.GetByIndexAsync(index);
+
+                if (items == null || !items.Any())
+                {
+                    _logger.LogWarning("No items found for page {Index}", index);
+                    return NotFound();
+                }
+
+                _logger.LogInformation("Fetched {Count} items for page {Index}", items.Count(), index);
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error while fetching items for page {Index}", index);
+                return StatusCode(500, "An error occurred while retrieving items.");
+            }
         }
 
-        // GET: api/item/{id}
+        
         [HttpGet("{id}")]
         [Authorize]
         public async Task<IActionResult> GetById(string id)
         {
-            var item = await _itemService.GetByIdAsync(Guid.Parse(id));
-            return item != null ? Ok(item) : NotFound();
+             _logger.LogInformation("Fetching item with ID {ItemId}", id);
+
+            try
+            {
+                var item = await _itemService.GetByIdAsync(Guid.Parse(id));
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching item with ID {ItemId}", id);
+                return StatusCode(500, "Error retrieving item.");
+            }
         }
 
-        // POST: api/item
+       
         [HttpPost]
         [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Create([FromForm] ItemCreateDto dto)
         {
-            var id = await _itemService.CreateAsync(dto);
-            return CreatedAtAction(nameof(GetById), new { id }, null);
+            _logger.LogInformation("Creating new item with name {ItemName}", dto.Name);
+
+            try
+            {
+                var id = await _itemService.CreateAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id }, null);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating item {ItemName}", dto.Name);
+                return StatusCode(500, "Error creating item.");
+            }
         }
 
         [HttpPut]
         [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Update([FromForm] ItemUpdateDto dto)
         {
-            var result = await _itemService.UpdateAsync(dto);
-            return result ? Ok() : NotFound();
+            _logger.LogInformation("Updating item {ItemId}", dto.Id);
+
+            try
+            {
+                var result = await _itemService.UpdateAsync(dto);
+                if (!result)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating item {ItemId}", dto.Id);
+                return StatusCode(500, "Error updating item.");
+            }
         }
 
-        // DELETE: api/item/{id}
-        [HttpDelete("{id:guid}")]
+        
+        [HttpDelete("{id}")]
         [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> Delete(string id)
         {
-            var result = await _itemService.DeleteAsync(Guid.Parse(id));
-            return result ? Ok() : NotFound();
+            _logger.LogInformation("Deleting item {ItemId}", id);
+
+            try
+            {
+                var result = await _itemService.DeleteAsync(Guid.Parse(id));
+                if (!result)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting item {ItemId}", id);
+                return StatusCode(500, "Error deleting item.");
+            }
         }
 
-        // PATCH: api/item/changeStatus/{id}
-        [HttpPatch("changeStatus/{id:guid}")]
+        
+        [HttpPatch("changeStatus/{id}")]
         [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> ChangeStatus(string id)
         {
-            var result = await _itemService.ChangeStatusAsync(Guid.Parse(id));
-            return result ? Ok() : NotFound();
+            _logger.LogInformation("Changing status for item {id}", id);
+
+            try
+            {
+                var result = await _itemService.ChangeStatusAsync(Guid.Parse(id));
+                if (!result)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error changing status for item {ItemId}", id);
+                return StatusCode(500, "Error changing status.");
+            }
         }
 
         // PATCH: api/item/addCategory?id={itemId}&categoryId={categoryId}
@@ -84,8 +179,22 @@ namespace API.Controllers
         [Authorize(Roles = "Manager,Staff")]
         public async Task<IActionResult> AddCategory([FromQuery] string id, [FromQuery] string categoryId)
         {
-            var result = await _itemService.AddCategoryAsync(Guid.Parse(id), Guid.Parse(categoryId));
-            return result ? Ok() : NotFound();
+            _logger.LogInformation("Adding category {CategoryId} to item {ItemId}", categoryId, id);
+
+            try
+            {
+                var result = await _itemService.AddCategoryAsync(Guid.Parse(id), Guid.Parse(categoryId));
+                if (!result)
+                {
+                    return NotFound();
+                }
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding category {CategoryId} to item {ItemId}", categoryId, id);
+                return StatusCode(500, "Error adding category to item.");
+            }
         }
 
 
